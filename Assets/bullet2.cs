@@ -13,8 +13,8 @@ public class bullet2 : MonoBehaviour
 
     void Start()
     {
-        this.fallSpeed=0.1f;
-        this.rotSpeed=5f;
+        fallSpeed=0.1f;
+        rotSpeed=5f;
     }
 
     void FixedUpdate()
