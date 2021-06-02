@@ -24,11 +24,7 @@ public class boss2 : MonoBehaviour
 
     void Start()
     {
-        Invoke("Shoot1",0f);
-        Invoke("Shoot2",10f);
-        Invoke("Shoot3",25f);
-        Invoke("Shoot4",40f);
-        Invoke("Shoot5",49f);
+        
     }
 
     void FixedUpdate()
@@ -109,8 +105,8 @@ public class boss2 : MonoBehaviour
         bullet5Place.x=Random.Range(-8f,8f);
         bullet5Place.y=-5.5f;
         Instantiate(bullet5Prefab,bullet5Place,Quaternion.identity);
-        if(count3<80){
-            Invoke("Shoot5",0.2f);
+        if(count3<100){
+            Invoke("Shoot5",0.1f);
             count3++;
         }
         else{

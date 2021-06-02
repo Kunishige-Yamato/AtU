@@ -11,7 +11,7 @@ public class bullet15 : MonoBehaviour
     //回転速度
     float rotSpeed;
     //重力
-    float gra=-0.001f;
+    float gra=-0.00015f;
     //イラスト
     public Sprite image0;
     public Sprite image1;
@@ -31,8 +31,8 @@ public class bullet15 : MonoBehaviour
                 this.gameObject.GetComponent<SpriteRenderer>().sprite=image2;
                 break;
         }
-        fallSpeed=-0.15f;
-        moveSpeed=Random.Range(-0.05f,0.05f);
+        fallSpeed=-0.05f;
+        moveSpeed=Random.Range(-0.02f,0.02f);
         rotSpeed=Random.Range(-5f,5f);
     }
 
