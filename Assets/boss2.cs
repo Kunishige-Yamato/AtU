@@ -19,7 +19,7 @@ public class boss2 : MonoBehaviour
     int count3=0;
     bool direction;
     Vector3 objPlace;
-    int hp=600;
+    int hp=500;
     int hit=0;
 
     void Start()

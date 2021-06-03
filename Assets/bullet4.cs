@@ -10,17 +10,19 @@ public class bullet4 : MonoBehaviour
     public float moveSpeed=0;
     //回転速度
     float rotSpeed;
+    
+    GameObject pl;
 
     void Start()
     {
         this.fallSpeed=0.05f;
         this.moveSpeed=0;
         this.rotSpeed=10;
+        pl=GameObject.Find("Player");
     }
 
     void FixedUpdate()
     {
-        GameObject pl=GameObject.Find("Player");
         if(gameObject.transform.position.y>1){
             moveSpeed=0;
         }
