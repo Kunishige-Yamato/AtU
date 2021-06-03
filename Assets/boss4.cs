@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class boss4 : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class boss4 : MonoBehaviour
     float angle;
     int count=0,count2=0,count3=0;
 
+    float timer;
+
+    TextAsset csvFile; // CSVファイル
+    List<string[]> csvDatas=new List<string[]>(); // CSVの中身を入れるリスト;
+
     void Start()
     {
         if(transform.position.x>0){
@@ -37,17 +43,33 @@ public class boss4 : MonoBehaviour
         }
         cakeCom=cakePrefab.GetComponent<boss4>();
 
-        //Shoot1();
-        //Shoot2();
-        //Shoot3();
-        //Shoot4();
-        Shoot5();
+        timer=0;
+
+        //csv読み込み
+        csvFile=Resources.Load("boss-4") as TextAsset;
+        StringReader reader=new StringReader(csvFile.text);
+
+        // , で分割しつつ一行ずつ読み込み，リストに追加していく
+        while (reader.Peek() != -1) // reader.Peaekが-1になるまで
+        {
+            string line=reader.ReadLine(); // 一行ずつ読み込み
+            csvDatas.Add(line.Split(',')); // , 区切りでリストに追加
+        }
     }
 
     void FixedUpdate()
     {
+        timer+=Time.deltaTime;
+
         if(cakeCom.hit>=this.hit){
             this.hit=cakeCom.hit;
+        }
+
+        for(int i=0;i<csvDatas.Count;i++){
+            if(float.Parse(csvDatas[i][1])<=timer&&csvDatas[i][2]=="0"){
+                Generate(csvDatas[i][0]);
+                csvDatas[i][2]="1";
+            }
         }
     }
 
@@ -135,6 +157,27 @@ public class boss4 : MonoBehaviour
                 Destroy(cakePrefab.gameObject);
                 Destroy(gameObject);
             }
+        }
+    }
+
+    void Generate(string n)
+    {   
+        switch(n){
+            case "s1":
+                Shoot1();
+                break;
+            case "s2":
+                Shoot2();
+                break;
+            case "s3":
+                Shoot3();
+                break;
+            case "s4":
+                Shoot4();
+                break;
+            case "s5":
+                Shoot5();
+                break;
         }
     }
 }

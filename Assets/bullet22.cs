@@ -20,7 +20,7 @@ public class bullet22 : MonoBehaviour
     void Start()
     {
         if(transform.position.x>0){
-            mainCake=GameObject.Find("boss4-2Prefab(Clone)");
+            mainCake=GameObject.Find("boss4-2Prefab");
             int i=Random.Range(0,2);
             if(i>0){
                 this.gameObject.GetComponent<SpriteRenderer>().sprite=image0;
@@ -30,7 +30,7 @@ public class bullet22 : MonoBehaviour
             }
         }
         else{
-            mainCake=GameObject.Find("boss4-1Prefab(Clone)");
+            mainCake=GameObject.Find("boss4-1Prefab");
             int i=Random.Range(0,2);
             if(i>0){
                 this.gameObject.GetComponent<SpriteRenderer>().sprite=image2;
