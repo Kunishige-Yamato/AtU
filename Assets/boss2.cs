@@ -23,7 +23,7 @@ public class boss2 : MonoBehaviour
     int hp=500;
     int hit=0;
 
-    float timer;
+    float timer,lastTime;
 
     TextAsset csvFile; // CSVファイル
     List<string[]> csvDatas=new List<string[]>(); // CSVの中身を入れるリスト;
@@ -34,8 +34,14 @@ public class boss2 : MonoBehaviour
 
         //csv読み込み
         csvFile=Resources.Load("boss-2") as TextAsset;
-        StringReader reader=new StringReader(csvFile.text);
 
+        addList();        
+    }
+
+    void addList()
+    {
+        StringReader reader=new StringReader(csvFile.text);
+        
         // , で分割しつつ一行ずつ読み込み，リストに追加していく
         while (reader.Peek() != -1) // reader.Peaekが-1になるまで
         {
@@ -65,9 +71,14 @@ public class boss2 : MonoBehaviour
         transform.position=objPlace;
 
         for(int i=0;i<csvDatas.Count;i++){
-            if(float.Parse(csvDatas[i][1])<=timer&&csvDatas[i][2]=="0"){
+            if(float.Parse(csvDatas[i][1])+lastTime<=timer&&csvDatas[i][2]=="0"){
                 Generate(csvDatas[i][0]);
-                csvDatas[i][2]="1";
+                if(csvDatas[i][0]!="end"){
+                    csvDatas[i][2]="1";
+                }
+                else{
+                    lastTime+=float.Parse(csvDatas[i][1]);
+                }
             }
         }
     }
@@ -170,6 +181,9 @@ public class boss2 : MonoBehaviour
                 break;
             case "s5":
                 Shoot5();
+                break;
+            case "end":
+                addList();
                 break;
         }
     }

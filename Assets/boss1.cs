@@ -13,9 +13,9 @@ public class boss1 : MonoBehaviour
     public GameObject bullet2Prefab;
     public GameObject bullet3Prefab;
     Vector3 bulletPlace,bulletPlace2;
-    public int num=0,num2=0;
+    public int num=0,num2=0,count=0;
 
-    float timer;
+    float timer,lastTime;
 
     TextAsset csvFile; // CSVファイル
     List<string[]> csvDatas=new List<string[]>(); // CSVの中身を入れるリスト;
@@ -31,11 +31,18 @@ public class boss1 : MonoBehaviour
         dir=false;
 
         timer=0;
+        lastTime=0;
 
         //csv読み込み
         csvFile=Resources.Load("boss-1") as TextAsset;
-        StringReader reader=new StringReader(csvFile.text);
 
+        addList();        
+    }
+
+    void addList()
+    {
+        StringReader reader=new StringReader(csvFile.text);
+        
         // , で分割しつつ一行ずつ読み込み，リストに追加していく
         while (reader.Peek() != -1) // reader.Peaekが-1になるまで
         {
@@ -49,9 +56,14 @@ public class boss1 : MonoBehaviour
         timer+=Time.deltaTime;
 
         for(int i=0;i<csvDatas.Count;i++){
-            if(float.Parse(csvDatas[i][1])<=timer&&csvDatas[i][2]=="0"){
+            if(float.Parse(csvDatas[i][1])+lastTime<=timer&&csvDatas[i][2]=="0"){
                 Generate(csvDatas[i][0]);
-                csvDatas[i][2]="1";
+                if(csvDatas[i][0]!="end"){
+                    csvDatas[i][2]="1";
+                }
+                else{
+                    lastTime+=float.Parse(csvDatas[i][1]);
+                }
             }
         }
     }
@@ -95,20 +107,36 @@ public class boss1 : MonoBehaviour
             mov-=0.03f;
             Invoke("Shoot2",0.06f);
         }
+        else if(dir==true)
+        {
+            Invoke("switchDir",1);
+        }
     }
 
     void switchDir()
     {
-        dir=true;
-        Shoot2();
+        if(dir==false){
+            dir=true;
+            Shoot2();
+        }
+        else{
+            dir=false;
+        }
     }
 
     void Shoot3()
     {
         bulletPlace2.x=Random.Range(-8f,8f);
         bulletPlace2.y=5.5f;
-        Invoke("Shoot3",Random.Range(0.1f,0.3f));
         Instantiate(bullet3Prefab,bulletPlace2,Quaternion.identity);
+        count++;
+
+        if(count<50){
+            Invoke("Shoot3",Random.Range(0.1f,0.3f));
+        }
+        else{
+            count=0;
+        }
     }
 
     //当たったら消去
@@ -135,6 +163,9 @@ public class boss1 : MonoBehaviour
                 break;
             case "s3":
                 Shoot3();
+                break;
+            case "end":
+                addList();
                 break;
         }
     }

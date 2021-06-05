@@ -25,7 +25,7 @@ public class boss3 : MonoBehaviour
     float angle=0,posX=-8;
     int count,count2,count3;
 
-    float timer;
+    float timer,lastTime;
 
     TextAsset csvFile; // CSVファイル
     List<string[]> csvDatas=new List<string[]>(); // CSVの中身を入れるリスト;
@@ -36,8 +36,14 @@ public class boss3 : MonoBehaviour
 
         //csv読み込み
         csvFile=Resources.Load("boss-3") as TextAsset;
-        StringReader reader=new StringReader(csvFile.text);
 
+        addList();        
+    }
+
+    void addList()
+    {
+        StringReader reader=new StringReader(csvFile.text);
+        
         // , で分割しつつ一行ずつ読み込み，リストに追加していく
         while (reader.Peek() != -1) // reader.Peaekが-1になるまで
         {
@@ -51,9 +57,14 @@ public class boss3 : MonoBehaviour
         timer+=Time.deltaTime;
         
         for(int i=0;i<csvDatas.Count;i++){
-            if(float.Parse(csvDatas[i][1])<=timer&&csvDatas[i][2]=="0"){
+            if(float.Parse(csvDatas[i][1])+lastTime<=timer&&csvDatas[i][2]=="0"){
                 Generate(csvDatas[i][0]);
-                csvDatas[i][2]="1";
+                if(csvDatas[i][0]!="end"){
+                    csvDatas[i][2]="1";
+                }
+                else{
+                    lastTime+=float.Parse(csvDatas[i][1]);
+                }
             }
         }
     }
@@ -209,6 +220,9 @@ public class boss3 : MonoBehaviour
     void Generate(string n)
     {   
         switch(n){
+            case "w1":
+                Defense();
+                break;
             case "s1":
                 Shoot1();
                 break;
@@ -223,6 +237,9 @@ public class boss3 : MonoBehaviour
                 break;
             case "s5":
                 Shoot5();
+                break;
+            case "end":
+                addList();
                 break;
         }
     }
