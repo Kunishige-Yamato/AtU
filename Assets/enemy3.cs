@@ -40,8 +40,8 @@ public class enemy3 : MonoBehaviour
         //無限に打ち続ける
         while(i<1){
             GameObject mb=Instantiate(bulletPrefab,bulletPlace,Quaternion.identity);
-            mb.name="bullet_"+num;
-            GameObject bul=GameObject.Find("bullet_"+num);
+            mb.name="bullet_"+num+transform.position.x*100;
+            GameObject bul=GameObject.Find("bullet_"+num+transform.position.x*100);
             num++;
             bullet2 b2=bul.GetComponent<bullet2>();
             b2.moveSpeed=mov;

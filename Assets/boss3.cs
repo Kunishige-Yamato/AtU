@@ -24,6 +24,8 @@ public class boss3 : MonoBehaviour
     float moveSpeed;
     float angle=0,posX=-8;
     int count,count2,count3;
+    GameObject eg;
+    EnemyGenerator enemyGenerator;
 
     float timer,lastTime;
 
@@ -32,6 +34,9 @@ public class boss3 : MonoBehaviour
 
     void Start()
     {
+        eg=GameObject.Find("EG");
+        enemyGenerator=eg.GetComponent<EnemyGenerator>();
+
         timer=0;
 
         //csv読み込み
@@ -212,6 +217,9 @@ public class boss3 : MonoBehaviour
             hit++;
             if(hit>hp)
             {
+                //次のステージへ
+                //リザルト表示はここに書く
+                enemyGenerator.ReadFile();
                 Destroy(gameObject);
             }
         }

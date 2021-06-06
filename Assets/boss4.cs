@@ -23,6 +23,8 @@ public class boss4 : MonoBehaviour
     int side;
     float angle;
     int count=0,count2=0,count3=0;
+    GameObject eg;
+    EnemyGenerator enemyGenerator;
 
     float timer,lastTime;
 
@@ -31,6 +33,9 @@ public class boss4 : MonoBehaviour
 
     void Start()
     {
+        eg=GameObject.Find("EG");
+        enemyGenerator=eg.GetComponent<EnemyGenerator>();
+
         if(transform.position.x>0){
             gameObject.name="boss4-2Prefab";
             side=1;
@@ -166,6 +171,9 @@ public class boss4 : MonoBehaviour
             hit++;
             if(hit>this.hp)
             {
+                //次のステージへ
+                //リザルト表示はここに書く
+                enemyGenerator.ReadFile();
                 Destroy(cakePrefab.gameObject);
                 Destroy(gameObject);
             }

@@ -313,6 +313,16 @@ MonoBehaviour:
     type: 3}
   bullet6Prefab: {fileID: 7283955097995499960, guid: ab5637b11040648e88981cf271c0a22a,
     type: 3}
+  boss1Prefab: {fileID: 5023791096585076737, guid: 261a1ebbbb01141ff9b8b744fc60a365,
+    type: 3}
+  boss2Prefab: {fileID: 377104313807473271, guid: 18ad6ff6133a14ffeb3eba5dd286de2f,
+    type: 3}
+  boss3Prefab: {fileID: 3308254519182357638, guid: a98594684eee846dfb0f272639979c42,
+    type: 3}
+  boss4_1Prefab: {fileID: 4278060310826018187, guid: 2377ca0d8c0d04012843c53a0820d7e9,
+    type: 3}
+  boss4_2Prefab: {fileID: 5024038160280421466, guid: e31288ca9cd7e42389be03ba5f1d6160,
+    type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

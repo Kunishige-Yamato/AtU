@@ -14,6 +14,8 @@ public class boss1 : MonoBehaviour
     public GameObject bullet3Prefab;
     Vector3 bulletPlace,bulletPlace2;
     public int num=0,num2=0,count=0;
+    GameObject eg;
+    EnemyGenerator enemyGenerator;
 
     float timer,lastTime;
 
@@ -22,6 +24,9 @@ public class boss1 : MonoBehaviour
 
     void Start()
     {
+        eg=GameObject.Find("EG");
+        enemyGenerator=eg.GetComponent<EnemyGenerator>();
+
         bulletPlace.x=gameObject.transform.position.x;
         bulletPlace.y=gameObject.transform.position.y-2;
 
@@ -147,6 +152,9 @@ public class boss1 : MonoBehaviour
             hit++;
             if(hit>hp)
             {
+                //次のステージへ
+                //リザルト表示はここに書く
+                enemyGenerator.ReadFile();
                 Destroy(gameObject);
             }
         }
