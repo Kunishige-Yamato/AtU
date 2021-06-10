@@ -17,6 +17,9 @@ public class boss1 : MonoBehaviour
     GameObject eg;
     EnemyGenerator enemyGenerator;
 
+    //爆発エフェクトのPrefab
+	public GameObject explosionPrefab;
+
     float timer,lastTime;
 
     TextAsset csvFile; // CSVファイル
@@ -150,9 +153,19 @@ public class boss1 : MonoBehaviour
         if(col.gameObject.tag=="Bullet")
         {
             hit++;
+
+            //スコア付与
+            GameObject scoreCounter=GameObject.Find("ScoreCounter");
+            ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
+            sc.AddScore(10);
+
             Destroy(col.gameObject);
             if(hit>hp)
             {
+                //爆発
+		        Instantiate (explosionPrefab, transform.position, Quaternion.identity);
+                //早期撃退ボーナス
+                sc.AddScore((int)Mathf.Floor(12000/timer));
                 //次のステージへ
                 enemyGenerator.DisplayResult();
                 Destroy(gameObject);

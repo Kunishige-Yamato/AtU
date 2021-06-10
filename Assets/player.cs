@@ -9,6 +9,10 @@ public class player : MonoBehaviour
     Vector3 bulPos;
     float timer,coolTime;
     public int imageNum;
+    public int hitNum;
+
+    //爆発エフェクトのPrefab
+	public GameObject explosionPrefab;
 
     void Start()
     {
@@ -67,7 +71,15 @@ public class player : MonoBehaviour
     {
         if(col.gameObject.tag=="Enemy")
         {
-            Debug.Log("death");
+            // 爆発エフェクトを生成する	
+		    Instantiate (explosionPrefab, transform.position, Quaternion.identity);
+
+            //スコア大幅減点
+            GameObject scoreCounter=GameObject.Find("ScoreCounter");
+            ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
+            sc.AddScore(-100);
+		
+            hitNum++;
         }
     }
 }

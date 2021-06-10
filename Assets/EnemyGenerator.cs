@@ -35,6 +35,7 @@ public class EnemyGenerator : MonoBehaviour
     public Text stageText;
     public Text scoreText;
     public Text timeText;
+    public Text hitText;
     public Text nextButtonText;
 
     void Start()
@@ -63,9 +64,14 @@ public class EnemyGenerator : MonoBehaviour
         resultGroup.alpha=1f;
         resultGroup.interactable=true;
 
+        //スコア集計＆表示
         stageText.text="Stage-"+stageNum;
+        GameObject scoreCounter=GameObject.Find("ScoreCounter");
+        ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
+        scoreText.text="Score:"+sc.returnScore();
         sumTime+=timer;
         timeText.text="Time:"+(Mathf.Floor(sumTime*100)/100);
+        hitText.text="Hit:"+pl.hitNum;
     }
 
     public void ReadFile()

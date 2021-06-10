@@ -56,6 +56,12 @@ public class enemy2 : MonoBehaviour
         if(col.gameObject.tag=="Bullet")
         {
             hit++;
+
+            //スコア付与
+            GameObject scoreCounter=GameObject.Find("ScoreCounter");
+            ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
+            sc.AddScore(5);
+
             Destroy(col.gameObject);
             if(hit>hp){
                 Destroy(gameObject);
