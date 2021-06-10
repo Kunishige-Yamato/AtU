@@ -36,6 +36,17 @@ public class boss4 : MonoBehaviour
         eg=GameObject.Find("EG");
         enemyGenerator=eg.GetComponent<EnemyGenerator>();
 
+        timer=0;
+
+        //csv読み込み
+        csvFile=Resources.Load("boss-4") as TextAsset;
+        StringReader reader=new StringReader(csvFile.text);
+
+        addList();     
+    }
+
+    void findCake()
+    {
         if(transform.position.x>0){
             gameObject.name="boss4-2Prefab";
             side=1;
@@ -46,15 +57,9 @@ public class boss4 : MonoBehaviour
             side=-1;
             cakePrefab=GameObject.Find("boss4-2Prefab");
         }
-        cakeCom=cakePrefab.GetComponent<boss4>();
-
-        timer=0;
-
-        //csv読み込み
-        csvFile=Resources.Load("boss-4") as TextAsset;
-        StringReader reader=new StringReader(csvFile.text);
-
-        addList();        
+        if(cakePrefab!=null){
+            cakeCom=cakePrefab.GetComponent<boss4>();
+        }
     }
 
     void addList()
@@ -73,7 +78,10 @@ public class boss4 : MonoBehaviour
     {
         timer+=Time.deltaTime;
 
-        if(cakeCom.hit>=this.hit){
+        if(cakePrefab==null){
+            findCake();
+        }
+        else if(cakeCom.hit>=this.hit){
             this.hit=cakeCom.hit;
         }
 
@@ -169,12 +177,12 @@ public class boss4 : MonoBehaviour
         if(col.gameObject.tag=="Bullet")
         {
             hit++;
+            Destroy(col.gameObject);
             if(hit>this.hp)
             {
+                
                 //次のステージへ
-                //リザルト表示はここに書く
-                enemyGenerator.ReadFile();
-                Destroy(cakePrefab.gameObject);
+                enemyGenerator.DisplayResult();
                 Destroy(gameObject);
             }
         }

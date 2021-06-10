@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 public class EnemyGenerator : MonoBehaviour
 {
@@ -25,15 +26,57 @@ public class EnemyGenerator : MonoBehaviour
 
     int stageNum=0;
     int allStageNum=4;
-    float timer;
+    float timer,sumTime;
+
+    GameObject player;
+    player pl;
+
+    public CanvasGroup resultGroup;
+    public Text stageText;
+    public Text scoreText;
+    public Text timeText;
+    public Text nextButtonText;
 
     void Start()
     {
+        player=GameObject.Find("Player");
+        pl=player.GetComponent<player>();
+
+        sumTime=0;
+
         ReadFile();
+    }
+
+    public void DisplayResult()
+    {
+        //自機停止
+        pl.enabled=false;
+        
+        //敵消去
+        //タグつきを全て格納
+        GameObject[] enemys=GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject del in enemys) {
+            Destroy(del);
+        }
+
+        //リザルト表示
+        resultGroup.alpha=1f;
+        resultGroup.interactable=true;
+
+        stageText.text="Stage-"+stageNum;
+        sumTime+=timer;
+        timeText.text="Time:"+(Mathf.Floor(sumTime*100)/100);
     }
 
     public void ReadFile()
     {
+        //自機停止
+        pl.enabled=true;
+
+        //リザルト表示
+        resultGroup.alpha=0f;
+        resultGroup.interactable=false;
+
         stageNum++;
 
         if(stageNum<=allStageNum){
@@ -91,17 +134,17 @@ public class EnemyGenerator : MonoBehaviour
                 Instantiate(bullet6Prefab,new Vector3(x,y,0),Quaternion.identity);
                 break;
             case "boss1":
-                Instantiate(boss1Prefab,new Vector3(x,y,0),Quaternion.identity);
+                Instantiate(boss1Prefab,new Vector3(0,3,0),Quaternion.identity);
                 break;
             case "boss2":
-                Instantiate(boss2Prefab,new Vector3(x,y,0),Quaternion.identity);
+                Instantiate(boss2Prefab,new Vector3(0,3,0),Quaternion.identity);
                 break;
             case "boss3":
-                Instantiate(boss3Prefab,new Vector3(x,y,0),Quaternion.identity);
+                Instantiate(boss3Prefab,new Vector3(0,3,0),Quaternion.identity);
                 break;
             case "boss4":
-                Instantiate(boss4_1Prefab,new Vector3(x,y,0),Quaternion.identity);
-                Instantiate(boss4_2Prefab,new Vector3(x,y,0),Quaternion.identity);
+                Instantiate(boss4_1Prefab,new Vector3(-5,3,0),Quaternion.identity);
+                Instantiate(boss4_2Prefab,new Vector3(5,3,0),Quaternion.identity);
                 break;
         }
     }

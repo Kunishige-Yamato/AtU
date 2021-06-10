@@ -57,6 +57,7 @@ public class enemy1 : MonoBehaviour
         if(col.gameObject.tag=="Bullet")
         {
             hit++;
+            Destroy(col.gameObject);
             if(hit>hp){
                 Destroy(gameObject);
             }

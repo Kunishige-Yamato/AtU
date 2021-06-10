@@ -179,7 +179,7 @@ public class boss3 : MonoBehaviour
         bullet4Place.y=Random.Range(-5f,5f);
         Instantiate(bullet4Prefab,bullet4Place,Quaternion.identity);
 
-        if(count2<100){
+        if(count2<30){
             Invoke("Shoot4",0.4f);
         }
         else{
@@ -215,11 +215,11 @@ public class boss3 : MonoBehaviour
         if(col.gameObject.tag=="Bullet")
         {
             hit++;
+            Destroy(col.gameObject);
             if(hit>hp)
             {
                 //次のステージへ
-                //リザルト表示はここに書く
-                enemyGenerator.ReadFile();
+                enemyGenerator.DisplayResult();
                 Destroy(gameObject);
             }
         }

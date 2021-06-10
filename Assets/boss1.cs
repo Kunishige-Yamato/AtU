@@ -5,7 +5,7 @@ using System.IO;
 
 public class boss1 : MonoBehaviour
 {
-    int hp=400;
+    int hp=40; //hp=400
     int hit=0;
     float mov,maxMov,minMov;
     public bool dir;
@@ -150,11 +150,11 @@ public class boss1 : MonoBehaviour
         if(col.gameObject.tag=="Bullet")
         {
             hit++;
+            Destroy(col.gameObject);
             if(hit>hp)
             {
                 //次のステージへ
-                //リザルト表示はここに書く
-                enemyGenerator.ReadFile();
+                enemyGenerator.DisplayResult();
                 Destroy(gameObject);
             }
         }

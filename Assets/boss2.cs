@@ -162,11 +162,12 @@ public class boss2 : MonoBehaviour
         if(col.gameObject.tag=="Bullet")
         {
             hit++;
+            Destroy(col.gameObject);
             if(hit>hp)
             {
+                
                 //次のステージへ
-                //リザルト表示はここに書く
-                enemyGenerator.ReadFile();
+                enemyGenerator.DisplayResult();
                 Destroy(gameObject);
             }
         }

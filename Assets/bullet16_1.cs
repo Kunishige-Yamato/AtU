@@ -21,7 +21,7 @@ public class bullet16_1 : MonoBehaviour
         moveSpeed=0;
         timer=0;
         pl=GameObject.Find("Player");
-        Invoke("Delete",30f);
+        Invoke("Delete",15f);
     }
 
     void FixedUpdate()
