@@ -13,6 +13,7 @@ public class bullet26 : MonoBehaviour
 
     GameObject enemy4Prefab;
     GameObject enemy5Prefab;
+    GameObject enemy6Prefab;
     public Sprite image0;
     public Sprite image1;
     public Sprite image2;
@@ -28,8 +29,15 @@ public class bullet26 : MonoBehaviour
         }
         else{
             enemy5Prefab=GameObject.Find("enemy5Prefab");
-            fallSpeed=(transform.position.y-enemy5Prefab.transform.position.y)/5;
-            moveSpeed=(transform.position.x-enemy5Prefab.transform.position.x)/5;
+            if(enemy5Prefab!=null){
+                fallSpeed=(transform.position.y-enemy5Prefab.transform.position.y)/5;
+                moveSpeed=(transform.position.x-enemy5Prefab.transform.position.x)/5;
+            }
+            else{
+                enemy6Prefab=GameObject.Find("enemy6Prefab");
+                fallSpeed=(transform.position.y-enemy6Prefab.transform.position.y)/4;
+                moveSpeed=(transform.position.x-enemy6Prefab.transform.position.x)/4;
+            }
         }
         rotSpeed=10f;
 

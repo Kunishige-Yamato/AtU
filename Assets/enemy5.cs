@@ -22,7 +22,7 @@ public class enemy5 : MonoBehaviour
         gameObject.transform.Translate(0,-fallSpeed,0,Space.World);
         fallSpeed+=0.0005f;
         //下まで行ったら消去
-        if(transform.position.y<-5.5f){
+        if(transform.position.y<-6.5f){
             Destroy(gameObject);
         }
     }
