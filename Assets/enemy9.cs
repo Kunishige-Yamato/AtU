@@ -8,16 +8,21 @@ public class enemy9 : MonoBehaviour
     GameObject player;
     Vector3 bulletPlace;
     float angle;
-    int hp=70;
-    int hit=0;
     float timer;
     
     void Start()
     {
+        //タグつきを全て格納
+        GameObject[] enemys=GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject del in enemys) {
+            if(del!=gameObject){
+                Destroy(del);
+            }
+        }
         gameObject.name="enemy9Prefab";
         player=GameObject.Find("Player");
         angle=0;
-        Shoot();
+        Invoke("Shoot",1.5f);
         timer=0;
     }
 
@@ -25,7 +30,7 @@ public class enemy9 : MonoBehaviour
     {
         timer+=Time.deltaTime;
 
-        if(timer>=60){
+        if(timer>=31){
             Destroy(gameObject);
         }
     }
@@ -51,19 +56,11 @@ public class enemy9 : MonoBehaviour
     {
         if(col.gameObject.tag=="Bullet")
         {
-            hit++;
-
+            Destroy(col.gameObject);
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(30);
-
-            Destroy(col.gameObject);
-            if(hit>hp){
-                //早期撃退ボーナス
-                sc.AddScore((int)Mathf.Floor(200/timer));
-                Destroy(gameObject);
-            }
         }
     }
 }

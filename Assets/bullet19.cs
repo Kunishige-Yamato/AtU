@@ -13,7 +13,7 @@ public class bullet19 : MonoBehaviour
 
     void Start()
     {
-        speed=0.02f;
+        speed=0.03f;
 
         if(transform.position.y>5.5f){
             fallSpeed=speed;

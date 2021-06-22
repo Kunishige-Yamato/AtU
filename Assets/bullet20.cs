@@ -15,7 +15,7 @@ public class bullet20 : MonoBehaviour
 
     void Start()
     {
-        moveSpeed=Random.Range(-0.02f,0.02f);
+        moveSpeed=Random.Range(-0.03f,0.03f);
         rotSpeed=-15f;
         timer=0;
     }
@@ -24,7 +24,7 @@ public class bullet20 : MonoBehaviour
     {
         timer+=Time.deltaTime;
         if(timer>0.8f){
-            fallSpeed+=0.002f;
+            fallSpeed+=0.001f;
             transform.Translate(moveSpeed,-fallSpeed,0,Space.World);
             transform.Rotate(0,0,rotSpeed);
         }

@@ -37,6 +37,14 @@ public class boss3 : MonoBehaviour
 
     void Start()
     {
+        //タグつきを全て格納
+        GameObject[] enemys=GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject del in enemys) {
+            if(del!=gameObject){
+                Destroy(del);
+            }
+        }
+
         eg=GameObject.Find("EG");
         enemyGenerator=eg.GetComponent<EnemyGenerator>();
 
@@ -153,8 +161,8 @@ public class boss3 : MonoBehaviour
     void Shoot3()
     {
         count++;
-        for(float i=-5;i<11;i+=2){
-            bullet3Place.y=i;
+        for(float i=-5;i<16;i+=2){
+            bullet3Place.y=i+i%3;
             bullet3Place.x=-9.5f;
             Instantiate(bullet3Prefab,bullet3Place,Quaternion.identity);
             bullet3Place.x=9.5f;
@@ -182,8 +190,8 @@ public class boss3 : MonoBehaviour
         bullet4Place.y=Random.Range(-5f,5f);
         Instantiate(bullet4Prefab,bullet4Place,Quaternion.identity);
 
-        if(count2<30){
-            Invoke("Shoot4",0.4f);
+        if(count2<45){
+            Invoke("Shoot4",0.2f);
         }
         else{
             count2=0;
@@ -205,7 +213,7 @@ public class boss3 : MonoBehaviour
         //周回数
         int rap=5;
         if(count3<33*rap){
-            Invoke("Shoot5",0.03f);
+            Invoke("Shoot5",0.05f);
         }
         else{
             count3=0;

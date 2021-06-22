@@ -35,8 +35,13 @@ public class bullet26 : MonoBehaviour
             }
             else{
                 enemy6Prefab=GameObject.Find("enemy6Prefab");
-                fallSpeed=(transform.position.y-enemy6Prefab.transform.position.y)/4;
-                moveSpeed=(transform.position.x-enemy6Prefab.transform.position.x)/4;
+                if(enemy6Prefab!=null){
+                    fallSpeed=(transform.position.y-enemy6Prefab.transform.position.y)/4;
+                    moveSpeed=(transform.position.x-enemy6Prefab.transform.position.x)/4;
+                }
+                else{
+                    Destroy(gameObject);
+                }
             }
         }
         rotSpeed=10f;

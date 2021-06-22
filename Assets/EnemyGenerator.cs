@@ -116,7 +116,7 @@ public class EnemyGenerator : MonoBehaviour
 
         for(int i=0;i<csvDatas.Count;i++){
             if(float.Parse(csvDatas[i][1])<=timer&&csvDatas[i][4]=="0"){
-                Generate(csvDatas[i][0],float.Parse(csvDatas[i][2]),float.Parse(csvDatas[i][3]));
+                //Generate(csvDatas[i][0],float.Parse(csvDatas[i][2]),float.Parse(csvDatas[i][3]));
                 csvDatas[i][4]="1";
             }
         }

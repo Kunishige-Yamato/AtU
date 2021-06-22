@@ -9,7 +9,7 @@ public class wall1 : MonoBehaviour
 
     void Start()
     {
-        
+        Invoke("Des",15f);
     }
 
     void FixedUpdate()
@@ -29,5 +29,10 @@ public class wall1 : MonoBehaviour
             }
             Destroy(col.gameObject);
         }
+    }
+
+    void Des()
+    {
+        Destroy(gameObject);
     }
 }

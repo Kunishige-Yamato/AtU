@@ -15,15 +15,15 @@ public class bullet18 : MonoBehaviour
     {
         //スキンチェンジ
         if(transform.position.x>0){
-            moveSpeed=-0.08f;
+            moveSpeed=-0.04f;
             this.gameObject.GetComponent<SpriteRenderer>().sprite=image0;
         }
         else{
-            moveSpeed=0.08f;
+            moveSpeed=0.04f;
             this.gameObject.GetComponent<SpriteRenderer>().sprite=image1;
         }
 
-        fallSpeed=0.1f;
+        fallSpeed=0.05f;
     }
 
     void FixedUpdate()

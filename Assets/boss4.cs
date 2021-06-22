@@ -36,6 +36,14 @@ public class boss4 : MonoBehaviour
 
     void Start()
     {
+        //タグつきを全て格納
+        GameObject[] enemys=GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject del in enemys) {
+            if(del!=gameObject){
+                Destroy(del);
+            }
+        }
+
         eg=GameObject.Find("EG");
         enemyGenerator=eg.GetComponent<EnemyGenerator>();
 
