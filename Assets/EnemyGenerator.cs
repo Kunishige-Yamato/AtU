@@ -9,6 +9,12 @@ public class EnemyGenerator : MonoBehaviour
     public GameObject enemy1Prefab;
     public GameObject enemy2Prefab;
     public GameObject enemy3Prefab;
+    public GameObject enemy4Prefab;
+    public GameObject enemy5Prefab;
+    public GameObject enemy6Prefab;
+    public GameObject enemy7Prefab;
+    public GameObject enemy8Prefab;
+    public GameObject enemy9Prefab;
 
     public GameObject bullet3Prefab;
     public GameObject bullet4Prefab;
@@ -44,6 +50,9 @@ public class EnemyGenerator : MonoBehaviour
         pl=player.GetComponent<player>();
 
         sumTime=0;
+
+        //テスト用
+        stageNum=2;
 
         ReadFile();
     }
@@ -99,8 +108,6 @@ public class EnemyGenerator : MonoBehaviour
 
             timer=0;
         }
-
-        //もしステージクリア毎にリザルト挟むならリザルトをボスが呼んでからリザルトがReadFile()呼ぶ
     }
 
     void FixedUpdate()
@@ -109,7 +116,7 @@ public class EnemyGenerator : MonoBehaviour
 
         for(int i=0;i<csvDatas.Count;i++){
             if(float.Parse(csvDatas[i][1])<=timer&&csvDatas[i][4]=="0"){
-                //Generate(csvDatas[i][0],float.Parse(csvDatas[i][2]),float.Parse(csvDatas[i][3]));
+                Generate(csvDatas[i][0],float.Parse(csvDatas[i][2]),float.Parse(csvDatas[i][3]));
                 csvDatas[i][4]="1";
             }
         }
@@ -126,6 +133,24 @@ public class EnemyGenerator : MonoBehaviour
                 break;
             case "e3":
                 Instantiate(enemy3Prefab,new Vector3(x,y,0),Quaternion.identity);
+                break;
+            case "e4":
+                Instantiate(enemy4Prefab,new Vector3(x,y,0),Quaternion.identity);
+                break;
+            case "e5":
+                Instantiate(enemy5Prefab,new Vector3(x,y,0),Quaternion.identity);
+                break;
+            case "e6":
+                Instantiate(enemy6Prefab,new Vector3(x,y,0),Quaternion.identity);
+                break;
+            case "e7":
+                Instantiate(enemy7Prefab,new Vector3(x,y,0),Quaternion.identity);
+                break;
+            case "e8":
+                Instantiate(enemy8Prefab,new Vector3(x,y,0),Quaternion.identity);
+                break;
+            case "e9":
+                Instantiate(enemy9Prefab,new Vector3(x,y,0),Quaternion.identity);
                 break;
             case "b3":
                 Instantiate(bullet3Prefab,new Vector3(x,y,0),Quaternion.identity);

@@ -5,7 +5,7 @@ using System.IO;
 
 public class boss1 : MonoBehaviour
 {
-    int hp=40; //hp=400
+    int hp=400;
     int hit=0;
     float mov,maxMov,minMov;
     public bool dir;
