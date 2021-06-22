@@ -13,12 +13,14 @@ public class boss4 : MonoBehaviour
     public GameObject bullet3Prefab;
     public GameObject bullet4Prefab;
     public GameObject bullet5Prefab;
+    public GameObject bullet6Prefab;
     Vector3 bulletPlace;
     Vector3 bullet2Place;
     Vector3 bullet3Place;
     Vector3 bullet4Place;
     Vector3 bullet5Place;
-    int hp=600;
+    Vector3 bullet6Place;
+    int hp=1000;
     public int hit=0;
     int side;
     float angle;
@@ -36,14 +38,6 @@ public class boss4 : MonoBehaviour
 
     void Start()
     {
-        //タグつきを全て格納
-        GameObject[] enemys=GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject del in enemys) {
-            if(del!=gameObject){
-                Destroy(del);
-            }
-        }
-
         eg=GameObject.Find("EG");
         enemyGenerator=eg.GetComponent<EnemyGenerator>();
 
@@ -54,6 +48,17 @@ public class boss4 : MonoBehaviour
         StringReader reader=new StringReader(csvFile.text);
 
         addList();     
+    }
+
+    void Clear()
+    {
+        //タグつきを全て格納
+        GameObject[] enemys=GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject del in enemys) {
+            if(del!=gameObject&&del!=cakePrefab){
+                Destroy(del);
+            }
+        }
     }
 
     void findCake()
@@ -71,6 +76,7 @@ public class boss4 : MonoBehaviour
         if(cakePrefab!=null){
             cakeCom=cakePrefab.GetComponent<boss4>();
         }
+        Clear();
     }
 
     void addList()
@@ -181,6 +187,15 @@ public class boss4 : MonoBehaviour
         }
     }
 
+    void Shoot6()
+    {
+        bullet6Place.x=0;
+        bullet6Place.y=4.5f;
+        if(side>0){
+            Instantiate(bullet6Prefab,bullet6Place,Quaternion.identity);
+        }
+    }
+
     //当たったら消去
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -192,6 +207,12 @@ public class boss4 : MonoBehaviour
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(10);
+            if(hit%3==0){
+                Instantiate(bullet5Prefab,transform.position,Quaternion.identity);
+            }
+            if(hit>this.hp*0.75&&hit%3==0){
+                Instantiate(bullet5Prefab,transform.position,Quaternion.identity);
+            }
 
             Destroy(col.gameObject);
             if(hit>this.hp)
@@ -224,6 +245,9 @@ public class boss4 : MonoBehaviour
                 break;
             case "s5":
                 Shoot5();
+                break;
+            case "s6":
+                Shoot6();
                 break;
             case "end":
                 addList();
