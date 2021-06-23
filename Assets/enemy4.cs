@@ -33,8 +33,11 @@ public class enemy4 : MonoBehaviour
         float rad=Mathf.PI*angle/180;
         bulletPlace.x=(float)Mathf.Cos(rad)*1.5f+transform.position.x;
         bulletPlace.y=(float)Mathf.Sin(rad)*1.5f+transform.position.y;
-        Instantiate(bulletPrefab,bulletPlace,Quaternion.identity);
-        Invoke("Shoot",0.08f);
+        GameObject bul=Instantiate(bulletPrefab,bulletPlace,Quaternion.identity) as GameObject;
+        bullet26 bulCom=bul.GetComponent<bullet26>();
+        bulCom.enemyPrefab=gameObject;
+        bulCom.parent=4;
+        Invoke("Shoot",0.07f);
     }
 
     //当たったら消去

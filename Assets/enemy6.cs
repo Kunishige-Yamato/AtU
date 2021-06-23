@@ -14,7 +14,7 @@ public class enemy6 : MonoBehaviour
     float angle;
     int hp=3;
     int hit=0;
-    bool stop=false;
+    bool stop=false,explosion=false;
     
     void Start()
     {
@@ -37,13 +37,13 @@ public class enemy6 : MonoBehaviour
         stop=true;
         if(fallSpeed>0){
             //ブレーキ
-            fallSpeed-=0.002f;
+            fallSpeed-=0.003f;
             //拡大
             bulletScale=transform.localScale;
             bulletScale.x+=0.005f;
             bulletScale.y+=0.005f;
             transform.localScale=bulletScale;
-            Invoke("Shoot",0.1f);
+            Invoke("Shoot",0.05f);
             //回転
             transform.Rotate(0,0,rotSpeed);
         }
@@ -54,7 +54,10 @@ public class enemy6 : MonoBehaviour
                 float rad=Mathf.PI*angle/180;
                 bulletPlace.x=(float)Mathf.Cos(rad)*0.5f+transform.position.x;
                 bulletPlace.y=(float)Mathf.Sin(rad)*0.5f+transform.position.y;
-                Instantiate(bulletPrefab,bulletPlace,Quaternion.identity);
+                GameObject bul=Instantiate(bulletPrefab,bulletPlace,Quaternion.identity) as GameObject;
+                bullet26 bulCom=bul.GetComponent<bullet26>();
+                bulCom.enemyPrefab=gameObject;
+                bulCom.parent=6;
                 Destroy(gameObject);
             }
         }
@@ -73,8 +76,9 @@ public class enemy6 : MonoBehaviour
             sc.AddScore(20);
 
             Destroy(col.gameObject);
-            if(hit>hp){
+            if(hit>hp&&explosion==false){
                 Shoot();
+                explosion=true;
             }
         }
     }

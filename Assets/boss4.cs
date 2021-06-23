@@ -75,8 +75,8 @@ public class boss4 : MonoBehaviour
         }
         if(cakePrefab!=null){
             cakeCom=cakePrefab.GetComponent<boss4>();
+            Clear();
         }
-        Clear();
     }
 
     void addList()

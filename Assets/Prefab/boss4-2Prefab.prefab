@@ -121,9 +121,7 @@ MonoBehaviour:
     type: 3}
   bullet5Prefab: {fileID: 5223422749943800723, guid: 34061f97adee74872bf3e5642fe85a7f,
     type: 3}
-  bullet6_1Prefab: {fileID: 8482624202541338671, guid: d29e93a783caa4f319a77f146ea1caba,
-    type: 3}
-  bullet6_2Prefab: {fileID: 8095366297999748260, guid: f6aeef25d29de49b6ac26f361643d19d,
+  bullet6Prefab: {fileID: 8482624202541338671, guid: d29e93a783caa4f319a77f146ea1caba,
     type: 3}
   hit: 0
   explosionPrefab: {fileID: 100000, guid: 4c5a17ca1f9fec84e941441ebb8be079, type: 3}

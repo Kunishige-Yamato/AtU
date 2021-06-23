@@ -11,39 +11,36 @@ public class bullet26 : MonoBehaviour
     //回転速度
     float rotSpeed;
 
-    GameObject enemy4Prefab;
-    GameObject enemy5Prefab;
-    GameObject enemy6Prefab;
+    public GameObject enemyPrefab;
     public Sprite image0;
     public Sprite image1;
     public Sprite image2;
     public Sprite image3;
     public Sprite image4;
 
+    public int parent=0;
+
     void Start()
     {
-        enemy4Prefab=GameObject.Find("enemy4Prefab");
-        if(enemy4Prefab!=null){
-            fallSpeed=(transform.position.y-enemy4Prefab.transform.position.y)/25;
-            moveSpeed=(transform.position.x-enemy4Prefab.transform.position.x)/25;
+        switch(parent){
+            case 4:
+                fallSpeed=(transform.position.y-enemyPrefab.transform.position.y)/25;
+                moveSpeed=(transform.position.x-enemyPrefab.transform.position.x)/25;
+                Invoke("checkParent",0.05f);
+                break;
+            case 5:
+                fallSpeed=(transform.position.y-enemyPrefab.transform.position.y)/5;
+                moveSpeed=(transform.position.x-enemyPrefab.transform.position.x)/5;
+                break;
+            case 6:
+                fallSpeed=(transform.position.y-enemyPrefab.transform.position.y)/4;
+                moveSpeed=(transform.position.x-enemyPrefab.transform.position.x)/4;
+                break;
+            default:
+                Destroy(gameObject);
+                break;
         }
-        else{
-            enemy5Prefab=GameObject.Find("enemy5Prefab");
-            if(enemy5Prefab!=null){
-                fallSpeed=(transform.position.y-enemy5Prefab.transform.position.y)/5;
-                moveSpeed=(transform.position.x-enemy5Prefab.transform.position.x)/5;
-            }
-            else{
-                enemy6Prefab=GameObject.Find("enemy6Prefab");
-                if(enemy6Prefab!=null){
-                    fallSpeed=(transform.position.y-enemy6Prefab.transform.position.y)/4;
-                    moveSpeed=(transform.position.x-enemy6Prefab.transform.position.x)/4;
-                }
-                else{
-                    Destroy(gameObject);
-                }
-            }
-        }
+
         rotSpeed=10f;
 
         int i=Random.Range(0,5);
@@ -73,6 +70,13 @@ public class bullet26 : MonoBehaviour
 
         //端まで行ったら消去
         if(transform.position.y<-5.5f||transform.position.y>5.5f||transform.position.x<-9.5f||transform.position.x>9.5f){
+            Destroy(gameObject);
+        }
+    }
+
+    void checkParent()
+    {
+        if(enemyPrefab==null){
             Destroy(gameObject);
         }
     }
