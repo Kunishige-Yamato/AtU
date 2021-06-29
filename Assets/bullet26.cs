@@ -17,6 +17,7 @@ public class bullet26 : MonoBehaviour
     public Sprite image2;
     public Sprite image3;
     public Sprite image4;
+    public float timer=0;
 
     public int parent=0;
 
@@ -65,6 +66,8 @@ public class bullet26 : MonoBehaviour
 
     void FixedUpdate()
     {
+        timer+=Time.deltaTime;
+
         transform.Translate(moveSpeed,fallSpeed,0,Space.World);
         transform.Rotate(0,0,rotSpeed);
 
@@ -72,11 +75,15 @@ public class bullet26 : MonoBehaviour
         if(transform.position.y<-5.5f||transform.position.y>5.5f||transform.position.x<-9.5f||transform.position.x>9.5f){
             Destroy(gameObject);
         }
+        //親がやられたら消去
+        if(enemyPrefab==null){
+            Destroy(gameObject);
+        }
     }
 
     void checkParent()
     {
-        if(enemyPrefab==null){
+        if(enemyPrefab==null&&timer>0.1f){
             Destroy(gameObject);
         }
     }

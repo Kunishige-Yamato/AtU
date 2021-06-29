@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 public class boss1 : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class boss1 : MonoBehaviour
     public int num=0,num2=0,count=0;
     GameObject eg;
     EnemyGenerator enemyGenerator;
+    Slider hpBar;
 
     //爆発エフェクトのPrefab
 	public GameObject explosionPrefab;
@@ -48,6 +50,11 @@ public class boss1 : MonoBehaviour
 
         timer=0;
         lastTime=0;
+
+        //hpバー制御
+        hpBar=GameObject.Find("Slider").GetComponent<Slider>();
+        hpBar.maxValue=hp;
+        hpBar.value=hp;
 
         //csv読み込み
         csvFile=Resources.Load("boss-1") as TextAsset;
@@ -158,9 +165,11 @@ public class boss1 : MonoBehaviour
     //当たったら消去
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag=="Bullet")
+        if(col.gameObject.tag=="Bullet"&&timer>0.1f)
         {
             hit++;
+
+            hpBar.value=hp-hit;
 
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");

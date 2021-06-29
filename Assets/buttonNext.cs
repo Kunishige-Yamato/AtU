@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class buttonNext : MonoBehaviour
 {
     GameObject eg;
     EnemyGenerator enemyGenerator;
+    public Text nextButtonText;
 
     void Start()
     {
@@ -20,6 +22,12 @@ public class buttonNext : MonoBehaviour
 
     public void OnClick()
     {
-        enemyGenerator.ReadFile();
+        if(enemyGenerator.stageNum==enemyGenerator.allStageNum-1){
+            nextButtonText.text="Total Result";
+            enemyGenerator.ReadFile();
+        }
+        else{
+            enemyGenerator.ReadFile();
+        }
     }
 }

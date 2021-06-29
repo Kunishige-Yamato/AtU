@@ -30,19 +30,19 @@ public class EnemyGenerator : MonoBehaviour
     TextAsset csvFile; // CSVファイル
     List<string[]> csvDatas=new List<string[]>(); // CSVの中身を入れるリスト;
 
-    int stageNum=0;
-    int allStageNum=4;
+    public int stageNum=0;
+    public int allStageNum=4;
     float timer,sumTime;
 
     GameObject player;
     player pl;
 
     public CanvasGroup resultGroup;
+    public CanvasGroup hpBarGroup;
     public Text stageText;
     public Text scoreText;
     public Text timeText;
     public Text hitText;
-    public Text nextButtonText;
 
     void Start()
     {
@@ -58,6 +58,9 @@ public class EnemyGenerator : MonoBehaviour
     {
         //自機停止
         pl.enabled=false;
+
+        //hpバー消去
+        hpBarGroup.alpha=0f;
         
         //敵消去
         //タグつきを全て格納
@@ -85,7 +88,10 @@ public class EnemyGenerator : MonoBehaviour
         //自機停止
         pl.enabled=true;
 
-        //リザルト表示
+        //hpバー消去
+        hpBarGroup.alpha=0f;
+
+        //リザルト消去
         resultGroup.alpha=0f;
         resultGroup.interactable=false;
 
@@ -163,16 +169,20 @@ public class EnemyGenerator : MonoBehaviour
                 break;
             case "boss1":
                 Instantiate(boss1Prefab,new Vector3(0,3,0),Quaternion.identity);
+                hpBarGroup.alpha=1f;
                 break;
             case "boss2":
                 Instantiate(boss2Prefab,new Vector3(0,3,0),Quaternion.identity);
+                hpBarGroup.alpha=1f;
                 break;
             case "boss3":
                 Instantiate(boss3Prefab,new Vector3(0,3,0),Quaternion.identity);
+                hpBarGroup.alpha=1f;
                 break;
             case "boss4":
                 Instantiate(boss4_1Prefab,new Vector3(-5,3,0),Quaternion.identity);
                 Instantiate(boss4_2Prefab,new Vector3(5,3,0),Quaternion.identity);
+                hpBarGroup.alpha=1f;
                 break;
         }
     }
