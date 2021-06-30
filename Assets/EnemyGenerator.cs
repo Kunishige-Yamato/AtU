@@ -51,7 +51,8 @@ public class EnemyGenerator : MonoBehaviour
 
         sumTime=0;
 
-        stageNum=3;
+        //テスト用ステージスキップ
+        //stageNum=3;
 
         ReadFile();
     }
@@ -103,6 +104,11 @@ public class EnemyGenerator : MonoBehaviour
             //csv読み込み
             csvFile=Resources.Load("stage-"+stageNum) as TextAsset;
             StringReader reader=new StringReader(csvFile.text);
+
+            //テスト用ボスのみ出現
+            //string boss="boss"+stageNum;
+            //Generate(boss,0,3);
+
 
             // , で分割しつつ一行ずつ読み込み，リストに追加していく
             while (reader.Peek() != -1) // reader.Peaekが-1になるまで

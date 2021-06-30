@@ -32,7 +32,6 @@ public class boss4 : MonoBehaviour
     GameObject eg;
     EnemyGenerator enemyGenerator;
     Slider hpBar;
-    bool form=false;
 
     //爆発エフェクトのPrefab
 	public GameObject explosionPrefab;
@@ -52,7 +51,7 @@ public class boss4 : MonoBehaviour
         //hpバー制御
         hpBar=GameObject.Find("Slider").GetComponent<Slider>();
         hpBar.maxValue=hp;
-        hpBar.value=hp;
+        hpBar.value=hpBar.maxValue;
 
         //csv読み込み
         csvFile=Resources.Load("boss-4") as TextAsset;
@@ -235,11 +234,6 @@ public class boss4 : MonoBehaviour
                 }
             }
             if(hit>this.hp*0.5){
-                if(form==false){
-                    //体力半分削られた時のエフェクト予定地
-                    Debug.Log("second form");
-                    form=true;
-                }
                 if(hit%10==5){
                     int ran2=Random.Range(0,3);
                     switch(ran2){

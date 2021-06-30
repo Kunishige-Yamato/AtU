@@ -7,7 +7,7 @@ public class enemy4 : MonoBehaviour
     public GameObject bulletPrefab;
     Vector3 bulletPlace;
     float angle;
-    int hp=20;
+    int hp=12;
     int hit=0;
     float timer;
     

@@ -55,7 +55,7 @@ public class boss3 : MonoBehaviour
         //hpバー制御
         hpBar=GameObject.Find("Slider").GetComponent<Slider>();
         hpBar.maxValue=hp;
-        hpBar.value=hp;
+        hpBar.value=hpBar.maxValue;
 
         //csv読み込み
         csvFile=Resources.Load("boss-3") as TextAsset;

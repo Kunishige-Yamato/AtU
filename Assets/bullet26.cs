@@ -62,6 +62,11 @@ public class bullet26 : MonoBehaviour
                 this.gameObject.GetComponent<SpriteRenderer>().sprite=image4;
                 break;
         }
+
+        //親がやられたら消去
+        if(enemyPrefab==null&&fallSpeed==0&&moveSpeed==0){
+            Destroy(gameObject);
+        }
     }
 
     void FixedUpdate()
@@ -76,7 +81,7 @@ public class bullet26 : MonoBehaviour
             Destroy(gameObject);
         }
         //親がやられたら消去
-        if(enemyPrefab==null&&(fallSpeed==null||moveSpeed==null)){
+        if(enemyPrefab==null&&fallSpeed==0&&moveSpeed==0){
             Destroy(gameObject);
         }
     }

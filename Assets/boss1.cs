@@ -54,7 +54,7 @@ public class boss1 : MonoBehaviour
         //hpバー制御
         hpBar=GameObject.Find("Slider").GetComponent<Slider>();
         hpBar.maxValue=hp;
-        hpBar.value=hp;
+        hpBar.value=hpBar.maxValue;
 
         //csv読み込み
         csvFile=Resources.Load("boss-1") as TextAsset;
@@ -170,6 +170,7 @@ public class boss1 : MonoBehaviour
             hit++;
 
             hpBar.value=hp-hit;
+            Debug.Log("boss1hp--");
 
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");

@@ -17,10 +17,8 @@ public class bullet23_2 : MonoBehaviour
     //当たったら消去
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("hit");
         if(col.gameObject.name=="bullet23-3")
         {
-            Debug.Log("delete");
             Destroy(gameObject);
         }
     }
