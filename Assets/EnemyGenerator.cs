@@ -51,6 +51,8 @@ public class EnemyGenerator : MonoBehaviour
 
         sumTime=0;
 
+        stageNum=3;
+
         ReadFile();
     }
 

@@ -15,6 +15,9 @@ public class boss4 : MonoBehaviour
     public GameObject bullet4Prefab;
     public GameObject bullet5Prefab;
     public GameObject bullet6Prefab;
+    public GameObject bullet7Prefab;
+    public GameObject bullet8Prefab;
+    public GameObject bullet9Prefab;
     Vector3 bulletPlace;
     Vector3 bullet2Place;
     Vector3 bullet3Place;
@@ -29,6 +32,7 @@ public class boss4 : MonoBehaviour
     GameObject eg;
     EnemyGenerator enemyGenerator;
     Slider hpBar;
+    bool form=false;
 
     //爆発エフェクトのPrefab
 	public GameObject explosionPrefab;
@@ -150,12 +154,12 @@ public class boss4 : MonoBehaviour
     void Shoot3()
     {
         if(side<0){
-            bullet3Place.x=Random.Range(-5f,0);
+            bullet3Place.x=Random.Range(-4f,0);
         }
         else{
-            bullet3Place.x=Random.Range(0,5f);
+            bullet3Place.x=Random.Range(0,4f);
         }
-        bullet3Place.y=7.5f;
+        bullet3Place.y=9f;
         GameObject　go=Instantiate(bullet3Prefab,bullet3Place,Quaternion.identity) as GameObject;
         go.name="bullet23-1("+side+")";
     }
@@ -216,14 +220,46 @@ public class boss4 : MonoBehaviour
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(10);
-            if(hit%3==0){
-                Instantiate(bullet5Prefab,transform.position,Quaternion.identity);
+            if(hit%10==0){
+                int ran=Random.Range(0,3);
+                switch(ran){
+                    case 0:
+                        Instantiate(bullet7Prefab,transform.position,Quaternion.identity);
+                        break;
+                    case 1:
+                        Instantiate(bullet8Prefab,transform.position,Quaternion.identity);
+                        break;
+                    case 2:
+                        Instantiate(bullet9Prefab,transform.position,Quaternion.identity);
+                        break;
+                }
             }
-            if(hit>this.hp*0.75&&hit%3==0){
-                Instantiate(bullet5Prefab,transform.position,Quaternion.identity);
+            if(hit>this.hp*0.5){
+                if(form==false){
+                    //体力半分削られた時のエフェクト予定地
+                    Debug.Log("second form");
+                    form=true;
+                }
+                if(hit%10==5){
+                    int ran2=Random.Range(0,3);
+                    switch(ran2){
+                        case 0:
+                            Instantiate(bullet7Prefab,transform.position,Quaternion.identity);
+                            break;
+                        case 1:
+                            Instantiate(bullet8Prefab,transform.position,Quaternion.identity);
+                            break;
+                        case 2:
+                            Instantiate(bullet9Prefab,transform.position,Quaternion.identity);
+                            break;
+                    }
+                }
             }
 
+            bullet0 bul0=col.GetComponent<bullet0>();
+            bul0.explosion();
             Destroy(col.gameObject);
+            
             if(hit>this.hp)
             {
                 //爆発

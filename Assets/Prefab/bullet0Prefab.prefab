@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image0: {fileID: 6805304515042899624, guid: 3e7d7a91804424b14a10e6c0b607f29b, type: 3}
   image1: {fileID: -2855682051518798655, guid: 3e7d7a91804424b14a10e6c0b607f29b, type: 3}
+  explosionPrefab: {fileID: 100000, guid: 7a2b3c6dde1175a439506d7d2e259bbf, type: 3}
 --- !u!58 &-6649610966100916338
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -52,7 +52,10 @@ public class enemy7 : MonoBehaviour
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(7);
 
+            bullet0 bul0=col.GetComponent<bullet0>();
+            bul0.explosion();
             Destroy(col.gameObject);
+            
             if(hit>hp){
                 Destroy(gameObject);
             }

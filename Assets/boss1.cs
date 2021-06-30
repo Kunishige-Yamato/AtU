@@ -175,8 +175,11 @@ public class boss1 : MonoBehaviour
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(10);
-
+            
+            bullet0 bul0=col.GetComponent<bullet0>();
+            bul0.explosion();
             Destroy(col.gameObject);
+            
             if(hit>hp)
             {
                 //爆発

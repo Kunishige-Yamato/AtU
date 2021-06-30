@@ -10,6 +10,9 @@ public class bullet0 : MonoBehaviour
     GameObject player;
     player pl;
 
+    //爆発エフェクトのPrefab
+	public GameObject explosionPrefab;
+
     void Start()
     {
         player=GameObject.Find("Player");
@@ -34,5 +37,10 @@ public class bullet0 : MonoBehaviour
         else{
             this.gameObject.GetComponent<SpriteRenderer>().sprite=image1;
         }
+    }
+    public void explosion()
+    {
+        // 爆発エフェクトを生成する	
+        Instantiate (explosionPrefab, transform.position, Quaternion.identity);
     }
 }

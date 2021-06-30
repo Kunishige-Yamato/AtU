@@ -56,7 +56,10 @@ public class enemy9 : MonoBehaviour
     {
         if(col.gameObject.tag=="Bullet")
         {
+            bullet0 bul0=col.GetComponent<bullet0>();
+            bul0.explosion();
             Destroy(col.gameObject);
+            
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();

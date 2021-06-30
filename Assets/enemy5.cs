@@ -53,7 +53,10 @@ public class enemy5 : MonoBehaviour
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(20);
 
+            bullet0 bul0=col.GetComponent<bullet0>();
+            bul0.explosion();
             Destroy(col.gameObject);
+            
             if(hit>hp){
                 Shoot();
                 Destroy(gameObject);

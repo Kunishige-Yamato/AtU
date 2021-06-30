@@ -76,7 +76,7 @@ public class bullet26 : MonoBehaviour
             Destroy(gameObject);
         }
         //親がやられたら消去
-        if(enemyPrefab==null){
+        if(enemyPrefab==null&&(fallSpeed==null||moveSpeed==null)){
             Destroy(gameObject);
         }
     }
