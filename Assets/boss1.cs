@@ -170,7 +170,6 @@ public class boss1 : MonoBehaviour
             hit++;
 
             hpBar.value=hp-hit;
-            Debug.Log("boss1hp--");
 
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");

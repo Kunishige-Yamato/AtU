@@ -32,12 +32,13 @@ public class EnemyGenerator : MonoBehaviour
 
     public int stageNum=0;
     public int allStageNum=4;
-    float timer,sumTime;
+    public float timer,sumTime;
 
     GameObject player;
     player pl;
 
     public CanvasGroup resultGroup;
+    public CanvasGroup pauseGroup;
     public CanvasGroup hpBarGroup;
     public Text stageText;
     public Text scoreText;
@@ -88,8 +89,9 @@ public class EnemyGenerator : MonoBehaviour
 
     public void ReadFile()
     {
-        //自機停止
+        //自機動作
         pl.enabled=true;
+        pl.canMove=true;
 
         //hpバー消去
         hpBarGroup.alpha=0f;
@@ -97,6 +99,10 @@ public class EnemyGenerator : MonoBehaviour
         //リザルト消去
         resultGroup.alpha=0f;
         resultGroup.interactable=false;
+
+        //ポーズ画面消去
+        pauseGroup.alpha=0f;
+        pauseGroup.interactable=false;
 
         stageNum++;
 
