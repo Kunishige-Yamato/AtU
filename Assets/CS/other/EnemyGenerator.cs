@@ -108,7 +108,20 @@ public class EnemyGenerator : MonoBehaviour
 
         if(stageNum<=allStageNum){
             //csv読み込み
-            csvFile=Resources.Load("stage-"+stageNum) as TextAsset;
+            switch(selectDifficulty.difficulty){
+                case 0:
+                    csvFile=Resources.Load("stage-e-"+stageNum) as TextAsset;
+                    break;
+                case 1:
+                    csvFile=Resources.Load("stage-n-"+stageNum) as TextAsset;
+                    break;
+                case 2:
+                    csvFile=Resources.Load("stage-h-"+stageNum) as TextAsset;
+                    break;
+                case 3:
+                    csvFile=Resources.Load("stage-c-"+stageNum) as TextAsset;
+                    break;
+            }
             StringReader reader=new StringReader(csvFile.text);
 
             //テスト用ボスのみ出現
