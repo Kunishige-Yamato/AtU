@@ -21,7 +21,7 @@ public class enemy2 : MonoBehaviour
     void FixedUpdate()
     {
         objPlace=transform.position;
-        float moveSpeed=Random.Range(0.1f,0.3f);
+        float moveSpeed=Random.Range(0.1f,0.6f);
         if(objPlace.x<7&&direction==true){
             objPlace.x+=moveSpeed;
         }

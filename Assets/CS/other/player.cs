@@ -41,6 +41,13 @@ public class player : MonoBehaviour
         Cursor.lockState=wantedMode;
         Cursor.lockState=wantedMode=CursorLockMode.Confined;
         Cursor.visible=false; 
+        Cursor.lockState=CursorLockMode.Locked;
+        Invoke("CursorMove",0.1f);
+    }
+
+    void CursorMove()
+    {
+        Cursor.lockState=CursorLockMode.None;
     }
 
     void FixedUpdate()
@@ -55,6 +62,7 @@ public class player : MonoBehaviour
         {
             //自機停止
             canMove=false;
+            Cursor.visible=true;
 
             //ポーズ画面表示
             pauseGroup.alpha=1f;
@@ -120,7 +128,7 @@ public class player : MonoBehaviour
             }
             //左にはみ出した時
             if(mousePosition.x<=5f){
-                //Y軸固定
+                //X軸固定
                 mousePosition.x=5f;
                 // マウス位置座標をスクリーン座標からワールド座標に変換する
                 screenToWorldPointPosition=Camera.main.ScreenToWorldPoint(mousePosition);
@@ -129,7 +137,7 @@ public class player : MonoBehaviour
             }
             //右にはみ出した時
             if(mousePosition.x>=705f){
-                //Y軸固定
+                //X軸固定
                 mousePosition.x=705f;
                 // マウス位置座標をスクリーン座標からワールド座標に変換する
                 screenToWorldPointPosition=Camera.main.ScreenToWorldPoint(mousePosition);

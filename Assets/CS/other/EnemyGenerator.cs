@@ -20,6 +20,7 @@ public class EnemyGenerator : MonoBehaviour
     public GameObject bullet4Prefab;
     public GameObject bullet5Prefab;
     public GameObject bullet6Prefab;
+    public GameObject bullet23Prefab;
 
     public GameObject boss1Prefab;
     public GameObject boss2Prefab;
@@ -45,6 +46,13 @@ public class EnemyGenerator : MonoBehaviour
     public Text timeText;
     public Text hitText;
 
+    // 位置座標
+	private Vector3 mousePosition;
+	// スクリーン座標をワールド座標に変換した位置座標
+	private Vector3 screenToWorldPointPosition;
+
+    CursorLockMode wantedMode = CursorLockMode.None;
+
     void Start()
     {
         player=GameObject.Find("Player");
@@ -55,13 +63,21 @@ public class EnemyGenerator : MonoBehaviour
         //テスト用ステージスキップ
         //stageNum=3;
 
+        // 初期動作
+        Cursor.lockState=wantedMode;
+        Cursor.lockState=wantedMode=CursorLockMode.Confined;
+        Cursor.visible=false; 
+
         ReadFile();
     }
 
     public void DisplayResult()
     {
         //自機停止
-        pl.enabled=false;
+        pl.canMove=false;
+
+        //カーソル表示
+        Cursor.visible=true; 
 
         //hpバー消去
         hpBarGroup.alpha=0f;
@@ -90,7 +106,7 @@ public class EnemyGenerator : MonoBehaviour
     public void ReadFile()
     {
         //自機動作
-        pl.enabled=true;
+        Cursor.visible=false;
         pl.canMove=true;
 
         //hpバー消去
@@ -193,6 +209,12 @@ public class EnemyGenerator : MonoBehaviour
                 break;
             case "b6":
                 Instantiate(bullet6Prefab,new Vector3(x,y,0),Quaternion.identity);
+                break;
+            case "b23":
+                GameObject　go=Instantiate(bullet23Prefab,new Vector3(2,y,0),Quaternion.identity) as GameObject;
+                go.name="bullet23-1(1)";
+                GameObject　go2=Instantiate(bullet23Prefab,new Vector3(-2,y,0),Quaternion.identity) as GameObject;
+                go2.name="bullet23-1(-1)";
                 break;
             case "boss1":
                 Instantiate(boss1Prefab,new Vector3(0,3,0),Quaternion.identity);

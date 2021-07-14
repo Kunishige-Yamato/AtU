@@ -27,7 +27,7 @@ public class enemy6 : MonoBehaviour
         gameObject.transform.Translate(0,-fallSpeed,0,Space.World);
         fallSpeed+=0.0005f;
         //下まで行ったら消去
-        if(transform.position.y<-6.5f&&stop==true){
+        if(transform.position.y<-6.5f&&stop==false){
             Destroy(gameObject);
         }
     }
