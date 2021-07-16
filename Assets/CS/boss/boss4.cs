@@ -18,13 +18,14 @@ public class boss4 : MonoBehaviour
     public GameObject bullet7Prefab;
     public GameObject bullet8Prefab;
     public GameObject bullet9Prefab;
+    public GameObject bullet10Prefab;
     Vector3 bulletPlace;
     Vector3 bullet2Place;
     Vector3 bullet3Place;
     Vector3 bullet4Place;
     Vector3 bullet5Place;
     Vector3 bullet6Place;
-    int hp=1000;
+    int hp;
     public int hit=0;
     int side;
     float angle;
@@ -43,6 +44,22 @@ public class boss4 : MonoBehaviour
 
     void Start()
     {
+        //hp設定
+        switch(selectDifficulty.difficulty){
+            case 0:
+                hp=800;
+                break;
+            case 1:
+                hp=1000;
+                break;
+            case 2:
+                hp=1050;
+                break;
+            case 3:
+                hp=1200;
+                break;
+        }
+
         eg=GameObject.Find("EG");
         enemyGenerator=eg.GetComponent<EnemyGenerator>();
 
@@ -202,7 +219,12 @@ public class boss4 : MonoBehaviour
         bullet6Place.x=0;
         bullet6Place.y=4.5f;
         if(side>0){
-            Instantiate(bullet6Prefab,bullet6Place,Quaternion.identity);
+            if(selectDifficulty.difficulty!=3){
+                Instantiate(bullet6Prefab,bullet6Place,Quaternion.identity);
+            }
+            else{
+                Instantiate(bullet10Prefab,bullet6Place,Quaternion.identity);
+            }
         }
     }
 
@@ -218,7 +240,8 @@ public class boss4 : MonoBehaviour
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-            sc.AddScore(10);
+            sc.AddScore(10+20*selectDifficulty.difficulty);
+
             if(hit%10==0){
                 int ran=Random.Range(0,3);
                 switch(ran){
@@ -259,7 +282,7 @@ public class boss4 : MonoBehaviour
                 //爆発
 		        Instantiate (explosionPrefab, transform.position, Quaternion.identity);
                 //早期撃退ボーナス
-                sc.AddScore((int)Mathf.Floor(12000/timer));
+                sc.AddScore((int)Mathf.Floor(18000*(1+selectDifficulty.difficulty)/timer));
                 //次のステージへ
                 enemyGenerator.DisplayResult();
                 Destroy(gameObject);

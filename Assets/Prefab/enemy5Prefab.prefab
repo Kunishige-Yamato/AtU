@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1110706272780269168, guid: b46a257d403ae4e2da66e447109bc0b5,
     type: 3}
+  image: {fileID: 21300000, guid: c42147bb2760f436d9583a5fbf02aa38, type: 3}
 --- !u!58 &4714570189596260784
 CircleCollider2D:
   m_ObjectHideFlags: 0

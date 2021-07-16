@@ -66,7 +66,7 @@ public class enemy6 : MonoBehaviour
     //当たったら消去
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag=="Bullet")
+        if(col.gameObject.tag=="Bullet"&&transform.position.y<5.5f)
         {
             hit++;
 

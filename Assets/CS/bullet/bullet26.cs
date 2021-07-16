@@ -77,7 +77,7 @@ public class bullet26 : MonoBehaviour
         transform.Rotate(0,0,rotSpeed);
 
         //端まで行ったら消去
-        if(transform.position.y<-5.5f||transform.position.y>5.5f||transform.position.x<-9.5f||transform.position.x>9.5f){
+        if(transform.position.y<-5.5f||transform.position.y>9f||transform.position.x<-9.5f||transform.position.x>9.5f){
             Destroy(gameObject);
         }
         //親がやられたら消去

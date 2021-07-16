@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class boss1 : MonoBehaviour
 {
-    int hp=400;
+    int hp;
     int hit=0;
     float mov,maxMov,minMov;
     public bool dir;
@@ -35,6 +35,22 @@ public class boss1 : MonoBehaviour
             if(del!=gameObject){
                 Destroy(del);
             }
+        }
+
+        //hp設定
+        switch(selectDifficulty.difficulty){
+            case 0:
+                hp=400;
+                break;
+            case 1:
+                hp=450;
+                break;
+            case 2:
+                hp=500;
+                break;
+            case 3:
+                hp=600;
+                break;
         }
 
         eg=GameObject.Find("EG");
@@ -93,14 +109,27 @@ public class boss1 : MonoBehaviour
 
     void Shoot1()
     {
-        for(float i=-2;i<=2;i+=0.1f)
-        {
-            GameObject mb=Instantiate(bulletPrefab,bulletPlace,Quaternion.identity);
-            mb.name="bullet_"+num;
-            GameObject bul=GameObject.Find("bullet_"+num);
-            num++;
-            bullet8 b=bul.GetComponent<bullet8>();
-            b.moveSpeed=i;
+        if(selectDifficulty.difficulty!=3){
+            for(float i=-2;i<=2;i+=0.1f)
+            {
+                GameObject mb=Instantiate(bulletPrefab,bulletPlace,Quaternion.identity);
+                mb.name="bullet_"+num;
+                GameObject bul=GameObject.Find("bullet_"+num);
+                num++;
+                bullet8 b=bul.GetComponent<bullet8>();
+                b.moveSpeed=i;
+            }
+        }
+        else{
+            for(float i=-2;i<=2;i+=0.08f)
+            {
+                GameObject mb=Instantiate(bulletPrefab,bulletPlace,Quaternion.identity);
+                mb.name="bullet_"+num;
+                GameObject bul=GameObject.Find("bullet_"+num);
+                num++;
+                bullet8 b=bul.GetComponent<bullet8>();
+                b.moveSpeed=i;
+            }
         }
     }
 
@@ -154,8 +183,11 @@ public class boss1 : MonoBehaviour
         Instantiate(bullet3Prefab,bulletPlace2,Quaternion.identity);
         count++;
 
-        if(count<50){
+        if(count<50&&selectDifficulty.difficulty!=3){
             Invoke("Shoot3",Random.Range(0.1f,0.3f));
+        }
+        else if(count<100&&selectDifficulty.difficulty==3){
+            Invoke("Shoot3",Random.Range(0.05f,0.15f));
         }
         else{
             count=0;
@@ -174,7 +206,7 @@ public class boss1 : MonoBehaviour
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-            sc.AddScore(10);
+            sc.AddScore(10+20*selectDifficulty.difficulty);
             
             bullet0 bul0=col.GetComponent<bullet0>();
             bul0.explosion();
@@ -185,7 +217,7 @@ public class boss1 : MonoBehaviour
                 //爆発
 		        Instantiate (explosionPrefab, transform.position, Quaternion.identity);
                 //早期撃退ボーナス
-                sc.AddScore((int)Mathf.Floor(12000/timer));
+                sc.AddScore((int)Mathf.Floor(12000*(1+selectDifficulty.difficulty)/timer));
                 //次のステージへ
                 enemyGenerator.DisplayResult();
                 Destroy(gameObject);

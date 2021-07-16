@@ -45,6 +45,7 @@ public class EnemyGenerator : MonoBehaviour
     public Text scoreText;
     public Text timeText;
     public Text hitText;
+    int stageScore=0,stageHit=0;
 
     // 位置座標
 	private Vector3 mousePosition;
@@ -61,7 +62,7 @@ public class EnemyGenerator : MonoBehaviour
         sumTime=0;
 
         //テスト用ステージスキップ
-        //stageNum=3;
+        stageNum=3;
 
         // 初期動作
         Cursor.lockState=wantedMode;
@@ -97,10 +98,12 @@ public class EnemyGenerator : MonoBehaviour
         stageText.text="Stage-"+stageNum;
         GameObject scoreCounter=GameObject.Find("ScoreCounter");
         ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-        scoreText.text="Score:"+sc.returnScore();
+        scoreText.text="Score:"+(sc.returnScore()-stageScore);
+        stageScore=sc.returnScore();
+        timeText.text="Time:"+(Mathf.Floor(timer*100)/100);
         sumTime+=timer;
-        timeText.text="Time:"+(Mathf.Floor(sumTime*100)/100);
-        hitText.text="Hit:"+pl.hitNum;
+        hitText.text="Hit:"+(pl.hitNum-stageHit);
+        stageHit=pl.hitNum;
     }
 
     public void ReadFile()
@@ -153,6 +156,8 @@ public class EnemyGenerator : MonoBehaviour
             }
 
             timer=0;
+
+            Debug.Log("stage:"+stageNum);
         }
     }
 
@@ -211,9 +216,9 @@ public class EnemyGenerator : MonoBehaviour
                 Instantiate(bullet6Prefab,new Vector3(x,y,0),Quaternion.identity);
                 break;
             case "b23":
-                GameObject　go=Instantiate(bullet23Prefab,new Vector3(2,y,0),Quaternion.identity) as GameObject;
+                GameObject　go=Instantiate(bullet23Prefab,new Vector3(2,8,0),Quaternion.identity) as GameObject;
                 go.name="bullet23-1(1)";
-                GameObject　go2=Instantiate(bullet23Prefab,new Vector3(-2,y,0),Quaternion.identity) as GameObject;
+                GameObject　go2=Instantiate(bullet23Prefab,new Vector3(-2,8,0),Quaternion.identity) as GameObject;
                 go2.name="bullet23-1(-1)";
                 break;
             case "boss1":

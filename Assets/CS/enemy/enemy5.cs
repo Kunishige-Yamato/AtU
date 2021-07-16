@@ -7,14 +7,22 @@ public class enemy5 : MonoBehaviour
     //落下速度
     float fallSpeed;
     public GameObject bulletPrefab;
+    GameObject eg;
+    EnemyGenerator enemyGenerator;
     Vector3 bulletPlace;
     float angle;
     int hp=5;
     int hit=0;
+    public Sprite image;
     
     void Start()
     {
         gameObject.name="enemy5Prefab";
+        eg=GameObject.Find("EG");
+        enemyGenerator=eg.GetComponent<EnemyGenerator>();
+        if(selectDifficulty.difficulty==3&&enemyGenerator.stageNum==3){
+            this.gameObject.GetComponent<SpriteRenderer>().sprite=image;
+        }
     }
 
     void FixedUpdate()
@@ -44,7 +52,11 @@ public class enemy5 : MonoBehaviour
     //当たったら消去
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag=="Bullet")
+        if(col.gameObject.tag=="Bullet"&&selectDifficulty.difficulty==3&&enemyGenerator.stageNum==3){
+            this.gameObject.GetComponent<SpriteRenderer>().sprite=image;
+            Destroy(col.gameObject);
+        }
+        else if(col.gameObject.tag=="Bullet"&&selectDifficulty.difficulty!=3)
         {
             hit++;
 

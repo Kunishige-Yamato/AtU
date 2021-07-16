@@ -21,7 +21,7 @@ public class boss2 : MonoBehaviour
     int count3=0;
     bool direction;
     Vector3 objPlace;
-    int hp=500;
+    int hp;
     int hit=0;
     GameObject eg;
     EnemyGenerator enemyGenerator;
@@ -43,6 +43,22 @@ public class boss2 : MonoBehaviour
             if(del!=gameObject){
                 Destroy(del);
             }
+        }
+
+        //hp設定
+        switch(selectDifficulty.difficulty){
+            case 0:
+                hp=500;
+                break;
+            case 1:
+                hp=600;
+                break;
+            case 2:
+                hp=650;
+                break;
+            case 3:
+                hp=700;
+                break;
         }
 
         eg=GameObject.Find("EG");
@@ -131,10 +147,19 @@ public class boss2 : MonoBehaviour
 
     void Shoot3()
     {
-        for(float i=-6;i<=2;i+=1.5f){
-            bullet3Place.x=-9.5f;
-            bullet3Place.y=i;
-            Instantiate(bullet3Prefab,bullet3Place,Quaternion.identity);
+        if(selectDifficulty.difficulty!=3){
+            for(float i=-6;i<=2;i+=1.5f){
+                bullet3Place.x=-9.5f;
+                bullet3Place.y=i;
+                Instantiate(bullet3Prefab,bullet3Place,Quaternion.identity);
+            }
+        }
+        else{
+            for(float i=-9;i<=5;i+=1.5f){
+                bullet3Place.x=-9.5f;
+                bullet3Place.y=i;
+                Instantiate(bullet3Prefab,bullet3Place,Quaternion.identity);
+            }
         }
         if(count2<2){
             Invoke("Shoot3",3.8f);
@@ -165,8 +190,12 @@ public class boss2 : MonoBehaviour
         bullet5Place.x=Random.Range(-8f,8f);
         bullet5Place.y=-5.5f;
         Instantiate(bullet5Prefab,bullet5Place,Quaternion.identity);
-        if(count3<100){
+        if(count3<100&&selectDifficulty.difficulty!=3){
             Invoke("Shoot5",0.1f);
+            count3++;
+        }
+        else if(count3<200&&selectDifficulty.difficulty==3){
+            Invoke("Shoot5",0.05f);
             count3++;
         }
         else{
@@ -186,7 +215,7 @@ public class boss2 : MonoBehaviour
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-            sc.AddScore(10);
+            sc.AddScore(10+20*selectDifficulty.difficulty);
 
             bullet0 bul0=col.GetComponent<bullet0>();
             bul0.explosion();
@@ -197,7 +226,7 @@ public class boss2 : MonoBehaviour
                 //爆発
 		        Instantiate (explosionPrefab, transform.position, Quaternion.identity);
                 //早期撃退ボーナス
-                sc.AddScore((int)Mathf.Floor(15000/timer));
+                sc.AddScore((int)Mathf.Floor(15000*(1+selectDifficulty.difficulty)/timer));
                 //次のステージへ
                 enemyGenerator.DisplayResult();
                 Destroy(gameObject);

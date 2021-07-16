@@ -33,6 +33,7 @@ public class selectDifficulty : MonoBehaviour
                 difficulty=3;
                 break;
         }
+        Cursor.lockState=CursorLockMode.Locked;
         SceneManager.LoadScene("Game");
     }
 }

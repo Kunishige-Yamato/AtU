@@ -19,7 +19,7 @@ public class boss3 : MonoBehaviour
     Vector3 bullet4Place;
     Vector3 bullet5Place;
     Vector3 objPlace;
-    int hp=400;
+    int hp=0;
     int hit=0;
     int mode=0;
     float moveSpeed;
@@ -45,6 +45,22 @@ public class boss3 : MonoBehaviour
             if(del!=gameObject){
                 Destroy(del);
             }
+        }
+
+        //hp設定
+        switch(selectDifficulty.difficulty){
+            case 0:
+                hp=400;
+                break;
+            case 1:
+                hp=500;
+                break;
+            case 2:
+                hp=500;
+                break;
+            case 3:
+                hp=400;
+                break;
         }
 
         eg=GameObject.Find("EG");
@@ -129,11 +145,17 @@ public class boss3 : MonoBehaviour
         }
         if(mode==2){
             if(angle<720){
-                float rad=Mathf.PI*(angle+90)/180;
+                float rad=Mathf.PI*(angle+45)/180;
                 bullet2Place.x=(float)Mathf.Cos(rad)*2+transform.position.x;
                 bullet2Place.y=(float)Mathf.Sin(rad)*2+transform.position.y;
-                angle+=0.8f;
                 Instantiate(bullet2Prefab,bullet2Place,Quaternion.identity);
+                if(selectDifficulty.difficulty!=0){
+                    rad=Mathf.PI*(angle+225)/180;
+                    bullet2Place.x=(float)Mathf.Cos(rad)*2+transform.position.x;
+                    bullet2Place.y=(float)Mathf.Sin(rad)*2+transform.position.y;
+                    Instantiate(bullet2Prefab,bullet2Place,Quaternion.identity);
+                }
+                angle+=0.8f;
             }
             else{
                 angle=0;
@@ -239,7 +261,7 @@ public class boss3 : MonoBehaviour
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-            sc.AddScore(10);
+            sc.AddScore(10+20*selectDifficulty.difficulty);
 
             bullet0 bul0=col.GetComponent<bullet0>();
             bul0.explosion();
@@ -250,7 +272,7 @@ public class boss3 : MonoBehaviour
                 //爆発
 		        Instantiate (explosionPrefab, transform.position, Quaternion.identity);
                 //早期撃退ボーナス
-                sc.AddScore((int)Mathf.Floor(12000/timer));
+                sc.AddScore((int)Mathf.Floor(15000*(1+selectDifficulty.difficulty)/timer));
                 //次のステージへ
                 enemyGenerator.DisplayResult();
                 Destroy(gameObject);
@@ -271,12 +293,18 @@ public class boss3 : MonoBehaviour
                 Shoot2();
                 break;
             case "s3":
+                if(selectDifficulty.difficulty==3){
+                    Invoke("Defense",1f);
+                }
                 Shoot3();
                 break;
             case "s4":
                 Shoot4();
                 break;
             case "s5":
+                if(selectDifficulty.difficulty==3){
+                    Defense();
+                }
                 Shoot5();
                 break;
             case "end":
