@@ -20,7 +20,7 @@ public class player : MonoBehaviour
     // 位置座標
 	private Vector3 mousePosition;
 	// スクリーン座標をワールド座標に変換した位置座標
-	private Vector3 screenToWorldPointPosition;
+	public Vector3 screenToWorldPointPosition;
 
     CursorLockMode wantedMode = CursorLockMode.None;
 
@@ -102,45 +102,38 @@ public class player : MonoBehaviour
             mousePosition=Input.mousePosition;
             // Z軸修正
             mousePosition.z=10f;
-            if(mousePosition.x<705f&&mousePosition.x>5f&&mousePosition.y>5f&&mousePosition.y<395f){
-                // マウス位置座標をスクリーン座標からワールド座標に変換する
-                screenToWorldPointPosition=Camera.main.ScreenToWorldPoint(mousePosition);
+            // マウス位置座標をスクリーン座標からワールド座標に変換する
+            screenToWorldPointPosition=Camera.main.ScreenToWorldPoint(mousePosition);
+
+            if(screenToWorldPointPosition.x<8.55f&&screenToWorldPointPosition.x>-8.55f&&screenToWorldPointPosition.y>-4.61f&&screenToWorldPointPosition.y<4.61f){
                 // ワールド座標に変換されたマウス座標を代入
                 gameObject.transform.position=screenToWorldPointPosition;
             }
             //下にはみ出した時
-            if(mousePosition.y<=5f){
+            if(screenToWorldPointPosition.y<=-4.61f){
                 //Y軸固定
-                mousePosition.y=5f;
-                // マウス位置座標をスクリーン座標からワールド座標に変換する
-                screenToWorldPointPosition=Camera.main.ScreenToWorldPoint(mousePosition);
+                screenToWorldPointPosition.y=-4.61f;
                 // ワールド座標に変換されたマウス座標を代入
                 gameObject.transform.position=screenToWorldPointPosition;
             }
             //上にはみ出した時
-            if(mousePosition.y>=395f){
+            if(screenToWorldPointPosition.y>=4.61f){
                 //Y軸固定
-                mousePosition.y=395f;
-                // マウス位置座標をスクリーン座標からワールド座標に変換する
-                screenToWorldPointPosition=Camera.main.ScreenToWorldPoint(mousePosition);
+                screenToWorldPointPosition.y=4.61f;
                 // ワールド座標に変換されたマウス座標を代入
                 gameObject.transform.position=screenToWorldPointPosition;
             }
             //左にはみ出した時
-            if(mousePosition.x<=5f){
+            if(screenToWorldPointPosition.x<=-8.55f){
                 //X軸固定
-                mousePosition.x=5f;
-                // マウス位置座標をスクリーン座標からワールド座標に変換する
-                screenToWorldPointPosition=Camera.main.ScreenToWorldPoint(mousePosition);
+                screenToWorldPointPosition.x=-8.55f;
                 // ワールド座標に変換されたマウス座標を代入
                 gameObject.transform.position=screenToWorldPointPosition;
             }
             //右にはみ出した時
-            if(mousePosition.x>=705f){
+            if(screenToWorldPointPosition.x>=8.55f){
                 //X軸固定
-                mousePosition.x=705f;
-                // マウス位置座標をスクリーン座標からワールド座標に変換する
-                screenToWorldPointPosition=Camera.main.ScreenToWorldPoint(mousePosition);
+                screenToWorldPointPosition.x=8.55f;
                 // ワールド座標に変換されたマウス座標を代入
                 gameObject.transform.position=screenToWorldPointPosition;
             }

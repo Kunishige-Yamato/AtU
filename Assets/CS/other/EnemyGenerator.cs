@@ -62,7 +62,7 @@ public class EnemyGenerator : MonoBehaviour
         sumTime=0;
 
         //テスト用ステージスキップ
-        stageNum=3;
+        //stageNum=3;
 
         // 初期動作
         Cursor.lockState=wantedMode;
