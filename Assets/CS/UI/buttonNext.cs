@@ -22,6 +22,7 @@ public class buttonNext : MonoBehaviour
 
     public void OnClick()
     {
+        Cursor.lockState=CursorLockMode.Locked;
         if(enemyGenerator.stageNum==enemyGenerator.allStageNum-1){
             nextButtonText.text="Total Result";
             enemyGenerator.ReadFile();

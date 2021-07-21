@@ -28,6 +28,14 @@ public class EnemyGenerator : MonoBehaviour
     public GameObject boss4_1Prefab;
     public GameObject boss4_2Prefab;
 
+    //カットイン関係
+    public GameObject cutInCanvas;
+    Animator animator;
+    public Sprite cutImage1;
+    public Sprite cutImage2;
+    public Sprite cutImage3;
+    public Sprite cutImage4;
+
     TextAsset csvFile; // CSVファイル
     List<string[]> csvDatas=new List<string[]>(); // CSVの中身を入れるリスト;
 
@@ -62,12 +70,14 @@ public class EnemyGenerator : MonoBehaviour
         sumTime=0;
 
         //テスト用ステージスキップ
-        //stageNum=3;
+        //stageNum=1;
 
         // 初期動作
         Cursor.lockState=wantedMode;
         Cursor.lockState=wantedMode=CursorLockMode.Confined;
         Cursor.visible=false; 
+
+        animator=cutInCanvas.GetComponent<Animator>();
 
         ReadFile();
     }
@@ -106,11 +116,33 @@ public class EnemyGenerator : MonoBehaviour
         stageHit=pl.hitNum;
     }
 
+    void CutIn()
+    {
+        switch(stageNum){
+            case 1:
+                cutInCanvas.GetComponent<Image>().sprite=cutImage1;
+                break;
+            case 2:
+                cutInCanvas.GetComponent<Image>().sprite=cutImage2;
+                break;
+            case 3:
+                cutInCanvas.GetComponent<Image>().sprite=cutImage3;
+                break;
+            case 4:
+                cutInCanvas.GetComponent<Image>().sprite=cutImage4;
+                break;
+        }
+
+        animator.Play("CutIn",0,0f);
+    }
+
     public void ReadFile()
     {
         //自機動作
         Cursor.visible=false;
         pl.canMove=true;
+        Cursor.lockState=CursorLockMode.Locked;
+        Invoke("CanMove",1.8f);
 
         //hpバー消去
         hpBarGroup.alpha=0f;
@@ -124,6 +156,8 @@ public class EnemyGenerator : MonoBehaviour
         pauseGroup.interactable=false;
 
         stageNum++;
+
+        CutIn();
 
         if(stageNum<=allStageNum){
             //csv読み込み
@@ -143,7 +177,7 @@ public class EnemyGenerator : MonoBehaviour
             }
             StringReader reader=new StringReader(csvFile.text);
 
-            //テスト用ボスのみ出現
+            //テスト用ボス出現
             //string boss="boss"+stageNum;
             //Generate(boss,0,3);
 
@@ -156,8 +190,6 @@ public class EnemyGenerator : MonoBehaviour
             }
 
             timer=0;
-
-            Debug.Log("stage:"+stageNum);
         }
     }
 
@@ -171,6 +203,11 @@ public class EnemyGenerator : MonoBehaviour
                 csvDatas[i][4]="1";
             }
         }
+    }
+
+    void CanMove()
+    {
+        Cursor.lockState=wantedMode=CursorLockMode.Confined;
     }
 
     void Generate(string n,float x,float y)
