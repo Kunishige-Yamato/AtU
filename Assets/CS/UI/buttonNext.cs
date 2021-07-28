@@ -7,12 +7,18 @@ public class buttonNext : MonoBehaviour
 {
     GameObject eg;
     EnemyGenerator enemyGenerator;
+    EnemyGenerator2 enemyGenerator2;
     public Text nextButtonText;
 
     void Start()
     {
         eg=GameObject.Find("EG");
-        enemyGenerator=eg.GetComponent<EnemyGenerator>();
+        if(selectDifficulty.endless){
+            enemyGenerator2=eg.GetComponent<EnemyGenerator2>();
+        }
+        else{
+            enemyGenerator=eg.GetComponent<EnemyGenerator>();
+        }
     }
 
     void FixedUpdate()
@@ -23,12 +29,17 @@ public class buttonNext : MonoBehaviour
     public void OnClick()
     {
         Cursor.lockState=CursorLockMode.Locked;
-        if(enemyGenerator.stageNum==enemyGenerator.allStageNum-1){
-            nextButtonText.text="Total Result";
-            enemyGenerator.ReadFile();
+        if(selectDifficulty.endless){
+            enemyGenerator2.ReadFile();
         }
         else{
-            enemyGenerator.ReadFile();
+            if(enemyGenerator.stageNum==enemyGenerator.allStageNum-1){
+                nextButtonText.text="Total Result";
+                enemyGenerator.ReadFile();
+            }
+            else{
+                enemyGenerator.ReadFile();
+            }
         }
     }
 }
