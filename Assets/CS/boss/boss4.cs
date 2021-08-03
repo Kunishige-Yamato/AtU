@@ -248,24 +248,10 @@ public class boss4 : MonoBehaviour
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(10+20*selectDifficulty.difficulty);
 
-            if(hit%10==0){
-                int ran=Random.Range(0,3);
-                switch(ran){
-                    case 0:
-                        Instantiate(bullet7Prefab,transform.position,Quaternion.identity);
-                        break;
-                    case 1:
-                        Instantiate(bullet8Prefab,transform.position,Quaternion.identity);
-                        break;
-                    case 2:
-                        Instantiate(bullet9Prefab,transform.position,Quaternion.identity);
-                        break;
-                }
-            }
-            if(hit>this.hp*0.5){
-                if(hit%10==5){
-                    int ran2=Random.Range(0,3);
-                    switch(ran2){
+            if(selectDifficulty.difficulty>1){
+                if(hit%10==0){
+                    int ran=Random.Range(0,3);
+                    switch(ran){
                         case 0:
                             Instantiate(bullet7Prefab,transform.position,Quaternion.identity);
                             break;
@@ -275,6 +261,22 @@ public class boss4 : MonoBehaviour
                         case 2:
                             Instantiate(bullet9Prefab,transform.position,Quaternion.identity);
                             break;
+                    }
+                }
+                if(hit>this.hp*0.5){
+                    if(hit%10==5){
+                        int ran2=Random.Range(0,3);
+                        switch(ran2){
+                            case 0:
+                                Instantiate(bullet7Prefab,transform.position,Quaternion.identity);
+                                break;
+                            case 1:
+                                Instantiate(bullet8Prefab,transform.position,Quaternion.identity);
+                                break;
+                            case 2:
+                                Instantiate(bullet9Prefab,transform.position,Quaternion.identity);
+                                break;
+                        }
                     }
                 }
             }

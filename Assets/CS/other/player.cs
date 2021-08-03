@@ -13,6 +13,11 @@ public class player : MonoBehaviour
     public int imageNum;
     public int hitNum;
     public bool canMove=true;
+    int maxLife=30;
+    public bool gameOver=false;
+    GameObject eg;
+    EnemyGenerator2 enemyGenerator2;
+    Slider hpBar;
 
     public CanvasGroup resultGroup;
     public CanvasGroup pauseGroup;
@@ -37,6 +42,15 @@ public class player : MonoBehaviour
         timer=coolTime;
         imageNum=0;
 
+        if(selectDifficulty.endless){
+            eg=GameObject.Find("EG");
+            enemyGenerator2=eg.GetComponent<EnemyGenerator2>();
+            //hpバー制御
+            hpBar=GameObject.Find("Slider-Player").GetComponent<Slider>();
+            hpBar.maxValue=maxLife;
+            hpBar.value=hpBar.maxValue;
+        }
+
         // 初期動作
         Cursor.lockState=wantedMode;
         Cursor.lockState=wantedMode=CursorLockMode.Confined;
@@ -53,6 +67,10 @@ public class player : MonoBehaviour
     void FixedUpdate()
     {
         timer+=Time.deltaTime;
+
+        if(selectDifficulty.endless){
+            hpBar.value=maxLife-hitNum;
+        }
 
         bulPos.x=gameObject.transform.position.x;
         bulPos.y=gameObject.transform.position.y+0.6f;
@@ -162,6 +180,11 @@ public class player : MonoBehaviour
             sc.AddScore(-100);
 		
             hitNum++;
+
+            if(hitNum>=maxLife){
+                gameOver=true;
+                enemyGenerator2.DisplayResult();
+            }
         }
     }
 }

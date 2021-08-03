@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class selectDifficulty : MonoBehaviour
 {
     public static int difficulty;
+    public static int endlessMode;
     public static bool endless;
 
     void Start()
@@ -35,10 +36,12 @@ public class selectDifficulty : MonoBehaviour
                 break;
             case "endlessNormal":
                 difficulty=0;
+                endlessMode=0;
                 endless=true;
                 break;
             case "endlessGambling":
                 difficulty=0;
+                endlessMode=1;
                 endless=true;
                 break;
         }

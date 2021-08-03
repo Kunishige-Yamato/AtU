@@ -23,19 +23,30 @@ public class buttonNext : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        if(selectDifficulty.endless){
+            if(enemyGenerator2.gameOver){
+                nextButtonText.text="Total Result";
+            }
+        }
     }
 
     public void OnClick()
     {
         Cursor.lockState=CursorLockMode.Locked;
         if(selectDifficulty.endless){
-            enemyGenerator2.ReadFile();
+            if(enemyGenerator2.gameOver){
+                //スコア画面へ
+                Debug.Log("move TotalScoreScene");
+            }
+            else{
+                enemyGenerator2.ReadFile();
+            }
         }
         else{
             if(enemyGenerator.stageNum==enemyGenerator.allStageNum-1){
                 nextButtonText.text="Total Result";
-                enemyGenerator.ReadFile();
+                //スコア画面へ
+                Debug.Log("move TotalScoreScene");
             }
             else{
                 enemyGenerator.ReadFile();
