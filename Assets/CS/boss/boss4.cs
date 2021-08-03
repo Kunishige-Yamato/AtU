@@ -32,6 +32,7 @@ public class boss4 : MonoBehaviour
     int count=0,count2=0,count3=0;
     GameObject eg;
     EnemyGenerator enemyGenerator;
+    EnemyGenerator2 enemyGenerator2;
     Slider hpBar;
 
     //爆発エフェクトのPrefab
@@ -47,7 +48,7 @@ public class boss4 : MonoBehaviour
         //hp設定
         switch(selectDifficulty.difficulty){
             case 0:
-                hp=800;
+                hp=600;
                 break;
             case 1:
                 hp=1000;
@@ -61,7 +62,12 @@ public class boss4 : MonoBehaviour
         }
 
         eg=GameObject.Find("EG");
-        enemyGenerator=eg.GetComponent<EnemyGenerator>();
+        if(selectDifficulty.endless){
+            enemyGenerator2=eg.GetComponent<EnemyGenerator2>();
+        }
+        else{
+            enemyGenerator=eg.GetComponent<EnemyGenerator>();
+        }
 
         timer=0;
 
@@ -242,24 +248,10 @@ public class boss4 : MonoBehaviour
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(10+20*selectDifficulty.difficulty);
 
-            if(hit%10==0){
-                int ran=Random.Range(0,3);
-                switch(ran){
-                    case 0:
-                        Instantiate(bullet7Prefab,transform.position,Quaternion.identity);
-                        break;
-                    case 1:
-                        Instantiate(bullet8Prefab,transform.position,Quaternion.identity);
-                        break;
-                    case 2:
-                        Instantiate(bullet9Prefab,transform.position,Quaternion.identity);
-                        break;
-                }
-            }
-            if(hit>this.hp*0.5){
-                if(hit%10==5){
-                    int ran2=Random.Range(0,3);
-                    switch(ran2){
+            if(selectDifficulty.difficulty>1){
+                if(hit%10==0){
+                    int ran=Random.Range(0,3);
+                    switch(ran){
                         case 0:
                             Instantiate(bullet7Prefab,transform.position,Quaternion.identity);
                             break;
@@ -269,6 +261,22 @@ public class boss4 : MonoBehaviour
                         case 2:
                             Instantiate(bullet9Prefab,transform.position,Quaternion.identity);
                             break;
+                    }
+                }
+                if(hit>this.hp*0.5){
+                    if(hit%10==5){
+                        int ran2=Random.Range(0,3);
+                        switch(ran2){
+                            case 0:
+                                Instantiate(bullet7Prefab,transform.position,Quaternion.identity);
+                                break;
+                            case 1:
+                                Instantiate(bullet8Prefab,transform.position,Quaternion.identity);
+                                break;
+                            case 2:
+                                Instantiate(bullet9Prefab,transform.position,Quaternion.identity);
+                                break;
+                        }
                     }
                 }
             }
@@ -284,7 +292,12 @@ public class boss4 : MonoBehaviour
                 //早期撃退ボーナス
                 sc.AddScore((int)Mathf.Floor(18000*(1+selectDifficulty.difficulty)/timer));
                 //次のステージへ
-                enemyGenerator.DisplayResult();
+                if(selectDifficulty.endless){
+                    enemyGenerator2.DisplayResult();
+                }
+                else{
+                    enemyGenerator.DisplayResult();
+                }
                 Destroy(gameObject);
             }
         }

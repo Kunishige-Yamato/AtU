@@ -17,6 +17,7 @@ public class boss1 : MonoBehaviour
     public int num=0,num2=0,count=0;
     GameObject eg;
     EnemyGenerator enemyGenerator;
+    EnemyGenerator2 enemyGenerator2;
     Slider hpBar;
 
     //爆発エフェクトのPrefab
@@ -54,7 +55,12 @@ public class boss1 : MonoBehaviour
         }
 
         eg=GameObject.Find("EG");
-        enemyGenerator=eg.GetComponent<EnemyGenerator>();
+        if(selectDifficulty.endless){
+            enemyGenerator2=eg.GetComponent<EnemyGenerator2>();
+        }
+        else{
+            enemyGenerator=eg.GetComponent<EnemyGenerator>();
+        }
 
         bulletPlace.x=gameObject.transform.position.x;
         bulletPlace.y=gameObject.transform.position.y-2;
@@ -219,7 +225,12 @@ public class boss1 : MonoBehaviour
                 //早期撃退ボーナス
                 sc.AddScore((int)Mathf.Floor(12000*(1+selectDifficulty.difficulty)/timer));
                 //次のステージへ
-                enemyGenerator.DisplayResult();
+                if(selectDifficulty.endless){
+                    enemyGenerator2.DisplayResult();
+                }
+                else{
+                    enemyGenerator.DisplayResult();
+                }
                 Destroy(gameObject);
             }
         }

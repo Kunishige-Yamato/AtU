@@ -27,6 +27,7 @@ public class boss3 : MonoBehaviour
     int count,count2,count3;
     GameObject eg;
     EnemyGenerator enemyGenerator;
+    EnemyGenerator2 enemyGenerator2;
     Slider hpBar;
 
     //爆発エフェクトのPrefab
@@ -64,7 +65,12 @@ public class boss3 : MonoBehaviour
         }
 
         eg=GameObject.Find("EG");
-        enemyGenerator=eg.GetComponent<EnemyGenerator>();
+        if(selectDifficulty.endless){
+            enemyGenerator2=eg.GetComponent<EnemyGenerator2>();
+        }
+        else{
+            enemyGenerator=eg.GetComponent<EnemyGenerator>();
+        }
 
         timer=0;
 
@@ -274,7 +280,12 @@ public class boss3 : MonoBehaviour
                 //早期撃退ボーナス
                 sc.AddScore((int)Mathf.Floor(15000*(1+selectDifficulty.difficulty)/timer));
                 //次のステージへ
-                enemyGenerator.DisplayResult();
+                if(selectDifficulty.endless){
+                    enemyGenerator2.DisplayResult();
+                }
+                else{
+                    enemyGenerator.DisplayResult();
+                }
                 Destroy(gameObject);
             }
         }

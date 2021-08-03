@@ -25,4 +25,14 @@ public class ScoreCount : MonoBehaviour
     {
         return score;
     }
+
+    public void resetScore()
+    {
+        score=0;
+    }
+
+    public void DoubleScore()
+    {
+        score*=(selectDifficulty.difficulty+1);
+    }
 }
