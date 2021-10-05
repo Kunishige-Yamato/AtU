@@ -40,7 +40,7 @@ public class EnemyGenerator2 : MonoBehaviour
     public Text scoreText;
     public Text timeText;
     public Text hitText;
-    int stageScore=0,stageHit=0;
+    int stageScore=0;
     public bool gameOver=false;
 
     // 位置座標
@@ -104,7 +104,7 @@ public class EnemyGenerator2 : MonoBehaviour
             if(selectDifficulty.endlessMode==1){
                 sc.resetScore();
             }
-            scoreText.text="Score:"+(sc.returnScore());
+            scoreText.text="Total Score:"+(sc.returnScore());
             timeText.text="Time:"+(Mathf.Floor(timer*100)/100);
             hitText.text="";
             this.gameOver=pl.gameOver;
@@ -118,8 +118,7 @@ public class EnemyGenerator2 : MonoBehaviour
             stageScore=sc.returnScore();
             timeText.text="Time:"+(Mathf.Floor(timer*100)/100);
             sumTime+=timer;
-            hitText.text="Hit:"+(pl.hitNum-stageHit);
-            stageHit=pl.hitNum;
+            hitText.text="Hit:"+(pl.hitNum);
 
             //セクションクリアごと少量回復
             int heal=10/(selectDifficulty.difficulty+1);
