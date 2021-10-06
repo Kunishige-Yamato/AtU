@@ -22,8 +22,7 @@ public class buttonMoveScene : MonoBehaviour
                 SceneManager.LoadScene("selectMode");
                 break;
             case "ScoreBtn":
-                Debug.Log("score move");
-                //SceneManager.LoadScene("score");
+                SceneManager.LoadScene("score");
                 break;
             case "AchievementBtn":
                 Debug.Log("achieve move");
