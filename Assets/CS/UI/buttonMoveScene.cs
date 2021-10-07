@@ -28,7 +28,7 @@ public class buttonMoveScene : MonoBehaviour
                 Debug.Log("achieve move");
                 //SceneManager.LoadScene("achive");
                 break;
-            case "BackTitleButton":
+            default:
                 SceneManager.LoadScene("title");
                 break;
         }
