@@ -235,7 +235,3 @@ public class EnemyGenerator2 : MonoBehaviour
         }
     }
 }
-
-/*
-    bossに使われてるegの名前直しから
-*/

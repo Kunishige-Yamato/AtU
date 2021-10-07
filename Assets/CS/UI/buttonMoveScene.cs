@@ -25,8 +25,7 @@ public class buttonMoveScene : MonoBehaviour
                 SceneManager.LoadScene("score");
                 break;
             case "AchievementBtn":
-                Debug.Log("achieve move");
-                //SceneManager.LoadScene("achive");
+                SceneManager.LoadScene("achievement");
                 break;
             default:
                 SceneManager.LoadScene("title");
