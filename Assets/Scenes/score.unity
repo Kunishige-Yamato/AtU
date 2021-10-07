@@ -154,7 +154,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -228,7 +228,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -469,7 +469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &408004319
 RectTransform:
   m_ObjectHideFlags: 0
@@ -525,7 +525,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &421773960
 MonoBehaviour:
@@ -1176,9 +1176,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &837442850
 MonoBehaviour:
@@ -1321,6 +1321,7 @@ GameObject:
   - component: {fileID: 932624086}
   - component: {fileID: 932624085}
   - component: {fileID: 932624084}
+  - component: {fileID: 932624088}
   m_Layer: 5
   m_Name: MyScoreBtn
   m_TagString: Untagged
@@ -1405,7 +1406,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 932624086}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 932624088}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &932624086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1443,6 +1455,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 932624082}
   m_CullTransparentMesh: 0
+--- !u!114 &932624088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932624082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f4bd2ae4fd64096a172eaae3240402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myScoreTab: {fileID: 1816661114}
+  FriendTab: {fileID: 408004318}
+  AllWorldTab: {fileID: 1626754721}
 --- !u!1 &942817931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,7 +1505,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &942817933
 MonoBehaviour:
@@ -1532,6 +1559,7 @@ GameObject:
   - component: {fileID: 1079920016}
   - component: {fileID: 1079920015}
   - component: {fileID: 1079920014}
+  - component: {fileID: 1079920018}
   m_Layer: 5
   m_Name: AllScoreBtn
   m_TagString: Untagged
@@ -1571,7 +1599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.83921576, g: 0.56078434, b: 0, a: 1}
+  m_EffectColor: {r: 0.9960785, g: 0.67058825, b: 0, a: 1}
   m_EffectDistance: {x: 4, y: 4}
   m_UseGraphicAlpha: 1
 --- !u!114 &1079920015
@@ -1616,7 +1644,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1079920016}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1079920018}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1079920016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1654,6 +1693,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079920012}
   m_CullTransparentMesh: 0
+--- !u!114 &1079920018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079920012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f4bd2ae4fd64096a172eaae3240402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myScoreTab: {fileID: 1816661114}
+  FriendTab: {fileID: 408004318}
+  AllWorldTab: {fileID: 1626754721}
 --- !u!1 &1099082998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,6 +1882,7 @@ GameObject:
   - component: {fileID: 1187856636}
   - component: {fileID: 1187856635}
   - component: {fileID: 1187856634}
+  - component: {fileID: 1187856638}
   m_Layer: 5
   m_Name: FriendScoreBtn
   m_TagString: Untagged
@@ -1912,7 +1967,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1187856636}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1187856638}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1187856636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1950,6 +2016,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1187856632}
   m_CullTransparentMesh: 0
+--- !u!114 &1187856638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187856632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f4bd2ae4fd64096a172eaae3240402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myScoreTab: {fileID: 1816661114}
+  FriendTab: {fileID: 408004318}
+  AllWorldTab: {fileID: 1626754721}
 --- !u!1 &1255209993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2433,7 +2514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1626754722
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2441,7 +2522,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626754721}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2842,9 +2923,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1901276906
 MonoBehaviour:

@@ -1335,7 +1335,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 978435445}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293123a2e7b174be190347ab3a66f055, type: 3}
+  m_Script: {fileID: 11500000, guid: 236296d9270a64265859d876794b3bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &978435448
@@ -1382,7 +1382,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 978435447}
-        m_MethodName: OnClick
+        m_MethodName: Onclick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1530,6 +1530,7 @@ MonoBehaviour:
   imageNum: 0
   hitNum: 0
   canMove: 1
+  gameOver: 0
   resultGroup: {fileID: 780829238}
   pauseGroup: {fileID: 887104131}
   screenToWorldPointPosition: {x: 0, y: 0, z: 0}
@@ -1672,7 +1673,7 @@ GameObject:
   - component: {fileID: 1087843358}
   - component: {fileID: 1087843357}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: PauseCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2639,7 +2640,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1948750949}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293123a2e7b174be190347ab3a66f055, type: 3}
+  m_Script: {fileID: 11500000, guid: 236296d9270a64265859d876794b3bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1948750952
@@ -2686,7 +2687,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1948750951}
-        m_MethodName: OnClick
+        m_MethodName: Onclick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

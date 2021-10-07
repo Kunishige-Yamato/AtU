@@ -27,10 +27,11 @@ public class buttonNext : MonoBehaviour
             if(enemyGenerator2.gameOver){
                 nextButtonText.text="Total Result";
             }
-        }
-        
-        if(enemyGenerator2.gameOver && gameObject.name=="RetireButton"){
-            Destroy(gameObject);
+
+            if (enemyGenerator2.gameOver && gameObject.name == "RetireButton")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
