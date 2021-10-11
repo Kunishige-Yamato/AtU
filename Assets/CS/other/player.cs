@@ -183,7 +183,10 @@ public class player : MonoBehaviour
 
             if(hitNum>=maxLife){
                 gameOver=true;
-                enemyGenerator2.DisplayResult();
+                if (selectDifficulty.endless)
+                {
+                    enemyGenerator2.DisplayResult();
+                }
             }
         }
     }

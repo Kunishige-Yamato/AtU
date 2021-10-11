@@ -27,6 +27,11 @@ public class buttonNext : MonoBehaviour
             if(enemyGenerator2.gameOver){
                 nextButtonText.text="Total Result";
             }
+
+            if (enemyGenerator2.gameOver && gameObject.name == "RetireButton")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -34,7 +39,7 @@ public class buttonNext : MonoBehaviour
     {
         Cursor.lockState=CursorLockMode.Locked;
         if(selectDifficulty.endless){
-            if(enemyGenerator2.gameOver){
+            if(enemyGenerator2.gameOver==true || gameObject.name=="RetireButton"){
                 //スコア画面へ
                 Debug.Log("move TotalScoreScene");
             }
