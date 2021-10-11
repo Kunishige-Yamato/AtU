@@ -16,7 +16,7 @@ public class RankingAdmin : MonoBehaviour
 
     void Start()
     {
-
+        PersonalProfile();
     }
 
     void FixedUpdate()
@@ -114,18 +114,11 @@ public class RankingAdmin : MonoBehaviour
             name.text = "user-" + i;
 
             //S_Score
-            GameObject s_score = ranking.transform.Find("S_Score").gameObject;
-            Text s_text = s_score.GetComponent<Text>();
+            GameObject score = ranking.transform.Find("Score").gameObject;
+            Text text = score.GetComponent<Text>();
             //スコア代入的な
             int j = i * 50;
-            s_text.text = "Story Mode Hi Score : " + j;
-
-            //E_Score
-            GameObject e_score = ranking.transform.Find("E_Score").gameObject;
-            Text e_text = e_score.GetComponent<Text>();
-            //スコア代入的な
-            int k = i * 100;
-            e_text.text = "Endless Mode Hi Score : " + k;
+            text.text = "Hi Score : " + j.ToString("D8");
         }
     }
 
@@ -150,18 +143,11 @@ public class RankingAdmin : MonoBehaviour
             name.text = "user-" + i;
 
             //S_Score
-            GameObject s_score = ranking.transform.Find("S_Score").gameObject;
-            Text s_text = s_score.GetComponent<Text>();
+            GameObject score = ranking.transform.Find("Score").gameObject;
+            Text text = score.GetComponent<Text>();
             //スコア代入的な
             int j = i * 50;
-            s_text.text = "Story Mode Hi Score : " + j;
-
-            //E_Score
-            GameObject e_score = ranking.transform.Find("E_Score").gameObject;
-            Text e_text = e_score.GetComponent<Text>();
-            //スコア代入的な
-            int k = i * 100;
-            e_text.text = "Endless Mode Hi Score : " + k;
+            text.text = "Hi Score : " + j.ToString("D8");
         }
     }
 }
