@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class regist : MonoBehaviour
+public class registration: MonoBehaviour
 {
     [SerializeField] InputField UserNameInput;
     [SerializeField] InputField PasswordInput;
@@ -14,37 +14,42 @@ public class regist : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void btnSignUp(){
+    public void btnSignUp()
+    {
         bool check = true;
         Debug.Log(UserNameInput.text);
-        if(!System.Text.RegularExpressions.Regex.IsMatch(UserNameInput.text, @"^[a-zA-Z0-9_]+$")){
+        if (!System.Text.RegularExpressions.Regex.IsMatch(UserNameInput.text, @"^[a-zA-Z0-9_]+$"))
+        {
             check = false;
         }
-        if(UserNameInput.text==""){
+        if (UserNameInput.text == "")
+        {
             check = false;
         }
-        if(check==true){
+        if (check == true)
+        {
             StartCoroutine(sign_up());
         }
     }
 
-    public void btnSignIn(){
-        id = ""+PlayerPrefs.GetInt("ID", 0);
+    public void btnSignIn()
+    {
+        id = "" + PlayerPrefs.GetInt("ID", 0);
         StartCoroutine(sign_in());
     }
 
     public IEnumerator sign_up()
     {
-        if(UserNameInput.text!="" && PasswordInput.text!="")
+        if (UserNameInput.text != "" && PasswordInput.text != "")
         {
             WWWForm form = new WWWForm();
             form.AddField("name", UserNameInput.text);
@@ -60,9 +65,12 @@ public class regist : MonoBehaviour
             yield return request.SendWebRequest();
 
             // isNetworkErrorとisHttpErrorでエラー判定
-            if(request.isNetworkError || request.isHttpError){
+            if (request.isNetworkError || request.isHttpError)
+            {
                 Debug.Log(request.error);
-            }else{
+            }
+            else
+            {
                 Debug.Log(request.responseCode);
                 returnID = int.Parse(request.downloadHandler.text);
                 Debug.Log(returnID);
@@ -74,14 +82,14 @@ public class regist : MonoBehaviour
 
     public IEnumerator sign_in()
     {
-        if(UserNameInput.text!="" && PasswordInput.text!="")
+        if (UserNameInput.text != "" && PasswordInput.text != "")
         {
             WWWForm form = new WWWForm();
             form.AddField("name", UserNameInput.text);
             form.AddField("pass", PasswordInput.text);
 
             //UnityWebRequestを生成
-            string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?sign_in="+id;
+            string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?sign_in=" + id;
             UnityWebRequest request = UnityWebRequest.Post(url, form);
 
             // request.SetRequestHeader("Content-Type", "application/json");
@@ -90,9 +98,12 @@ public class regist : MonoBehaviour
             yield return request.SendWebRequest();
 
             // isNetworkErrorとisHttpErrorでエラー判定
-            if(request.isNetworkError || request.isHttpError){
+            if (request.isNetworkError || request.isHttpError)
+            {
                 Debug.Log(request.error);
-            }else{
+            }
+            else
+            {
                 Debug.Log(request.responseCode);
                 returnID = int.Parse(request.downloadHandler.text);
                 Debug.Log(returnID);
