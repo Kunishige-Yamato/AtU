@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class scoreTabButton : MonoBehaviour
+public class buttonScoreTab : MonoBehaviour
 {
     public GameObject myScoreTab;
     public GameObject FriendTab;
