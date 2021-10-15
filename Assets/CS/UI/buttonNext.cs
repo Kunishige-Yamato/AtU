@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class buttonNext : MonoBehaviour
 {
@@ -41,19 +42,20 @@ public class buttonNext : MonoBehaviour
         if(selectDifficulty.endless){
             if(enemyGenerator2.gameOver==true || gameObject.name=="RetireButton"){
                 //スコア画面へ
-                Debug.Log("move TotalScoreScene");
+                SceneManager.LoadScene("score");
             }
             else{
                 enemyGenerator2.ReadFile();
             }
         }
         else{
-            if(enemyGenerator.stageNum==enemyGenerator.allStageNum-1){
-                nextButtonText.text="Total Result";
+            if(enemyGenerator.stageNum==enemyGenerator.allStageNum){
                 //スコア画面へ
-                Debug.Log("move TotalScoreScene");
+                SceneManager.LoadScene("score");
             }
-            else{
+            else
+            {
+                nextButtonText.text = "Total Result";
                 enemyGenerator.ReadFile();
             }
         }
