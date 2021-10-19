@@ -40,7 +40,10 @@ public class buttonNext : MonoBehaviour
     {
         Cursor.lockState=CursorLockMode.Locked;
         if(selectDifficulty.endless){
-            if(enemyGenerator2.gameOver==true || gameObject.name=="RetireButton"){
+            if(enemyGenerator2.gameOver==true || gameObject.name=="RetireButton")
+            {
+                //カーソル表示
+                Cursor.visible = true;
                 //スコア画面へ
                 SceneManager.LoadScene("score");
             }
@@ -49,13 +52,19 @@ public class buttonNext : MonoBehaviour
             }
         }
         else{
-            if(enemyGenerator.stageNum==enemyGenerator.allStageNum){
+            if(enemyGenerator.stageNum==enemyGenerator.allStageNum)
+            {
+                //カーソル表示
+                Cursor.visible = true;
                 //スコア画面へ
                 SceneManager.LoadScene("score");
             }
             else
             {
-                nextButtonText.text = "Total Result";
+                if(enemyGenerator.stageNum == enemyGenerator.allStageNum-1)
+                {
+                    nextButtonText.text = "Total Result";
+                }
                 enemyGenerator.ReadFile();
             }
         }

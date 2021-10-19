@@ -16,13 +16,12 @@ public class buttonCanvasToggle : MonoBehaviour
         
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        Debug.Log(commandNum);
         //隠しコマンド
         if (konami)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow)&&commandNum==0)
+            if (Input.GetKeyDown(KeyCode.UpArrow) && commandNum == 0)
             {
                 commandNum = 1;
             }
@@ -64,6 +63,11 @@ public class buttonCanvasToggle : MonoBehaviour
                 Debug.Log("command success!");
             }
         }
+    }
+
+    void FixedUpdate()
+    {
+        
     }
 
     public void Onclick()

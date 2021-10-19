@@ -34,6 +34,7 @@ public class player : MonoBehaviour
 
     //隠しコマンド入力待ちフラグ
     int commandNum = 0;
+    public Sprite commandImg;
 
     void Start()
     {
@@ -65,6 +66,65 @@ public class player : MonoBehaviour
     void CursorMove()
     {
         Cursor.lockState=CursorLockMode.None;
+    }
+
+    void Update()
+    {
+        //隠しコマンド
+        if (Input.GetKeyDown(KeyCode.UpArrow) && commandNum == 0)
+        {
+            commandNum = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow) && commandNum == 1)
+        {
+            commandNum = 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) && commandNum == 2)
+        {
+            commandNum = 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) && commandNum == 3)
+        {
+            commandNum = 4;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) && commandNum == 4)
+        {
+            commandNum = 5;
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && commandNum == 5)
+        {
+            commandNum = 6;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) && commandNum == 6)
+        {
+            commandNum = 7;
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && commandNum == 7)
+        {
+            commandNum = 8;
+        }
+        else if (Input.GetKeyDown(KeyCode.B) && commandNum == 8)
+        {
+            commandNum = 9;
+        }
+        else if (Input.GetKeyDown(KeyCode.A) && commandNum == 9)
+        {
+            //トロフィーの達成
+            Debug.Log("command success!");
+
+            /*
+            //当たり判定無くして無敵
+            Destroy(GetComponent<CircleCollider2D>());
+            Destroy(GetComponent<Rigidbody2D>());
+            */
+
+            SpriteRenderer image = gameObject.GetComponent<SpriteRenderer>();
+            image.sprite = commandImg;
+
+            //当たり判定縮小する強化
+            CircleCollider2D collider = GetComponent<CircleCollider2D>();
+            collider.radius = 0.1f;
+        }
     }
 
     void FixedUpdate()
@@ -165,59 +225,6 @@ public class player : MonoBehaviour
                 imageNum++;
                 imageNum%=2;
                 timer=0;
-            }
-
-            //隠しコマンド
-            if (Input.GetKeyDown(KeyCode.UpArrow) && commandNum == 0)
-            {
-                commandNum = 1;
-            }
-            else if (Input.GetKeyDown(KeyCode.UpArrow) && commandNum == 1)
-            {
-                commandNum = 2;
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow) && commandNum == 2)
-            {
-                commandNum = 3;
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow) && commandNum == 3)
-            {
-                commandNum = 4;
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow) && commandNum == 4)
-            {
-                commandNum = 5;
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) && commandNum == 5)
-            {
-                commandNum = 6;
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow) && commandNum == 6)
-            {
-                commandNum = 7;
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) && commandNum == 7)
-            {
-                commandNum = 8;
-            }
-            else if (Input.GetKeyDown(KeyCode.B) && commandNum == 8)
-            {
-                commandNum = 9;
-            }
-            else if (Input.GetKeyDown(KeyCode.A) && commandNum == 9)
-            {
-                //トロフィーの達成
-                Debug.Log("command success!");
-
-                /*
-                //当たり判定無くして無敵
-                Destroy(GetComponent<CircleCollider2D>());
-                Destroy(GetComponent<Rigidbody2D>());
-                */
-
-                //当たり判定縮小する強化
-                CircleCollider2D collider = GetComponent<CircleCollider2D>();
-                collider.radius = 0.1f;
             }
         }
     }
