@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class buttonSignInToggle : MonoBehaviour
 {
-    GameObject signInCanvas;
+    public GameObject signInCanvas;
 
     void Start()
     {
-        //サインイン画面取得
-        signInCanvas = GameObject.Find("SignInCanvas");
+        
     }
 
     void FixedUpdate()
