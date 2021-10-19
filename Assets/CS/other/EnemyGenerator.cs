@@ -55,11 +55,6 @@ public class EnemyGenerator : MonoBehaviour
     public Text hitText;
     int stageScore=0,stageHit=0;
 
-    // 位置座標
-	private Vector3 mousePosition;
-	// スクリーン座標をワールド座標に変換した位置座標
-	private Vector3 screenToWorldPointPosition;
-
     CursorLockMode wantedMode = CursorLockMode.None;
 
     void Start()
@@ -70,7 +65,7 @@ public class EnemyGenerator : MonoBehaviour
         sumTime=0;
 
         //テスト用ステージスキップ
-        //stageNum=3;
+        //stageNum=2;
 
         // 初期動作
         Cursor.lockState=wantedMode;
