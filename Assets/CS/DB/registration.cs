@@ -105,7 +105,8 @@ public class registration: MonoBehaviour
             else
             {
                 Debug.Log(request.responseCode);
-                returnID = int.Parse(request.downloadHandler.text);
+                //returnID = int.Parse(request.downloadHandler.text);
+                Debug.Log(request.downloadHandler.text);
                 Debug.Log(returnID);
                 PlayerPrefs.SetInt("ID", returnID);
                 PlayerPrefs.Save();

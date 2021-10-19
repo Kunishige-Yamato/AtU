@@ -897,6 +897,7 @@ GameObject:
   - component: {fileID: 505008986}
   - component: {fileID: 505008985}
   - component: {fileID: 505008984}
+  - component: {fileID: 505008987}
   m_Layer: 5
   m_Name: SignInBtn (1)
   m_TagString: Untagged
@@ -966,7 +967,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 505008985}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 505008987}
+        m_MethodName: btnSignIn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &505008985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1004,6 +1016,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505008982}
   m_CullTransparentMesh: 0
+--- !u!114 &505008987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505008982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f822823744d4d4478a1b22b22fcc7dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UserNameInput: {fileID: 1631462762}
+  PasswordInput: {fileID: 152054463}
+  returnID: 0
 --- !u!1 &517791936
 GameObject:
   m_ObjectHideFlags: 0
