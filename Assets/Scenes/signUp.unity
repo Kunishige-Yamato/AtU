@@ -630,8 +630,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Do you already have an account? \nIf you want to sign in, please fill
-    in the above and press the button on the right"
+  m_Text: "Do you already have an account? \nIf you want to sign in, please fill in
+    the above and press the button on the right"
 --- !u!222 &268122847
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1173,6 +1173,7 @@ GameObject:
   - component: {fileID: 517791940}
   - component: {fileID: 517791939}
   - component: {fileID: 517791938}
+  - component: {fileID: 517791941}
   m_Layer: 5
   m_Name: SignUpBtn
   m_TagString: Untagged
@@ -1242,7 +1243,10 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 517791939}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls: [{m_Target: {fileID: 517791941}, m_MethodName: btnSignUp, m_Mode: 1,
+          m_Arguments: {m_ObjectArgument: {fileID: 0}, m_ObjectArgumentAssemblyTypeName: 'UnityEngine.Object,
+              UnityEngine', m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: '',
+            m_BoolArgument: 0}, m_CallState: 2}]
 --- !u!114 &517791939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1280,6 +1284,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 517791936}
   m_CullTransparentMesh: 0
+--- !u!114 &517791941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517791936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f822823744d4d4478a1b22b22fcc7dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UserNameInput: {fileID: 1769761921}
+  PasswordInput: {fileID: 1415889478}
+  returnID: 0
 --- !u!1 &627127240
 GameObject:
   m_ObjectHideFlags: 0
@@ -2030,18 +2049,10 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1144965114}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1144965116}
-        m_MethodName: SignInToggle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: [{m_Target: {fileID: 1144965116}, m_MethodName: SignInToggle, m_Mode: 1,
+          m_Arguments: {m_ObjectArgument: {fileID: 0}, m_ObjectArgumentAssemblyTypeName: 'UnityEngine.Object,
+              UnityEngine', m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: '',
+            m_BoolArgument: 0}, m_CallState: 2}]
 --- !u!114 &1144965114
 MonoBehaviour:
   m_ObjectHideFlags: 0
