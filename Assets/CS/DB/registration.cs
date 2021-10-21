@@ -105,12 +105,8 @@ public class registration: MonoBehaviour
             else
             {
                 Debug.Log(request.responseCode);
-<<<<<<< HEAD
                 //returnID = int.Parse(request.downloadHandler.text);
                 Debug.Log(request.downloadHandler.text);
-=======
-                returnID = int.Parse(request.downloadHandler.text);
->>>>>>> parent of 4a41184... sign_inメソッドの修正
                 Debug.Log(returnID);
                 PlayerPrefs.SetInt("ID", returnID);
                 PlayerPrefs.Save();
