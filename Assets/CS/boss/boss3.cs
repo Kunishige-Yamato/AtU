@@ -161,7 +161,7 @@ public class boss3 : MonoBehaviour
                     bullet2Place.y=(float)Mathf.Sin(rad)*2+transform.position.y;
                     Instantiate(bullet2Prefab,bullet2Place,Quaternion.identity);
                 }
-                angle+=0.8f;
+                angle+=1.5f;
             }
             else{
                 angle=0;

@@ -62,14 +62,14 @@ public class EnemyGenerator : MonoBehaviour
         player=GameObject.Find("Player");
         pl=player.GetComponent<player>();
 
-        sumTime=0;
+        sumTime =0;
 
         //テスト用ステージスキップ
         //stageNum=2;
 
         // 初期動作
         Cursor.lockState=wantedMode;
-        Cursor.lockState=wantedMode=CursorLockMode.Confined;
+        Cursor.lockState=wantedMode=CursorLockMode.Locked;
         Cursor.visible=false; 
 
         animator=cutInCanvas.GetComponent<Animator>();
