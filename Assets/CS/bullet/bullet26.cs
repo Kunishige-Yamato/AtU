@@ -23,44 +23,49 @@ public class bullet26 : MonoBehaviour
 
     void Start()
     {
-        switch(parent){
-            case 4:
-                fallSpeed=(transform.position.y-enemyPrefab.transform.position.y)/25;
-                moveSpeed=(transform.position.x-enemyPrefab.transform.position.x)/25;
-                Invoke("checkParent",0.05f);
-                break;
-            case 5:
-                fallSpeed=(transform.position.y-enemyPrefab.transform.position.y)/5;
-                moveSpeed=(transform.position.x-enemyPrefab.transform.position.x)/5;
-                break;
-            case 6:
-                fallSpeed=(transform.position.y-enemyPrefab.transform.position.y)/4;
-                moveSpeed=(transform.position.x-enemyPrefab.transform.position.x)/4;
-                break;
-            default:
-                Destroy(gameObject);
-                break;
-        }
+        if(enemyPrefab!=null)
+        {
+            switch (parent)
+            {
+                case 4:
+                    fallSpeed = (transform.position.y - enemyPrefab.transform.position.y) / 25;
+                    moveSpeed = (transform.position.x - enemyPrefab.transform.position.x) / 25;
+                    Invoke("checkParent", 0.05f);
+                    break;
+                case 5:
+                    fallSpeed = (transform.position.y - enemyPrefab.transform.position.y) / 5;
+                    moveSpeed = (transform.position.x - enemyPrefab.transform.position.x) / 5;
+                    break;
+                case 6:
+                    fallSpeed = (transform.position.y - enemyPrefab.transform.position.y) / 4;
+                    moveSpeed = (transform.position.x - enemyPrefab.transform.position.x) / 4;
+                    break;
+                default:
+                    Destroy(gameObject);
+                    break;
+            }
 
-        rotSpeed=10f;
+            rotSpeed = 10f;
 
-        int i=Random.Range(0,5);
-        switch(i){
-            case 0:
-                this.gameObject.GetComponent<SpriteRenderer>().sprite=image0;
-                break;
-            case 1:
-                this.gameObject.GetComponent<SpriteRenderer>().sprite=image1;
-                break;
-            case 2:
-                this.gameObject.GetComponent<SpriteRenderer>().sprite=image2;
-                break;
-            case 3:
-                this.gameObject.GetComponent<SpriteRenderer>().sprite=image3;
-                break;
-            case 4:
-                this.gameObject.GetComponent<SpriteRenderer>().sprite=image4;
-                break;
+            int i = Random.Range(0, 5);
+            switch (i)
+            {
+                case 0:
+                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image0;
+                    break;
+                case 1:
+                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image1;
+                    break;
+                case 2:
+                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image2;
+                    break;
+                case 3:
+                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image3;
+                    break;
+                case 4:
+                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image4;
+                    break;
+            }
         }
 
         //親がやられたら消去
@@ -69,7 +74,7 @@ public class bullet26 : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         timer+=Time.deltaTime;
 

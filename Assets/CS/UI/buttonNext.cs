@@ -25,7 +25,9 @@ public class buttonNext : MonoBehaviour
     void FixedUpdate()
     {
         if(selectDifficulty.endless){
-            if(enemyGenerator2.gameOver){
+            if(enemyGenerator2.gameOver)
+            {
+                Cursor.lockState = CursorLockMode.None;
                 nextButtonText.text="Total Result";
             }
 
@@ -44,6 +46,7 @@ public class buttonNext : MonoBehaviour
             {
                 //カーソル表示
                 Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 //スコア画面へ
                 SceneManager.LoadScene("score");
             }
@@ -56,6 +59,7 @@ public class buttonNext : MonoBehaviour
             {
                 //カーソル表示
                 Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 //スコア画面へ
                 SceneManager.LoadScene("score");
             }
