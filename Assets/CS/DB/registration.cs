@@ -10,12 +10,13 @@ public class registration: MonoBehaviour
     public InputField UserIdInput;
     public InputField UserNameInput;
     public InputField PasswordInput;
+    public GameObject errorTextObj;
+    Text errorText;
     string inputID;
     string inputName;
     string inputPass;
     string returnID;
 
-    // Start is called before the first frame update
     void Start()
     {
         // PlayerPrefsのIDに9桁のIDが入っていればタイトル画面に飛ばす
@@ -23,9 +24,12 @@ public class registration: MonoBehaviour
         {
             SceneManager.LoadScene("title");
         }
+
+        //エラーテキスト用テキストコンポーネント取得
+        errorText = errorTextObj.GetComponent<Text>();
+        errorText.text = "";
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -108,15 +112,17 @@ public class registration: MonoBehaviour
         if (request.isNetworkError || request.isHttpError)
         {
             Debug.Log(request.error);
+            errorText.text = "Communication failed.";
         }
         else
         {
             returnID = request.downloadHandler.text;
 
             // パスワードミスをエラー処理
-            if(returnID==null || returnID=="")
+            if(!System.Text.RegularExpressions.Regex.IsMatch(returnID, @"^[0-9]{9}$"))
             {
-                Debug.Log("パスワード違うよおおお");
+                Debug.Log("ID,Pass違い\n"+returnID);
+                errorText.text = "ID or password is wrong.";
             }
             else
             {
@@ -132,6 +138,7 @@ public class registration: MonoBehaviour
                 else
                 {
                     Debug.Log("保存失敗");
+                    errorText.text = "Failed to save.";
                 }
             }
         }
