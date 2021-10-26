@@ -3,21 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class registration: MonoBehaviour
 {
-    [SerializeField] InputField UserIdInput;
-    [SerializeField] InputField UserNameInput;
-    [SerializeField] InputField PasswordInput;
+    public InputField UserIdInput;
+    public InputField UserNameInput;
+    public InputField PasswordInput;
     string inputID;
     string inputName;
     string inputPass;
-    int returnID;
+    string returnID;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        // PlayerPrefsのIDに9桁のIDが入っていればタイトル画面に飛ばす
+        if(System.Text.RegularExpressions.Regex.IsMatch(PlayerPrefs.GetString("ID"), @"^[0-9]{9}$"))
+        {
+            SceneManager.LoadScene("title");
+        }
     }
 
     // Update is called once per frame
@@ -78,11 +83,10 @@ public class registration: MonoBehaviour
         }
         else
         {
-            Debug.Log(request.downloadHandler.text);
-            returnID = int.Parse(request.downloadHandler.text);
-            Debug.Log(returnID);
-            PlayerPrefs.SetInt("ID", returnID);
+            returnID = request.downloadHandler.text;
+            PlayerPrefs.SetString("ID", returnID);
             PlayerPrefs.Save();
+            SceneManager.LoadScene("title");
         }
     }
 
@@ -107,11 +111,29 @@ public class registration: MonoBehaviour
         }
         else
         {
-            Debug.Log(request.responseCode);
-            returnID = int.Parse(request.downloadHandler.text);
-            Debug.Log(request.downloadHandler.text);
-            PlayerPrefs.SetInt("ID", returnID);
-            PlayerPrefs.Save();
+            returnID = request.downloadHandler.text;
+
+            // パスワードミスをエラー処理
+            if(returnID==null || returnID=="")
+            {
+                Debug.Log("パスワード違うよおおお");
+            }
+            else
+            {
+                PlayerPrefs.SetString("ID", returnID);
+                PlayerPrefs.Save();
+
+                // PlayerPrefsにセーブ出来ているかの確認if文
+                // ログインはphp側で判定、IDが数字９桁でなければタイトルへの遷移は行わない
+                if(System.Text.RegularExpressions.Regex.IsMatch(PlayerPrefs.GetString("ID"), @"^[0-9]{9}$"))
+                {
+                    SceneManager.LoadScene("title");
+                }
+                else
+                {
+                    Debug.Log("保存失敗");
+                }
+            }
         }
     }
 }
