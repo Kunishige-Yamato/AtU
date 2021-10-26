@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class buttonNext : MonoBehaviour
 {
     GameObject eg;
+    public GameObject totalResultCanvas;
     EnemyGenerator enemyGenerator;
     EnemyGenerator2 enemyGenerator2;
     public Text nextButtonText;
@@ -57,11 +58,22 @@ public class buttonNext : MonoBehaviour
         else{
             if(enemyGenerator.stageNum==enemyGenerator.allStageNum)
             {
-                //カーソル表示
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                //スコア画面へ
-                SceneManager.LoadScene("score");
+                //totlaResult表示してからスコアかタイトルへ
+                if(gameObject.name == "TotalResultNextStageButton")
+                {
+                    //カーソル表示
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    //スコア画面へ
+                    SceneManager.LoadScene("score");
+                }
+                else
+                {
+                    //カーソル表示
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    totalResultCanvas.SetActive(true);
+                }
             }
             else
             {
