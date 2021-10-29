@@ -13,6 +13,10 @@ public class EnemyGenerator2 : MonoBehaviour
     public GameObject boss4_1Prefab;
     public GameObject boss4_2Prefab;
 
+    //セクションごとのリザルト用Prefab
+    public GameObject sectionPrefab;
+    public GameObject totalResults;
+
     /*
     //カットイン関係
     public GameObject cutInCanvas;
@@ -36,17 +40,8 @@ public class EnemyGenerator2 : MonoBehaviour
     public CanvasGroup resultGroup;
     public CanvasGroup pauseGroup;
     public CanvasGroup hpBarGroup;
-    public Text stageText;
-    public Text scoreText;
-    public Text timeText;
-    public Text hitText;
     int stageScore=0;
     public bool gameOver=false;
-
-    // 位置座標
-	private Vector3 mousePosition;
-	// スクリーン座標をワールド座標に変換した位置座標
-	private Vector3 screenToWorldPointPosition;
 
     CursorLockMode wantedMode = CursorLockMode.None;
 
@@ -72,6 +67,7 @@ public class EnemyGenerator2 : MonoBehaviour
         //animator=cutInCanvas.GetComponent<Animator>();
 
         ReadFile();
+        //DisplayResult();
     }
 
     public void DisplayResult()
@@ -99,26 +95,40 @@ public class EnemyGenerator2 : MonoBehaviour
         //スコア集計＆表示
         GameObject scoreCounter=GameObject.Find("ScoreCounter");
         ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-        if(pl.gameOver){
-            stageText.text="GameOver";
+        if(pl.gameOver)
+        {
             if(selectDifficulty.endlessMode==1){
                 sc.resetScore();
             }
-            scoreText.text="Total Score:"+(sc.returnScore());
-            timeText.text="Time:"+(Mathf.Floor(timer*100)/100);
-            hitText.text="";
             this.gameOver=pl.gameOver;
         }
-        else{
-            stageText.text="Section-"+stageNum;
-            if(selectDifficulty.endlessMode==1){
-                sc.DoubleScore();
-            }
-            scoreText.text="Score:"+(sc.returnScore()-stageScore);
-            stageScore=sc.returnScore();
-            timeText.text="Time:"+(Mathf.Floor(timer*100)/100);
-            sumTime+=timer;
-            hitText.text="Hit:"+(pl.hitNum);
+        else
+        {
+            //スクロール部分の親になるオブジェ
+            GameObject contentParent = GameObject.Find("Canvas/TotalResult/Scroll View/Viewport/Content");
+            //sectionPrefab生成 付属オブジェコンポーネント取得
+            GameObject sectionObj = Instantiate(sectionPrefab,new Vector3(0,0,0),Quaternion.identity,contentParent.transform);
+            sectionObj.transform.localScale = new Vector3(1, 1, 1);
+            //Name,Score,Timeのテキスト
+            Text[] childText = sectionObj.GetComponentsInChildren<Text>();
+
+            //合計スコア,タイム表示用
+            sectionObj.transform.localScale = new Vector3(1, 1, 1);
+            //Name,Score,Timeのテキスト
+            Text[] totalTexts = totalResults.GetComponentsInChildren<Text>();
+
+            //sectionPrefabの中身書き込み
+            childText[0].text="Section-"+stageNum;
+            childText[1].text="Score:"+(sc.returnScore()-stageScore);
+            childText[2].text="Time :"+(Mathf.Floor(timer*100)/100);
+
+            //totalresultsの中身書き込み
+            totalTexts[1].text = "Score:" + sc.returnScore();
+            totalTexts[2].text = "Time :"+(Mathf.Floor((sumTime+timer)*100)/100);
+
+            sc.DoubleScore();
+            stageScore = sc.returnScore();
+            sumTime +=timer;
 
             //セクションクリアごと少量回復
             int heal=10/(selectDifficulty.difficulty+1);

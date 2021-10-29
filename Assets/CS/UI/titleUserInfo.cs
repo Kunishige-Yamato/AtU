@@ -16,7 +16,7 @@ public class titleUserInfo : MonoBehaviour
             if (gameObject.name=="UserName")
             {
                 //nameセット
-                userText.text = "UserName";
+                userText.text = PlayerPrefs.GetString("NAME");
             }
             else if(gameObject.name=="UserID")
             {

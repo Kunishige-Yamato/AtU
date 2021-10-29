@@ -246,7 +246,7 @@ public class boss4 : MonoBehaviour
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-            sc.AddScore(10+20*selectDifficulty.difficulty);
+            sc.AddScore(10+20*(selectDifficulty.difficulty+1));
 
             if(selectDifficulty.difficulty>1){
                 if(hit%10==0){

@@ -221,7 +221,7 @@ public class boss2 : MonoBehaviour
             //スコア付与
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-            sc.AddScore(10+20*selectDifficulty.difficulty);
+            sc.AddScore(10+20*(selectDifficulty.difficulty+1));
 
             bullet0 bul0=col.GetComponent<bullet0>();
             bul0.explosion();
