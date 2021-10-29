@@ -551,8 +551,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Do you already have an account? \nIf you want to sign in, please fill
-    in the above and press the button on the right"
+  m_Text: "Do you already have an account? \nIf you want to sign in, please fill in
+    the above and press the button on the right"
 --- !u!222 &268122847
 CanvasRenderer:
   m_ObjectHideFlags: 0
