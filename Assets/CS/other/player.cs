@@ -240,7 +240,7 @@ public class player : MonoBehaviour
             //スコア大幅減点
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-            sc.AddScore(-100);
+            sc.AddScore(-100*(selectDifficulty.difficulty+1));
 		
             hitNum++;
 

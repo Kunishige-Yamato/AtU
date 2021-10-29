@@ -117,6 +117,15 @@ public class EnemyGenerator2 : MonoBehaviour
             //Name,Score,Timeのテキスト
             Text[] totalTexts = totalResults.GetComponentsInChildren<Text>();
 
+            Debug.Log(selectDifficulty.difficulty);
+            //点数変換，時間加算
+            if (selectDifficulty.endlessMode==1)
+            {
+                //ギャンブルの時はスコア倍増
+                sc.DoubleScore();
+            }
+            sumTime += timer;
+
             //sectionPrefabの中身書き込み
             childText[0].text="Section-"+stageNum;
             childText[1].text="Score:"+(sc.returnScore()-stageScore);
@@ -124,11 +133,10 @@ public class EnemyGenerator2 : MonoBehaviour
 
             //totalresultsの中身書き込み
             totalTexts[1].text = "Score:" + sc.returnScore();
-            totalTexts[2].text = "Time :"+(Mathf.Floor((sumTime+timer)*100)/100);
+            totalTexts[2].text = "Time :"+(Mathf.Floor(sumTime*100)/100);
 
-            sc.DoubleScore();
+            //今までのスコアをstageScoreで保持
             stageScore = sc.returnScore();
-            sumTime +=timer;
 
             //セクションクリアごと少量回復
             int heal=10/(selectDifficulty.difficulty+1);

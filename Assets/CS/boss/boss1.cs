@@ -32,14 +32,16 @@ public class boss1 : MonoBehaviour
     {
         //タグつきを全て格納
         GameObject[] enemys=GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject del in enemys) {
+        foreach (GameObject del in enemys)
+        {
             if(del!=gameObject){
                 Destroy(del);
             }
         }
 
         //hp設定
-        switch(selectDifficulty.difficulty){
+        switch(selectDifficulty.difficulty)
+        {
             case 0:
                 hp=400;
                 break;
@@ -54,7 +56,10 @@ public class boss1 : MonoBehaviour
                 break;
         }
 
-        eg=GameObject.Find("EG");
+        //debug用体力セット
+        hp = 10;
+
+        eg =GameObject.Find("EG");
         if(selectDifficulty.endless){
             enemyGenerator2=eg.GetComponent<EnemyGenerator2>();
         }
@@ -223,7 +228,7 @@ public class boss1 : MonoBehaviour
                 //爆発
 		        Instantiate (explosionPrefab, transform.position, Quaternion.identity);
                 //早期撃退ボーナス
-                sc.AddScore((int)Mathf.Floor(12000*(1+selectDifficulty.difficulty)/timer));
+                //sc.AddScore((int)Mathf.Floor(10000*(1+selectDifficulty.difficulty)/timer));
                 //次のステージへ
                 if(selectDifficulty.endless){
                     enemyGenerator2.DisplayResult();

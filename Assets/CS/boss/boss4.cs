@@ -61,7 +61,10 @@ public class boss4 : MonoBehaviour
                 break;
         }
 
-        eg=GameObject.Find("EG");
+        //debug用体力セット
+        hp = 10;
+
+        eg =GameObject.Find("EG");
         if(selectDifficulty.endless){
             enemyGenerator2=eg.GetComponent<EnemyGenerator2>();
         }
@@ -248,6 +251,7 @@ public class boss4 : MonoBehaviour
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(10+20*(selectDifficulty.difficulty+1));
 
+            //hard以上は被弾すると追尾弾ばら撒く
             if(selectDifficulty.difficulty>1){
                 if(hit%10==0){
                     int ran=Random.Range(0,3);
@@ -263,6 +267,7 @@ public class boss4 : MonoBehaviour
                             break;
                     }
                 }
+                //体力半分切ったら更に頻繁にばら撒く
                 if(hit>this.hp*0.5){
                     if(hit%10==5){
                         int ran2=Random.Range(0,3);
@@ -290,7 +295,7 @@ public class boss4 : MonoBehaviour
                 //爆発
 		        Instantiate (explosionPrefab, transform.position, Quaternion.identity);
                 //早期撃退ボーナス
-                sc.AddScore((int)Mathf.Floor(18000*(1+selectDifficulty.difficulty)/timer));
+                //sc.AddScore((int)Mathf.Floor(18000*(1+selectDifficulty.difficulty)/timer));
                 //次のステージへ
                 if(selectDifficulty.endless){
                     enemyGenerator2.DisplayResult();
