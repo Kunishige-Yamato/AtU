@@ -10,26 +10,20 @@ public class registration: MonoBehaviour
     public InputField UserIdInput;
     public InputField UserNameInput;
     public InputField PasswordInput;
-    public GameObject errorTextObj;
-    Text errorText;
     string inputID;
     string inputName;
     string inputPass;
     string returnID;
+    string returnName;
 
+    // Start is called before the first frame update
     void Start()
     {
-        // PlayerPrefsのIDに9桁のIDが入っていればタイトル画面に飛ばす
-        if(System.Text.RegularExpressions.Regex.IsMatch(PlayerPrefs.GetString("ID"), @"^[0-9]{9}$"))
-        {
-            SceneManager.LoadScene("title");
-        }
-
-        //エラーテキスト用テキストコンポーネント取得
-        errorText = errorTextObj.GetComponent<Text>();
-        errorText.text = "";
+        // 自動ログイン。サインインの動作確認の間はコメントアウトで無効に。
+        // StartCoroutine(connect());
     }
 
+    // Update is called once per frame
     void Update()
     {
 
@@ -64,6 +58,30 @@ public class registration: MonoBehaviour
         StartCoroutine(sign_in(inputID, inputPass));
     }
 
+    public IEnumerator connect()
+    {
+        //UnityWebRequestを生成
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?connect=1";
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        // SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            // PlayerPrefsのIDに9桁のIDが入っていればタイトル画面に飛ばす
+            if (System.Text.RegularExpressions.Regex.IsMatch(PlayerPrefs.GetString("ID"), @"^[0-9]{9}$"))
+            {
+                SceneManager.LoadScene("title");
+            }
+        }
+    }
+
 
     public IEnumerator sign_up(string name, string pass)
     {
@@ -81,16 +99,34 @@ public class registration: MonoBehaviour
         yield return request.SendWebRequest();
 
         // isNetworkErrorとisHttpErrorでエラー判定
-        if (request.isNetworkError || request.isHttpError)
+        if(request.isNetworkError || request.isHttpError)
         {
             Debug.Log(request.error);
         }
         else
         {
             returnID = request.downloadHandler.text;
-            PlayerPrefs.SetString("ID", returnID);
-            PlayerPrefs.Save();
-            SceneManager.LoadScene("title");
+            if (System.Text.RegularExpressions.Regex.IsMatch(returnID, @"^[0-9]{9}$"))
+            {
+                // IDが9桁なら端末に保存
+                PlayerPrefs.SetString("ID", returnID);
+                PlayerPrefs.SetString("NAME", name);
+                PlayerPrefs.Save();
+
+                // IDが端末に正しく保存されていればシーンをタイトルへ
+                if(System.Text.RegularExpressions.Regex.IsMatch(PlayerPrefs.GetString("ID"), @"^[0-9]{9}$"))
+                {
+                    SceneManager.LoadScene("title");
+                }
+                else
+                {
+                    Debug.Log("保存失敗");
+                }
+            }
+            else
+            {
+                Debug.Log("ID取得失敗");
+            }
         }
     }
 
@@ -98,10 +134,11 @@ public class registration: MonoBehaviour
     {
 
         WWWForm form = new WWWForm();
-        // form.AddField("id", id); パラメータで解決
+
         form.AddField("pass", pass);
 
         //UnityWebRequestを生成
+        // idはパラメータに付加して送信、パスワードのみPOSTで送信
         string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?sign_in="+id;
         UnityWebRequest request = UnityWebRequest.Post(url, form);
 
@@ -112,34 +149,25 @@ public class registration: MonoBehaviour
         if (request.isNetworkError || request.isHttpError)
         {
             Debug.Log(request.error);
-            errorText.text = "Communication failed.";
         }
         else
         {
-            returnID = request.downloadHandler.text;
+            returnName = request.downloadHandler.text;
 
-            // パスワードミスをエラー処理
-            if(!System.Text.RegularExpressions.Regex.IsMatch(returnID, @"^[0-9]{9}$"))
+            // ID値の不正入力やパスワードミスを処理
+            if(returnName==null || returnName=="")
             {
-                Debug.Log("ID,Pass違い\n"+returnID);
-                errorText.text = "ID or password is wrong.";
+                Debug.Log("入力に間違いがあります");
             }
             else
             {
-                PlayerPrefs.SetString("ID", returnID);
+                Debug.Log(returnName);
+                PlayerPrefs.SetString("ID", id);
+                PlayerPrefs.SetString("NAME", returnName);
                 PlayerPrefs.Save();
+                // セーブ出来ているかの確認方法は思いつき次第
 
-                // PlayerPrefsにセーブ出来ているかの確認if文
-                // ログインはphp側で判定、IDが数字９桁でなければタイトルへの遷移は行わない
-                if(System.Text.RegularExpressions.Regex.IsMatch(PlayerPrefs.GetString("ID"), @"^[0-9]{9}$"))
-                {
-                    SceneManager.LoadScene("title");
-                }
-                else
-                {
-                    Debug.Log("保存失敗");
-                    errorText.text = "Failed to save.";
-                }
+                SceneManager.LoadScene("title");
             }
         }
     }
