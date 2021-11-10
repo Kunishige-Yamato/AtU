@@ -81,7 +81,7 @@ public class boss2 : MonoBehaviour
         hpBar.value=hpBar.maxValue;
 
         //csv読み込み
-        csvFile=Resources.Load("boss-2") as TextAsset;
+        csvFile=Resources.Load("stage-CSV/boss-2") as TextAsset;
 
         addList();        
     }

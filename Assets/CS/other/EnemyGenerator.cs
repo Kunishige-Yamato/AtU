@@ -158,16 +158,16 @@ public class EnemyGenerator : MonoBehaviour
             //csv読み込み
             switch(selectDifficulty.difficulty){
                 case 0:
-                    csvFile=Resources.Load("stage-e-"+stageNum) as TextAsset;
+                    csvFile=Resources.Load("stage-CSV/stage-e-"+stageNum) as TextAsset;
                     break;
                 case 1:
-                    csvFile=Resources.Load("stage-n-"+stageNum) as TextAsset;
+                    csvFile=Resources.Load("stage-CSV/stage-n-" + stageNum) as TextAsset;
                     break;
                 case 2:
-                    csvFile=Resources.Load("stage-h-"+stageNum) as TextAsset;
+                    csvFile=Resources.Load("stage-CSV/stage-h-" + stageNum) as TextAsset;
                     break;
                 case 3:
-                    csvFile=Resources.Load("stage-c-"+stageNum) as TextAsset;
+                    csvFile=Resources.Load("stage-CSV/stage-c-" + stageNum) as TextAsset;
                     break;
             }
             StringReader reader=new StringReader(csvFile.text);
@@ -206,7 +206,7 @@ public class EnemyGenerator : MonoBehaviour
     }
 
     void Generate(string n,float x,float y)
-    {   
+    {   /*
         switch(n){
             case "e1":
                 Instantiate(enemy1Prefab,new Vector3(x,y,0),Quaternion.identity);
@@ -270,6 +270,6 @@ public class EnemyGenerator : MonoBehaviour
                 Instantiate(boss4_2Prefab,new Vector3(5,3,0),Quaternion.identity);
                 hpBarGroup.alpha=1f;
                 break;
-        }
+        }*/
     }
 }

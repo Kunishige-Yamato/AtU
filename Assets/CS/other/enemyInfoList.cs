@@ -6,7 +6,7 @@ using enemyInfo;
 public class enemyInfoList
 {
     //ボス型
-    Boss[] boss;
+    public Boss[] boss;
     //配列の最大値
     int arrayMax;
     //配列内の数
@@ -22,7 +22,7 @@ public class enemyInfoList
     }
 
     //情報を受け取って登録するメソッド
-    public void SetBossInfo(string name, int hp, int hitBonus, int defeatBonus, int timeBonus)
+    public void SetBossInfo(string name,float posX, float posY, int hp, int hitBonus, int defeatBonus, int timeBonus)
     {
         if(arrayNum==arrayMax)
         {
@@ -31,17 +31,17 @@ public class enemyInfoList
         else
         {
             //boss登録
-            boss[arrayNum] = new Boss(name, hp, hitBonus, defeatBonus, timeBonus);
+            boss[arrayNum] = new Boss(name, posX, posY, hp, hitBonus, defeatBonus, timeBonus);
             arrayNum++;
         }
     }
 
-    //Debug用表示メソッド
+    //Debug用リスト表示メソッド
     public void PrintInfo()
     {
         for(int i=0;i<arrayNum;i++)
         {
-            Debug.Log("No." + i + ":"+boss[i].hp);
+            Debug.Log("ListNo." + i);
             boss[i].PrintBossInfo();
         }
     }
