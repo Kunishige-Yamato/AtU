@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,8 +20,28 @@ public class bossBasicInfo : MonoBehaviour
     int defeatBonus;
     int timeBonus;
 
+    //難易度
+    int difficulty;
+
     //UI
     Slider hpBar;
+
+    //以下攻撃用
+    //攻撃方法
+    attack atk;
+
+    //ゲーム進行オブジェ
+    GameObject progress;
+    progress pro;
+
+    //CSV関係
+    TextAsset csvFile;
+    List<string[]> csvDatas = new List<string[]>();
+
+    //タイマー
+    float timer;
+    //攻撃一順時経過秒数保管用変数
+    float lastTime;
 
     void Start()
     {
@@ -31,11 +53,55 @@ public class bossBasicInfo : MonoBehaviour
         hpBar = GameObject.Find("Slider").GetComponent<Slider>();
         hpBar.maxValue = hp;
         hpBar.value = hpBar.maxValue;
+
+        //自分以外のEnemyタグのオブジェを削除してリセット
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject del in enemys)
+        {
+            if (del != gameObject)
+            {
+                Destroy(del);
+            }
+        }
+
+        //進行用コンポーネント取得
+        progress = GameObject.Find("Progress");
+        pro = progress.GetComponent<progress>();
+        difficulty = pro.GetDifficulty();
+
+        //攻撃用コンポーネント取得
+        atk = gameObject.GetComponent<attack>();
+        atk.SetInfo(difficulty);
+
+        //タイマー初期化
+        timer = 0;
+
+        //csv読み込み
+        csvFile = Resources.Load("CSV/"+name) as TextAsset;
+        addList();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        
+        //時間計測
+        timer += Time.deltaTime;
+
+        //CSVを監視して秒数ごとに攻撃
+        for (int i = 0; i < csvDatas.Count; i++)
+        {
+            if (float.Parse(csvDatas[i][1]) + lastTime <= timer && csvDatas[i][2] == "0")
+            {
+                Generate(csvDatas[i][0]);
+                if (csvDatas[i][0] != "end")
+                {
+                    csvDatas[i][2] = "1";
+                }
+                else
+                {
+                    lastTime += float.Parse(csvDatas[i][1]);
+                }
+            }
+        }
     }
 
     //設定読み込み
@@ -76,7 +142,7 @@ public class bossBasicInfo : MonoBehaviour
             EffectAdd(col.transform.position.x,col.transform.position.y,"hitEffect");
             Destroy(col.gameObject);
 
-            if (hit > hp)
+            if (hit >= hp)
             {
                 //爆発
                 EffectAdd(transform.position.x, transform.position.y, "defeatEffect");
@@ -93,6 +159,39 @@ public class bossBasicInfo : MonoBehaviour
                 }*/
                 Destroy(gameObject);
             }
+        }
+    }
+
+    //CSVをリスト形式で格納
+    void addList()
+    {
+        StringReader reader = new StringReader(csvFile.text);
+
+        // , で分割しつつ一行ずつ読み込み，リストに追加
+        while (reader.Peek() != -1)
+        {
+            string line = reader.ReadLine();
+            csvDatas.Add(line.Split(','));
+        }
+    }
+
+    //攻撃
+    void Generate(string n)
+    {
+        switch (n)
+        {
+            case "s1":
+                atk.Shoot1();
+                break;
+            case "s2":
+                atk.Shoot2();
+                break;
+            case "s3":
+                atk.Shoot3();
+                break;
+            case "end":
+                addList();
+                break;
         }
     }
 }

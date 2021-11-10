@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
 
-public class boss1 : MonoBehaviour
+public class boss1_1 : MonoBehaviour
 {
     int hp;
     int hit=0;

@@ -11,10 +11,10 @@ public class enemyAppearance : MonoBehaviour
 
     public void Appearance(Boss bossInfo)
     {
-        //オブジェクトを画面に生成する
+        //bossオブジェクトを画面に生成する
         enemyObj = Instantiate(bossInfo.bossObj, new Vector3(bossInfo.posX, bossInfo.posY, 0), Quaternion.identity);
         enemyObj.name = bossInfo.name;
-        basicInfo = enemyObj.AddComponent<bossBasicInfo>();
+        basicInfo = enemyObj.GetComponent<bossBasicInfo>();
         basicInfo.SetBasicInfo(bossInfo.name,bossInfo.hp,bossInfo.hitBonus,bossInfo.defeatBonus,bossInfo.timeBonus);
         //enemyObj.GetComponent<boss1>().hp = hp;
     }
