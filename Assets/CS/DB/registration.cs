@@ -21,6 +21,7 @@ public class registration: MonoBehaviour
     {
         // 自動ログイン。サインインの動作確認の間はコメントアウトで無効に。
         // StartCoroutine(connect());
+        StartCoroutine(getEnemyInfo("1"));
     }
 
     // Update is called once per frame
@@ -35,10 +36,11 @@ public class registration: MonoBehaviour
         inputName = UserNameInput.text;
         inputPass = PasswordInput.text;
         bool check = true;
-        Debug.Log(inputName);
+
         if (!System.Text.RegularExpressions.Regex.IsMatch(inputName, @"^[a-zA-Z0-9_]+$"))
         {
             check = false;
+            Debug.Log("名前だめー");
         }
         if (UserNameInput.text == "")
         {
@@ -92,8 +94,6 @@ public class registration: MonoBehaviour
         //UnityWebRequestを生成
         string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?sign_up=1";
         UnityWebRequest request = UnityWebRequest.Post(url, form);
-
-        // request.SetRequestHeader("Content-Type", "application/json");
 
         // SendWebRequestを実行して送受信開始
         yield return request.SendWebRequest();
@@ -169,6 +169,29 @@ public class registration: MonoBehaviour
 
                 SceneManager.LoadScene("title");
             }
+        }
+    }
+
+    public IEnumerator getEnemyInfo(string id)
+    {
+        //UnityWebRequestを生成
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?enemy="+id;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        // request.SetRequestHeader("Content-Type", "application/json");
+
+        // SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            // return request.downloadHandler.text;
+            Debug.Log(request.downloadHandler.text);
         }
     }
 }
