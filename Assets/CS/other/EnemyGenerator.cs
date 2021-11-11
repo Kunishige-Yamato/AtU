@@ -103,8 +103,8 @@ public class EnemyGenerator : MonoBehaviour
         stageText.text="Stage-"+stageNum;
         GameObject scoreCounter=GameObject.Find("ScoreCounter");
         ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-        scoreText.text="Score:"+(sc.returnScore()-stageScore);
-        stageScore=sc.returnScore();
+        scoreText.text="Score:"+(sc.GetScore()-stageScore);
+        stageScore=sc.GetScore();
         timeText.text="Time:"+(Mathf.Floor(timer*100)/100);
         sumTime+=timer;
         hitText.text="Hit:"+(pl.hitNum-stageHit);

@@ -6,26 +6,40 @@ using UnityEngine.SceneManagement;
 
 public class buttonNext : MonoBehaviour
 {
-    GameObject eg;
+    //進行用オブジェ
+    GameObject progress;
+    progress pro;
+
+    //難易度
+    int endless;
+    int[] modeDif;
+
+    //ステージ番号
+    int[] stage;
+
+    //UI
     public GameObject totalResultCanvas;
-    EnemyGenerator enemyGenerator;
-    EnemyGenerator2 enemyGenerator2;
     public Text nextButtonText;
 
     void Start()
     {
-        eg=GameObject.Find("EG");
-        if(selectDifficulty.endless){
-            enemyGenerator2=eg.GetComponent<EnemyGenerator2>();
-        }
-        else{
-            enemyGenerator=eg.GetComponent<EnemyGenerator>();
-        }
+        //進行用取得
+        progress = GameObject.Find("Progress");
+        pro = progress.GetComponent<progress>();
+
+        //難易度取得
+        modeDif = pro.GetDifficulty();
+        endless = modeDif[1];
+
+        //ステージ番号取得
+        stage = pro.GetStageNum();
     }
 
     void FixedUpdate()
     {
-        if(selectDifficulty.endless){
+        if(endless==1){
+            //エンドレスモードゲームオーバー処理
+            /*
             if(enemyGenerator2.gameOver)
             {
                 Cursor.lockState = CursorLockMode.None;
@@ -35,14 +49,16 @@ public class buttonNext : MonoBehaviour
             if (enemyGenerator2.gameOver && gameObject.name == "RetireButton")
             {
                 Destroy(gameObject);
-            }
+            }*/
         }
     }
 
     public void OnClick()
     {
         Cursor.lockState=CursorLockMode.Locked;
-        if(selectDifficulty.endless){
+        if(endless==1){
+            //エンドレスモードリザルト時のボタン処理
+            /*
             if(enemyGenerator2.gameOver==true || gameObject.name=="RetireButton")
             {
                 //カーソル表示
@@ -54,9 +70,12 @@ public class buttonNext : MonoBehaviour
             else{
                 enemyGenerator2.ReadFile();
             }
+            */
         }
         else{
-            if(enemyGenerator.stageNum==enemyGenerator.allStageNum)
+            //ストーリーモードのリザルトのボタン処理
+            //全ステージクリアしてたら
+            if(stage[0]==stage[1])
             {
                 //totlaResult表示してからスコアかタイトルへ
                 if(gameObject.name == "TotalResultNextStageButton")
@@ -77,11 +96,12 @@ public class buttonNext : MonoBehaviour
             }
             else
             {
-                if(enemyGenerator.stageNum == enemyGenerator.allStageNum-1)
+                //次の面が最終ステージの時
+                if(stage[0] == stage[1] - 1)
                 {
                     nextButtonText.text = "Total Result";
                 }
-                enemyGenerator.ReadFile();
+                pro.StageStart();
             }
         }
     }

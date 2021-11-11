@@ -125,7 +125,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulSkin:
-  - {fileID: 21300000, guid: 16182a27cc90a4248add9e75e172b168, type: 3}
+  - {fileID: 21300000, guid: 926908cf6e3244d9882f4e2c8b7ad708, type: 3}
+  - {fileID: 21300000, guid: 323c76e4401884fbca5f1fd771091556, type: 3}
+  - {fileID: 21300000, guid: d2d3e049d147d4ff0a42cf4bdf2dd4a7, type: 3}
   bulPrefab:
   - {fileID: 1141260957886149448, guid: b1ab7184e73094b218fc783584b36031, type: 3}
   - {fileID: 6703154757363419079, guid: baa7194b0d409493486862ef6464d02a, type: 3}

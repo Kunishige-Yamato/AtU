@@ -8,44 +8,55 @@ namespace enemyInfo
     [System.Serializable]
     public class Enemy
     {
-        //出現座標
-        public float posX;
-        public float posY;
+        //名前
+        public string name;
         //体力
         public int hp;
         //被弾，撃沈スコア
         public int hitBonus;
         public int defeatBonus;
 
-        public Enemy(float posX, float posY, int hp,int hitBonus,int defeatBonus)
+        public Enemy(string name, int hp,int hitBonus,int defeatBonus)
         {
-            this.posX = posX;
-            this.posY = posY;
+            this.name = name;
             this.hp = hp;
             this.hitBonus = hitBonus;
             this.defeatBonus = defeatBonus;
         }   
     }
 
-    //派生クラス
+    //派生ボスクラス
     [System.Serializable]
     public class Boss : Enemy
     {
-        public string name;
         public int timeBonus;
         public GameObject bossObj;
 
-        public Boss(string name, float posX, float posY, int hp, int hitBonus, int defeatBonus,int timeBonus) : base(posX, posY, hp, hitBonus, defeatBonus)
+        public Boss(string name, int hp, int hitBonus, int defeatBonus,int timeBonus) : base(name, hp, hitBonus, defeatBonus)
         {
-            this.name = name;
             this.timeBonus = timeBonus;
-            bossObj = Resources.Load("Prefabs/Boss/"+this.name) as GameObject;
+            bossObj = Resources.Load("Prefabs/Boss/" + this.name) as GameObject;
         }
+    }
+    //派生モブエネミークラス
+    [System.Serializable]
+    public class MobEnemy : Enemy
+    {
+        //上下左右の移動速度
+        public float fallSpeed;
+        public float moveSpeed;
+        //回転の速度
+        public float rotSpeed;
 
-        //debug用中身表示メソッド
-        public void PrintBossInfo()
+        //オブジェクト
+        public GameObject enemyObj;
+
+        public MobEnemy(string name, int hp, int hitBonus, int defeatBonus, float fallSpeed, float moveSpeed, float rotSpeed) : base(name, hp, hitBonus, defeatBonus)
         {
-            Debug.Log(name + "," + bossObj.name + "," + posX + "," + posY + "," + hp + "," + hitBonus + "," + defeatBonus + "," + timeBonus);
+            this.fallSpeed = fallSpeed;
+            this.moveSpeed = moveSpeed;
+            this.rotSpeed = rotSpeed;
+            enemyObj = Resources.Load("Prefabs/Enemy/"+this.name) as GameObject;
         }
     }
 }

@@ -7,20 +7,20 @@ using System.Text.RegularExpressions;
 public class jsonReceive
 {
     //ボス情報保管リスト
-    enemyInfoList bossInfoList;
+    enemyInfoList enemyInfoList;
 
     //受け取り用string
     string jsonData;
 
     //DBから情報を受け取る
-    public Boss[] ReceiveData()
+    public Boss[] ReceiveBossData()
     {
         //リストを作る
-        bossInfoList = new enemyInfoList(4);
+        enemyInfoList = new enemyInfoList(4,"boss");
 
         //jsonを受け取ってjsondataにぶちこむ
         //仮データ
-        jsonData = "[{\"name\":\"boss1\",\"posX\":0,\"posY\":3,\"hp\":10,\"hitBonus\":20,\"defeatBonus\":5000,\"timeBonus\":3000},{\"name\":\"boss2\",\"posX\":0,\"posY\":3,\"hp\":800,\"hitBonus\":20,\"defeatBonus\":8000,\"timeBonus\":5000}]";
+        jsonData = "[{\"name\":\"boss1\",\"hp\":10,\"hitBonus\":20,\"defeatBonus\":5000,\"timeBonus\":3000},{\"name\":\"boss2\",\"hp\":800,\"hitBonus\":20,\"defeatBonus\":8000,\"timeBonus\":5000}]";
 
         //必要部分だけ抜き取る
         //配列の[]とデータ間の,を置き換え
@@ -37,9 +37,40 @@ public class jsonReceive
         {
             Boss boss = JsonUtility.FromJson<Boss>(jsonDatas[i]);
 
-            bossInfoList.SetBossInfo(boss.name, boss.posX, boss.posY, boss.hp, boss.hitBonus, boss.defeatBonus, boss.timeBonus);
+            enemyInfoList.SetBossInfo(boss.name, boss.hp, boss.hitBonus, boss.defeatBonus, boss.timeBonus);
         }
 
-        return bossInfoList.boss;
+        return enemyInfoList.boss;
+    }
+
+    //DBから情報を受け取る
+    public MobEnemy[] ReceiveEnemyData()
+    {
+        //リストを作る
+        enemyInfoList = new enemyInfoList(10, "enemy");
+
+        //jsonを受け取ってjsondataにぶちこむ
+        //仮データ
+        jsonData = "[{\"name\":\"enemy1\",\"hp\":5,\"hitBonus\":20,\"defeatBonus\":100,\"fallSpeed\":0.1,\"moveSpeed\":0,\"rotSpeed\":10},{\"name\":\"enemy2\",\"hp\":5,\"hitBonus\":20,\"defeatBonus\":100,\"fallSpeed\":0.3,\"moveSpeed\":0,\"rotSpeed\":10},{\"name\":\"enemy3\",\"hp\":5,\"hitBonus\":20,\"defeatBonus\":100,\"fallSpeed\":0.5,\"moveSpeed\":0,\"rotSpeed\":10}]";
+
+        //必要部分だけ抜き取る
+        //配列の[]とデータ間の,を置き換え
+        Regex regex = new Regex("^.|.$");
+        jsonData = regex.Replace(jsonData, "");
+        regex = new Regex("},{");
+        jsonData = regex.Replace(jsonData, "}@{");
+
+        //データを分割して配列へ
+        var jsonDatas = jsonData.Split('@');
+
+        //jsonからオブジェクトに格納
+        for (int i = 0; i < jsonDatas.Length; i++)
+        {
+            MobEnemy enemy = JsonUtility.FromJson<MobEnemy>(jsonDatas[i]);
+
+            enemyInfoList.SetEnemyInfo(enemy.name, enemy.hp, enemy.hitBonus, enemy.defeatBonus, enemy.fallSpeed, enemy.moveSpeed, enemy.rotSpeed);
+        }
+
+        return enemyInfoList.enemy;
     }
 }

@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using enemyInfo;
+
 public class progress : MonoBehaviour
 {
     //json受け取る用クラス
@@ -9,28 +12,52 @@ public class progress : MonoBehaviour
 
     //ボスの情報リスト
     Boss[] bossList;
+    //エネミーの情報リスト
+    MobEnemy[] enemyList;
 
     //敵生成クラス
     enemyAppearance enemyApp;
 
-    //難易度
-    int difficulty;
+    //難易度，モード
+    int difficulty,endless;
+
+    //自機オブジェクト
+    GameObject player;
+    player pl;
+
+    //ステージ番号管理
+    public int stageNum = 0;
+    public int allStageNum = 4;
+
+    //CSVファイル
+    TextAsset csvFile;
+    // CSVの中身を入れるリスト;
+    List<string[]> csvDatas = new List<string[]>();
+
+    //タイマー
+    float timer;
 
     //UI
-    public CanvasGroup resultGroup;
-    public CanvasGroup pauseGroup;
-    public CanvasGroup hpBarGroup;
+    public CanvasGroup resultGroup, pauseGroup, hpBarGroup;
+    public Text stageText, scoreText, timeText, hitText;
+    int stageScore = 0, stageHit = 0;
+
+    //カットイン関係
+    public GameObject cutInCanvas;
+    Animator animator;
+    public Sprite[] cutImage;
 
     void Start()
     {
         //敵情報をDBから受け取る
-        bossList=jsonRec.ReceiveData();
+        bossList=jsonRec.ReceiveBossData();
+        enemyList = jsonRec.ReceiveEnemyData();
 
         //クラス作成
         enemyApp =gameObject.AddComponent<enemyAppearance>();
 
         //敵の生成(name指定)
-        enemyApp.Appearance(bossList[0]);
+        //enemyApp.BossAppearance(bossList[0]);
 
         //hpバー消去
         //hpBarGroup.alpha = 0f;
@@ -43,20 +70,172 @@ public class progress : MonoBehaviour
         pauseGroup.alpha = 0f;
         pauseGroup.interactable = false;
 
+        //自機取得
+        player = GameObject.Find("Player");
+        pl = player.GetComponent<player>();
+
         //難易度設定
         //仮
         difficulty = 2;
+        endless = 0;
+
+        //カットイン設定
+        animator = cutInCanvas.GetComponent<Animator>();
+
+        StageStart();
     }
 
-    public int GetDifficulty()
+    void FixedUpdate()
     {
-        return difficulty;
+        timer+=Time.deltaTime;
+
+        for(int i=0;i<csvDatas.Count;i++)
+        {
+            if(float.Parse(csvDatas[i][2])<=timer&&csvDatas[i][5]=="0")
+            {
+                Debug.Log(csvDatas[i][0] + csvDatas[i][1]);
+                if(csvDatas[i][0]=="boss")
+                {
+                    int bossNum = int.Parse(csvDatas[i][1]);
+                    float posX = float.Parse(csvDatas[i][3]);
+                    float posY = float.Parse(csvDatas[i][4]);
+                    enemyApp.BossAppearance(bossList[bossNum-1],posX,posY);
+                    hpBarGroup.alpha = 1f;
+                }
+                else if(csvDatas[i][0]=="enemy")
+                {
+                    int enemyNum = int.Parse(csvDatas[i][1]);
+                    float posX = float.Parse(csvDatas[i][3]);
+                    float posY = float.Parse(csvDatas[i][4]);
+                    enemyApp.EnemyAppearance(enemyList[enemyNum - 1],posX,posY);
+                }
+                csvDatas[i][5]="1";
+            }
+        }
+    }
+
+    public int[] GetDifficulty()
+    {
+        int[] dif = { difficulty, endless };
+        return dif;
+    }
+
+    public int[] GetStageNum()
+    {
+        int[] stage = { stageNum, allStageNum };
+        return stage;
+    }
+
+    public void DisplayResult()
+    {
+        //自機停止
+        pl.canMove = false;
+
+        //カーソル表示
+        Cursor.visible = true;
+
+        //hpバー消去
+        hpBarGroup.alpha = 0f;
+
+        //敵消去
+        //タグつきを全て格納
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject del in enemys)
+        {
+            Destroy(del);
+        }
+
+        //リザルト表示
+        resultGroup.alpha = 1f;
+        resultGroup.interactable = true;
+
+        //スコア集計＆表示
+        stageText.text = "Stage-" + stageNum;
+        GameObject scoreCounter = GameObject.Find("ScoreCounter");
+        ScoreCount sc = scoreCounter.GetComponent<ScoreCount>();
+        scoreText.text = "Score:" + (sc.GetScore() - stageScore);
+        stageScore = sc.GetScore();
+        timeText.text = "Time:" + (Mathf.Floor(sc.GetTime()[0] * 100) / 100);
+        hitText.text = "Hit:" + (pl.hitNum - stageHit);
+        stageHit = pl.hitNum;
+    }
+
+    public void StageStart()
+    {
+        //自機動作
+        Cursor.visible = false;
+        pl.canMove = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Invoke("CanMove", 1.8f);
+
+        //hpバー消去
+        hpBarGroup.alpha = 0f;
+
+        //リザルト消去
+        resultGroup.alpha = 0f;
+        resultGroup.interactable = false;
+
+        //ポーズ画面消去
+        pauseGroup.alpha = 0f;
+        pauseGroup.interactable = false;
+
+        stageNum++;
+
+        //CutIn();
+
+        if (stageNum <= allStageNum)
+        {
+            //csv読み込み
+            switch (difficulty)
+            {
+                case 0:
+                    csvFile = Resources.Load("CSV/stage-e-" + stageNum) as TextAsset;
+                    break;
+                case 1:
+                    csvFile = Resources.Load("CSV/stage-n-" + stageNum) as TextAsset;
+                    break;
+                case 2:
+                    csvFile = Resources.Load("CSV/stage-h-" + stageNum) as TextAsset;
+                    break;
+                case 3:
+                    csvFile = Resources.Load("CSV/stage-c-" + stageNum) as TextAsset;
+                    break;
+            }
+            StringReader reader = new StringReader(csvFile.text);
+
+            //テスト用ボス出現
+            //string boss="boss"+stageNum;
+            //Generate(boss,0,3);
+
+
+            // , で分割しつつ一行ずつ読み込み，リストに追加していく
+            while (reader.Peek() != -1)
+            {
+                string line = reader.ReadLine();
+                csvDatas.Add(line.Split(','));
+            }
+
+            timer = 0;
+        }
+    }
+
+    void CutIn()
+    {
+        switch (stageNum)
+        {
+            case 1:
+                cutInCanvas.GetComponent<Image>().sprite = cutImage[0];
+                break;
+            case 2:
+                cutInCanvas.GetComponent<Image>().sprite = cutImage[1];
+                break;
+            case 3:
+                cutInCanvas.GetComponent<Image>().sprite = cutImage[2];
+                break;
+            case 4:
+                cutInCanvas.GetComponent<Image>().sprite = cutImage[3];
+                break;
+        }
+        animator.Play("CutIn", 0, 0f);
     }
 }
-
-/*
-次回予告
-boss1攻撃残り
-残りのボスの攻撃
-progressの進行に沿ったあれこれ
- */

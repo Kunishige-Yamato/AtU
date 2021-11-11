@@ -2456,9 +2456,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff30e622bce3408196fc4079453be03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageNum: 0
+  allStageNum: 4
   resultGroup: {fileID: 780829238}
   pauseGroup: {fileID: 887104131}
   hpBarGroup: {fileID: 1127357612}
+  stageText: {fileID: 1915986520}
+  scoreText: {fileID: 2114460977}
+  timeText: {fileID: 2136997022}
+  hitText: {fileID: 501149783}
+  cutInCanvas: {fileID: 793342841}
+  cutImage:
+  - {fileID: 21300000, guid: 1930312c787ea40ebbac8a36a534a70d, type: 3}
+  - {fileID: 21300000, guid: c71091ff51e914b3a92684df0839caf9, type: 3}
+  - {fileID: 21300000, guid: b1f91cad7eb8e4536b12f0650d080436, type: 3}
+  - {fileID: 21300000, guid: 83253390e42694e249e933f16c458424, type: 3}
 --- !u!4 &1408321053
 Transform:
   m_ObjectHideFlags: 0

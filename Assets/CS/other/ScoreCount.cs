@@ -5,15 +5,16 @@ using UnityEngine;
 public class ScoreCount : MonoBehaviour
 {
     int score;
+    float timer,sumTime;
 
     void Start()
     {
         score=0;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        
+        timer += Time.deltaTime;
     }
 
     public void AddScore(int n)
@@ -21,9 +22,17 @@ public class ScoreCount : MonoBehaviour
         score+=n;
     }
 
-    public int returnScore()
+    public int GetScore()
     {
         return score;
+    }
+
+    public float[] GetTime()
+    {
+        sumTime += timer;
+        float[] time = { timer, sumTime };
+        timer = 0;
+        return time;
     }
 
     public void resetScore()

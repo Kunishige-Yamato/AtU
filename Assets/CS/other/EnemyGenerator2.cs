@@ -128,15 +128,15 @@ public class EnemyGenerator2 : MonoBehaviour
 
             //sectionPrefabの中身書き込み
             childText[0].text="Section-"+stageNum;
-            childText[1].text="Score:"+(sc.returnScore()-stageScore);
+            childText[1].text="Score:"+(sc.GetScore()-stageScore);
             childText[2].text="Time :"+(Mathf.Floor(timer*100)/100);
 
             //totalresultsの中身書き込み
-            totalTexts[1].text = "Score:" + sc.returnScore();
+            totalTexts[1].text = "Score:" + sc.GetScore();
             totalTexts[2].text = "Time :"+(Mathf.Floor(sumTime*100)/100);
 
             //今までのスコアをstageScoreで保持
-            stageScore = sc.returnScore();
+            stageScore = sc.GetScore();
 
             //セクションクリアごと少量回復
             int heal=10/(selectDifficulty.difficulty+1);

@@ -20,15 +20,15 @@ public class bossBasicInfo : MonoBehaviour
     int defeatBonus;
     int timeBonus;
 
-    //難易度
-    int difficulty;
+    //難易度，モード
+    int[] modeDif;
 
     //UI
     Slider hpBar;
 
     //以下攻撃用
     //攻撃方法
-    attack atk;
+    attack_boss atk;
 
     //ゲーム進行オブジェ
     GameObject progress;
@@ -67,11 +67,12 @@ public class bossBasicInfo : MonoBehaviour
         //進行用コンポーネント取得
         progress = GameObject.Find("Progress");
         pro = progress.GetComponent<progress>();
-        difficulty = pro.GetDifficulty();
 
         //攻撃用コンポーネント取得
-        atk = gameObject.GetComponent<attack>();
-        atk.SetInfo(difficulty);
+        atk = gameObject.GetComponent<attack_boss>();
+        //モード，難易度取得
+        modeDif = pro.GetDifficulty();
+        atk.SetInfo(modeDif[0]);
 
         //タイマー初期化
         timer = 0;
@@ -137,7 +138,7 @@ public class bossBasicInfo : MonoBehaviour
             //スコア付与
             GameObject scoreCounter = GameObject.Find("ScoreCounter");
             ScoreCount sc = scoreCounter.GetComponent<ScoreCount>();
-            sc.AddScore(10 + 20 * (selectDifficulty.difficulty + 1));
+            sc.AddScore(10 + hitBonus * (modeDif[0] + 1));
 
             EffectAdd(col.transform.position.x,col.transform.position.y,"hitEffect");
             Destroy(col.gameObject);
@@ -146,17 +147,19 @@ public class bossBasicInfo : MonoBehaviour
             {
                 //爆発
                 EffectAdd(transform.position.x, transform.position.y, "defeatEffect");
+                //撃破ボーナス
+                sc.AddScore(defeatBonus);
                 //早期撃退ボーナス
                 //sc.AddScore((int)Mathf.Floor(10000*(1+selectDifficulty.difficulty)/timer));
                 //次のステージへ
-                /*if (selectDifficulty.endless)
+                if (modeDif[1]==1)
                 {
-                    enemyGenerator2.DisplayResult();
+                    pro.DisplayResult();
                 }
                 else
                 {
-                    enemyGenerator.DisplayResult();
-                }*/
+                    pro.DisplayResult();
+                }
                 Destroy(gameObject);
             }
         }
