@@ -47,7 +47,7 @@ public class enemyInfoList
     }
 
     //エネミーの情報を受け取って登録するメソッド
-    public void SetEnemyInfo(string name, int hp,int hitBonus,int defeatBonus, float fallSpeed, float moveSpeed, float rotSpeed)
+    public void SetEnemyInfo(string name, int hp,int hitBonus,int defeatBonus, float fallSpeed, float moveSpeed, float rotSpeed, float lifeExpectancy)
     {
         if (arrayNum == arrayMax)
         {
@@ -56,7 +56,7 @@ public class enemyInfoList
         else
         {
             //boss登録
-            enemy[arrayNum] = new MobEnemy(name, hp, hitBonus, defeatBonus, fallSpeed, moveSpeed, rotSpeed);
+            enemy[arrayNum] = new MobEnemy(name, hp, hitBonus, defeatBonus, fallSpeed, moveSpeed, rotSpeed, lifeExpectancy);
             arrayNum++;
         }
     }

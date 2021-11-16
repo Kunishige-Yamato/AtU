@@ -18,15 +18,18 @@ public class enemyBasicInfo : MonoBehaviour
     //ボーナス
     int hitBonus;
     int defeatBonus;
-    int timeBonus;
 
     //移動
     float fallSpeed;
     float moveSpeed;
     float rotSpeed;
 
+    //タイマー
+    float timer;
+    float lifeExpectancy;
+
     //設定読み込み
-    public void SetBasicInfo(string name, int hp, int hitBonus, int defeatBonus, float fallSpeed, float moveSpeed, float rotSpeed)
+    public void SetBasicInfo(string name, int hp, int hitBonus, int defeatBonus, float fallSpeed, float moveSpeed, float rotSpeed, float lifeExpectancy)
     {
         this.hp = hp;
         this.hitBonus = hitBonus;
@@ -34,15 +37,42 @@ public class enemyBasicInfo : MonoBehaviour
         this.fallSpeed = fallSpeed;
         this.moveSpeed = moveSpeed;
         this.rotSpeed = rotSpeed;
+        this.lifeExpectancy = lifeExpectancy;
         skinSprite = Resources.Load<Sprite>("Textures/" + name);
+    }
+
+    //移動量教えるやつ
+    public float[] GetSpeed()
+    {
+        float[] speed = { fallSpeed, moveSpeed, rotSpeed };
+        return speed;
+    }
+
+    //移動量変化
+    public void AddSpeed(float fallSpeed, float moveSpeed, float rotSpeed)
+    {
+        this.fallSpeed += fallSpeed;
+        this.moveSpeed += moveSpeed;
+        this.rotSpeed += rotSpeed;
     }
 
     void FixedUpdate()
     {
+        //移動
         gameObject.transform.Translate(moveSpeed, -fallSpeed, 0, Space.World);
         transform.Rotate(0, 0, rotSpeed);
+
         //端まで行ったら消去
         if (transform.position.y < -6f || transform.position.y > 6f || transform.position.x < -10f || transform.position.x > 10f)
+        {
+            Destroy(gameObject);
+        }
+
+        //経過時間カウント
+        timer += Time.deltaTime;
+
+        //設定された時間で勝手に死ぬ
+        if (timer >= lifeExpectancy)
         {
             Destroy(gameObject);
         }
@@ -55,7 +85,10 @@ public class enemyBasicInfo : MonoBehaviour
         Vector3 pos = new Vector3(x, y, 0);
         GameObject canvas = GameObject.Find("EffectCanvas");
         GameObject g = Instantiate(explosionPrefab, pos, Quaternion.identity);
-        g.transform.localScale = new Vector3(0.2f, 0.2f, 1);
+        if(name=="defeatEffect")
+        {
+            g.transform.localScale = new Vector3(0.3f, 0.3f, 1);
+        }
         g.transform.SetParent(canvas.transform, false);
         g.transform.position = pos;
     }

@@ -51,11 +51,15 @@ namespace enemyInfo
         //オブジェクト
         public GameObject enemyObj;
 
-        public MobEnemy(string name, int hp, int hitBonus, int defeatBonus, float fallSpeed, float moveSpeed, float rotSpeed) : base(name, hp, hitBonus, defeatBonus)
+        //余命
+        public float lifeExpectancy;
+
+        public MobEnemy(string name, int hp, int hitBonus, int defeatBonus, float fallSpeed, float moveSpeed, float rotSpeed, float lifeExpectancy) : base(name, hp, hitBonus, defeatBonus)
         {
             this.fallSpeed = fallSpeed;
             this.moveSpeed = moveSpeed;
             this.rotSpeed = rotSpeed;
+            this.lifeExpectancy = lifeExpectancy;
             enemyObj = Resources.Load("Prefabs/Enemy/"+this.name) as GameObject;
         }
     }

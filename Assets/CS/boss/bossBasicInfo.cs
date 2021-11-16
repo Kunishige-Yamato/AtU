@@ -50,7 +50,7 @@ public class bossBasicInfo : MonoBehaviour
         skinSpriteRenderer.sprite = skinSprite;
 
         //hpバー設定
-        hpBar = GameObject.Find("Slider").GetComponent<Slider>();
+        hpBar = GameObject.Find("HP/Slider").GetComponent<Slider>();
         hpBar.maxValue = hp;
         hpBar.value = hpBar.maxValue;
 
@@ -129,7 +129,7 @@ public class bossBasicInfo : MonoBehaviour
     //被弾時
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Bullet")
+        if (col.gameObject.tag == "Bullet" && timer >= 0.2f)
         {
             hit++;
 
@@ -147,10 +147,15 @@ public class bossBasicInfo : MonoBehaviour
             {
                 //爆発
                 EffectAdd(transform.position.x, transform.position.y, "defeatEffect");
+
                 //撃破ボーナス
                 sc.AddScore(defeatBonus);
                 //早期撃退ボーナス
-                //sc.AddScore((int)Mathf.Floor(10000*(1+selectDifficulty.difficulty)/timer));
+                if(timer<=timeBonus)
+                {
+                    sc.AddScore(timeBonus-(int)timer);
+                }
+
                 //次のステージへ
                 if (modeDif[1]==1)
                 {

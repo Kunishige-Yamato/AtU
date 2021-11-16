@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7966855587406788455}
   - component: {fileID: -2865912614536011120}
   - component: {fileID: 6076980545318149513}
+  - component: {fileID: 8628430802524688094}
   m_Layer: 0
   m_Name: enemy2
   m_TagString: Enemy
@@ -27,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7966855587406788440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0, y: 5.7, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e68757b774eb6466588df400d6367c19, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6499472320aaf4d7a9f9d9c44865d388, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,8 +97,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.75, y: 3}
+  m_Offset: {x: 0, y: -0.5}
+  m_Size: {x: 3, y: 4}
   m_Direction: 0
 --- !u!114 &6076980545318149513
 MonoBehaviour:
@@ -111,3 +112,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af4a8a36f22348a28dac35d8239b7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8628430802524688094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7966855587406788440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bdf7bf5333404dbb8c84bb0eeab5c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulPrefab:
+  - {fileID: 6245433715339287012, guid: ebc72c646648f42dbac52f1e8570749a, type: 3}
+  timer: 0

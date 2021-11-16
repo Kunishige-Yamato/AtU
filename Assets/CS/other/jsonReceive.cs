@@ -51,7 +51,7 @@ public class jsonReceive
 
         //jsonを受け取ってjsondataにぶちこむ
         //仮データ
-        jsonData = "[{\"name\":\"enemy1\",\"hp\":5,\"hitBonus\":20,\"defeatBonus\":100,\"fallSpeed\":0.1,\"moveSpeed\":0,\"rotSpeed\":10},{\"name\":\"enemy2\",\"hp\":5,\"hitBonus\":20,\"defeatBonus\":100,\"fallSpeed\":0.3,\"moveSpeed\":0,\"rotSpeed\":10},{\"name\":\"enemy3\",\"hp\":5,\"hitBonus\":20,\"defeatBonus\":100,\"fallSpeed\":0.5,\"moveSpeed\":0,\"rotSpeed\":10}]";
+        jsonData = "[{\"name\":\"enemy1\",\"hp\":5,\"hitBonus\":20,\"defeatBonus\":100,\"fallSpeed\":0,\"moveSpeed\":0,\"rotSpeed\":0,\"lifeExpectancy\":10},{\"name\":\"enemy2\",\"hp\":5,\"hitBonus\":20,\"defeatBonus\":100,\"fallSpeed\":0,\"moveSpeed\":-0.2,\"rotSpeed\":0,\"lifeExpectancy\":5},{\"name\":\"enemy3\",\"hp\":5,\"hitBonus\":20,\"defeatBonus\":100,\"fallSpeed\":0,\"moveSpeed\":0,\"rotSpeed\":0,\"lifeExpectancy\":15}]";
 
         //必要部分だけ抜き取る
         //配列の[]とデータ間の,を置き換え
@@ -68,7 +68,7 @@ public class jsonReceive
         {
             MobEnemy enemy = JsonUtility.FromJson<MobEnemy>(jsonDatas[i]);
 
-            enemyInfoList.SetEnemyInfo(enemy.name, enemy.hp, enemy.hitBonus, enemy.defeatBonus, enemy.fallSpeed, enemy.moveSpeed, enemy.rotSpeed);
+            enemyInfoList.SetEnemyInfo(enemy.name, enemy.hp, enemy.hitBonus, enemy.defeatBonus, enemy.fallSpeed, enemy.moveSpeed, enemy.rotSpeed, enemy.lifeExpectancy);
         }
 
         return enemyInfoList.enemy;

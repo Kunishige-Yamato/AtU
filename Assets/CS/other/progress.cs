@@ -41,6 +41,9 @@ public class progress : MonoBehaviour
     public CanvasGroup resultGroup, pauseGroup, hpBarGroup;
     public Text stageText, scoreText, timeText, hitText;
     int stageScore = 0, stageHit = 0;
+    //背景
+    public GameObject backGround;
+    public Sprite[] backGroundSprites;
 
     //カットイン関係
     public GameObject cutInCanvas;
@@ -93,7 +96,6 @@ public class progress : MonoBehaviour
         {
             if(float.Parse(csvDatas[i][2])<=timer&&csvDatas[i][5]=="0")
             {
-                Debug.Log(csvDatas[i][0] + csvDatas[i][1]);
                 if(csvDatas[i][0]=="boss")
                 {
                     int bossNum = int.Parse(csvDatas[i][1]);
@@ -179,6 +181,9 @@ public class progress : MonoBehaviour
         pauseGroup.alpha = 0f;
         pauseGroup.interactable = false;
 
+        //背景設定
+        backGround.GetComponent<Image>().sprite = backGroundSprites[stageNum];
+
         stageNum++;
 
         //CutIn();
@@ -216,6 +221,8 @@ public class progress : MonoBehaviour
             }
 
             timer = 0;
+            //Debug用ステージ早送り
+            //timer = 55;
         }
     }
 

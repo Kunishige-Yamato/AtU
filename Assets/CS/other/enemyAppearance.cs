@@ -27,7 +27,7 @@ public class enemyAppearance : MonoBehaviour
         enemyObj = Instantiate(enemyInfo.enemyObj, new Vector3(posX, posY, 0), Quaternion.identity);
         enemyObj.name = enemyInfo.name;
         enemyBasicInfo = enemyObj.GetComponent<enemyBasicInfo>();
-        enemyBasicInfo.SetBasicInfo(enemyInfo.name, enemyInfo.hp, enemyInfo.hitBonus, enemyInfo.defeatBonus, enemyInfo.fallSpeed, enemyInfo.moveSpeed, enemyInfo.rotSpeed);
+        enemyBasicInfo.SetBasicInfo(enemyInfo.name, enemyInfo.hp, enemyInfo.hitBonus, enemyInfo.defeatBonus, enemyInfo.fallSpeed, enemyInfo.moveSpeed, enemyInfo.rotSpeed, enemyInfo.lifeExpectancy);
         //enemyObj.GetComponent<boss1>().hp = hp;
     }
 }

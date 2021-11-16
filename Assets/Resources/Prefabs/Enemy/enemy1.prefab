@@ -8,10 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3140850639534179993}
+  - component: {fileID: 1694615451032733416}
   - component: {fileID: 3140850639534179992}
   - component: {fileID: 3915164666477461081}
-  - component: {fileID: -3846654427048441980}
+  - component: {fileID: -7949231977703342627}
+  - component: {fileID: 6606874178432142973}
   m_Layer: 0
   m_Name: enemy1
   m_TagString: Enemy
@@ -19,8 +20,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3140850639534179993
-Transform:
+--- !u!224 &1694615451032733416
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -28,11 +29,16 @@ Transform:
   m_GameObject: {fileID: 3140850639534179995}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.6912005}
+  m_SizeDelta: {x: 4.8, y: 4.8}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &3140850639534179992
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4410435b04533487388fe7e1e8f633d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3956125062f8b4b3f8cbfdd2b848a60f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,10 +102,10 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 4, y: 4}
+  m_Offset: {x: 0, y: -0.8}
+  m_Size: {x: 2.5, y: 2.8}
   m_Direction: 0
---- !u!114 &-3846654427048441980
+--- !u!114 &-7949231977703342627
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,3 +117,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af4a8a36f22348a28dac35d8239b7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6606874178432142973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3140850639534179995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bdf7bf5333404dbb8c84bb0eeab5c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulPrefab:
+  - {fileID: 3828765601060331630, guid: c88dbdfef09284da68b8d9516fd6baa9, type: 3}
+  timer: 0
