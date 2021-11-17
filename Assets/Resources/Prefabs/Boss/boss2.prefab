@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3322193608145504861}
   - component: {fileID: 3322193608145504860}
-  - component: {fileID: 3322193608145504863}
   - component: {fileID: 3322193608145504862}
+  - component: {fileID: 5158336070199803032}
+  - component: {fileID: -3738084322640717309}
   m_Layer: 0
   m_Name: boss2
   m_TagString: Enemy
@@ -83,29 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3322193608145504863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3322193608145504851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7284a62751ef343a0b4dd12333f06052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1449191295878825502, guid: aaf4ca8833e874862a024749bddcf407,
-    type: 3}
-  bullet2Prefab: {fileID: 4982377701991841805, guid: 9a99d36e3ed124e4fb0df0ac130811f7,
-    type: 3}
-  bullet3Prefab: {fileID: 488880283681713786, guid: 666236460934d4d2a9412976dd30e2f0,
-    type: 3}
-  bullet4Prefab: {fileID: 8394794438750486569, guid: a895df5606b1148868e6c9a0d3caa828,
-    type: 3}
-  bullet5Prefab: {fileID: 494328128809913081, guid: b5fb88a5f6ac14a899f0ab07e2dba09d,
-    type: 3}
-  explosionPrefab: {fileID: 100000, guid: 4c5a17ca1f9fec84e941441ebb8be079, type: 3}
 --- !u!58 &3322193608145504862
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -122,3 +100,39 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2
+--- !u!114 &5158336070199803032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3322193608145504851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6719b26ba49384050b28e975c0eebae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3738084322640717309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3322193608145504851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d36b9bc964c66414380a8e72e6f42de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulSkin:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  bulPrefab:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

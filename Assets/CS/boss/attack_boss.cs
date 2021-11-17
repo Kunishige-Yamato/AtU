@@ -145,3 +145,7 @@ public class attack_boss : MonoBehaviour
         }
     }
 }
+
+/*
+ * boss2:bul11~15
+ */

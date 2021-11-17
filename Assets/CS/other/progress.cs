@@ -222,7 +222,7 @@ public class progress : MonoBehaviour
 
             timer = 0;
             //Debug用ステージ早送り
-            //timer = 55;
+            timer = 55;
         }
     }
 
@@ -246,3 +246,8 @@ public class progress : MonoBehaviour
         animator.Play("CutIn", 0, 0f);
     }
 }
+
+/*
+ 明日の俺へ
+ステージ2に必要な敵とボスを作ってくださーい
+ */

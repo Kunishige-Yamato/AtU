@@ -66,6 +66,7 @@ public class jsonReceive
         //jsonからオブジェクトに格納
         for (int i = 0; i < jsonDatas.Length; i++)
         {
+            Debug.Log(jsonDatas[i]);
             MobEnemy enemy = JsonUtility.FromJson<MobEnemy>(jsonDatas[i]);
 
             enemyInfoList.SetEnemyInfo(enemy.name, enemy.hp, enemy.hitBonus, enemy.defeatBonus, enemy.fallSpeed, enemy.moveSpeed, enemy.rotSpeed, enemy.lifeExpectancy);
