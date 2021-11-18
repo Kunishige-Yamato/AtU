@@ -15,22 +15,26 @@ public class bullet4 : MonoBehaviour
 
     void Start()
     {
-        this.fallSpeed=0.05f;
-        this.moveSpeed=0;
-        this.rotSpeed=10;
+        fallSpeed=0.05f;
+        moveSpeed = Random.Range(-0.03f, 0.03f);
+        rotSpeed=0;
         pl=GameObject.Find("Player");
     }
 
     void FixedUpdate()
     {
-        if(gameObject.transform.position.y>1){
-            moveSpeed=0;
+        if(gameObject.transform.position.y>1)
+        {
+            moveSpeed += 0;
         }
-        else if(gameObject.transform.position.y>-1){
-            if(pl.transform.position.x>gameObject.transform.position.x){
+        else if(gameObject.transform.position.y>-1)
+        {
+            if(pl.transform.position.x>gameObject.transform.position.x)
+            {
                 moveSpeed+=0.003f;
             }
-            else if(pl.transform.position.x<gameObject.transform.position.x){
+            else if(pl.transform.position.x<gameObject.transform.position.x)
+            {
                 moveSpeed-=0.003f;
             }
             else{
@@ -41,7 +45,8 @@ public class bullet4 : MonoBehaviour
         transform.Translate(moveSpeed,-fallSpeed,0,Space.World);
         transform.Rotate(0,0,rotSpeed);
         //下まで行ったら消去
-        if(transform.position.y<-5.5f){
+        if(transform.position.y<-5.5f)
+        {
             Destroy(gameObject);
         }
     }

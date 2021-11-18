@@ -6,7 +6,6 @@ using enemyInfo;
 public class enemyAppearance : MonoBehaviour
 {
     //使う部品
-    MobEnemy enemyInfo;
     bossBasicInfo bossBasicInfo;
     enemyBasicInfo enemyBasicInfo;
     GameObject enemyObj;
@@ -18,7 +17,6 @@ public class enemyAppearance : MonoBehaviour
         enemyObj.name = bossInfo.name;
         bossBasicInfo = enemyObj.GetComponent<bossBasicInfo>();
         bossBasicInfo.SetBasicInfo(bossInfo.name,bossInfo.hp,bossInfo.hitBonus,bossInfo.defeatBonus,bossInfo.timeBonus);
-        //enemyObj.GetComponent<boss1>().hp = hp;
     }
 
     public void EnemyAppearance(MobEnemy enemyInfo, float posX, float posY)
@@ -28,6 +26,13 @@ public class enemyAppearance : MonoBehaviour
         enemyObj.name = enemyInfo.name;
         enemyBasicInfo = enemyObj.GetComponent<enemyBasicInfo>();
         enemyBasicInfo.SetBasicInfo(enemyInfo.name, enemyInfo.hp, enemyInfo.hitBonus, enemyInfo.defeatBonus, enemyInfo.fallSpeed, enemyInfo.moveSpeed, enemyInfo.rotSpeed, enemyInfo.lifeExpectancy);
-        //enemyObj.GetComponent<boss1>().hp = hp;
+    }
+
+    public void BulletAppearance(string name, float posX, float posY)
+    {
+        //bulletオブジェクトを画面に生成する
+        GameObject bulObjPrefab = Resources.Load<GameObject>("Prefabs/Bullet/" + name);
+        enemyObj = Instantiate(bulObjPrefab, new Vector3(posX, posY, 0), Quaternion.identity);
+        enemyObj.name = name;
     }
 }

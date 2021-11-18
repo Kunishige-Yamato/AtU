@@ -12,7 +12,7 @@ public class bullet11 : MonoBehaviour
     void Start()
     {
         this.fallSpeed=0.3f;
-        this.rotSpeed=-15f;
+        this.rotSpeed=0f;
     }
 
     void FixedUpdate()

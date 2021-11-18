@@ -13,37 +13,43 @@ public class bullet6 : MonoBehaviour
 
     void Start()
     {
-        this.fallSpeed=0.05f;
-        this.moveSpeed=0;
-        this.rotSpeed=10;
+        fallSpeed=0.03f;
+        moveSpeed = Random.Range(-0.03f, 0.03f);
+        rotSpeed=0;
     }
 
     void FixedUpdate()
     {
         GameObject pl=GameObject.Find("Player");
-        if(gameObject.transform.position.y>1){
-            moveSpeed=0;
+        if(gameObject.transform.position.y>1)
+        {
+            moveSpeed += 0;
         }
-        else if(gameObject.transform.position.y>2){
-            if(pl.transform.position.x>gameObject.transform.position.x){
-                moveSpeed+=0.005f;
+        else if(gameObject.transform.position.y>4){
+            if(pl.transform.position.x>gameObject.transform.position.x)
+            {
+                moveSpeed+=0.003f;
             }
-            else if(pl.transform.position.x<gameObject.transform.position.x){
-                moveSpeed-=0.005f;
+            else if(pl.transform.position.x<gameObject.transform.position.x)
+            {
+                moveSpeed-=0.003f;
             }
             else{
                 moveSpeed=0;
             }
         }
-        else if(gameObject.transform.position.y>-1){
-            if(pl.transform.position.x>gameObject.transform.position.x){
-                moveSpeed+=0.01f;
+        else if(gameObject.transform.position.y>-1)
+        {
+            if(pl.transform.position.x>gameObject.transform.position.x)
+            {
+                moveSpeed+=0.006f;
             }
-            else if(pl.transform.position.x<gameObject.transform.position.x){
-                moveSpeed-=0.01f;
+            else if(pl.transform.position.x<gameObject.transform.position.x)
+            {
+                moveSpeed-=0.006f;
             }
             else{
-                moveSpeed=0;
+                moveSpeed+=0;
             }
         }
         

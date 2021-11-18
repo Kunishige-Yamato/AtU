@@ -34,8 +34,8 @@ public class bullet14_1 : MonoBehaviour
             timer=0;
         }
         if(moveSpeed>0&&timer>0.1f){
-            Instantiate(bulletPrefab,bulletPlace,Quaternion.identity);
-            timer=0;
+            Instantiate(bulletPrefab, bulletPlace, Quaternion.identity).transform.Rotate(new Vector3(0, 0, 90));
+            timer =0;
         }
 
         //自身の移動

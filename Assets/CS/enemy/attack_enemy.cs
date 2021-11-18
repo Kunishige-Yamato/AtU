@@ -39,6 +39,11 @@ public class attack_enemy : MonoBehaviour
                 atk3.bulPrefab = bulPrefab;
                 atk3.atkClass = gameObject.GetComponent<attack_enemy>();
                 break;
+            case "7":
+                attack_enemy_7 atk7 = gameObject.AddComponent<attack_enemy_7>();
+                atk7.bulPrefab = bulPrefab;
+                atk7.atkClass = gameObject.GetComponent<attack_enemy>();
+                break;
 
         }
     }
@@ -161,5 +166,33 @@ public class attack_enemy_3 : attack_enemy
         }
 
         Invoke("Shoot", 1.2f);
+    }
+}
+
+public class attack_enemy_7 : attack_enemy
+{
+    //回転移動に必要な変数
+    float angle, radius, speed;
+    Vector2 enemyPlace;
+
+    void Start()
+    {
+        angle = Random.Range(30f, 150f);
+        radius = Random.Range(3f, 6f);
+        speed = Random.Range(1f, 3f);
+        if (angle % 2 < 1)
+        {
+            speed *= -1;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        enemyPlace = transform.position;
+        angle += speed;
+        float rad = Mathf.PI * angle / 180;
+        enemyPlace.x = (float)Mathf.Cos(rad) * radius + 0;
+        enemyPlace.y = (float)Mathf.Sin(rad) * radius + 6;
+        transform.position = enemyPlace;
     }
 }

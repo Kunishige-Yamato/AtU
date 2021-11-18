@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,9 @@ public class progress : MonoBehaviour
     jsonReceive jsonRec = new jsonReceive();
 
     //ボスの情報リスト
-    Boss[] bossList;
+    public Boss[] bossList;
     //エネミーの情報リスト
-    MobEnemy[] enemyList;
+    public MobEnemy[] enemyList;
 
     //敵生成クラス
     enemyAppearance enemyApp;
@@ -53,8 +54,7 @@ public class progress : MonoBehaviour
     void Start()
     {
         //敵情報をDBから受け取る
-        bossList=jsonRec.ReceiveBossData();
-        enemyList = jsonRec.ReceiveEnemyData();
+        StartCoroutine(jsonRec.ConnectDB(PlayerPrefs.GetString("ID")));
 
         //クラス作成
         enemyApp =gameObject.AddComponent<enemyAppearance>();
@@ -63,7 +63,7 @@ public class progress : MonoBehaviour
         //enemyApp.BossAppearance(bossList[0]);
 
         //hpバー消去
-        //hpBarGroup.alpha = 0f;
+        hpBarGroup.alpha = 0f;
 
         //リザルト消去
         resultGroup.alpha = 0f;
@@ -79,8 +79,11 @@ public class progress : MonoBehaviour
 
         //難易度設定
         //仮
-        difficulty = 2;
+        difficulty = 0;
         endless = 0;
+
+        //Debug用ステージスキップ
+        stageNum = 1;
 
         //カットイン設定
         animator = cutInCanvas.GetComponent<Animator>();
@@ -96,20 +99,34 @@ public class progress : MonoBehaviour
         {
             if(float.Parse(csvDatas[i][2])<=timer&&csvDatas[i][5]=="0")
             {
-                if(csvDatas[i][0]=="boss")
+                if(csvDatas[i][0]=="boss"&&bossList.Length>0)
                 {
                     int bossNum = int.Parse(csvDatas[i][1]);
                     float posX = float.Parse(csvDatas[i][3]);
                     float posY = float.Parse(csvDatas[i][4]);
-                    enemyApp.BossAppearance(bossList[bossNum-1],posX,posY);
+                    //Debug.Log(bossNum);
+                    enemyApp.BossAppearance(bossList[bossNum - 1], posX, posY);
                     hpBarGroup.alpha = 1f;
                 }
-                else if(csvDatas[i][0]=="enemy")
+                else if(csvDatas[i][0]=="enemy"&&enemyList.Length>0)
                 {
                     int enemyNum = int.Parse(csvDatas[i][1]);
                     float posX = float.Parse(csvDatas[i][3]);
                     float posY = float.Parse(csvDatas[i][4]);
-                    enemyApp.EnemyAppearance(enemyList[enemyNum - 1],posX,posY);
+                    //Debug.Log(enemyNum);
+                    enemyApp.EnemyAppearance(enemyList[enemyNum - 1], posX, posY);
+                }
+                else if(csvDatas[i][0]=="bullet")
+                {
+                    string bulName = "bullet" + csvDatas[i][1] + "Prefab";
+                    float posX = float.Parse(csvDatas[i][3]);
+                    float posY = float.Parse(csvDatas[i][4]);
+                    //Debug.Log(bulName);
+                    enemyApp.BulletAppearance(bulName, posX, posY);
+                }
+                else
+                {
+                    Debug.Log(csvDatas[i][0]+"はcsvの記述が不適切");
                 }
                 csvDatas[i][5]="1";
             }
@@ -168,7 +185,7 @@ public class progress : MonoBehaviour
         Cursor.visible = false;
         pl.canMove = true;
         Cursor.lockState = CursorLockMode.Locked;
-        Invoke("CanMove", 1.8f);
+        Invoke("CursorMove", 1.8f);
 
         //hpバー消去
         hpBarGroup.alpha = 0f;
@@ -186,7 +203,7 @@ public class progress : MonoBehaviour
 
         stageNum++;
 
-        //CutIn();
+        CutIn();
 
         if (stageNum <= allStageNum)
         {
@@ -222,8 +239,13 @@ public class progress : MonoBehaviour
 
             timer = 0;
             //Debug用ステージ早送り
-            timer = 55;
+            timer = 60;
         }
+    }
+
+    void CursorMove()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void CutIn()
@@ -246,8 +268,3 @@ public class progress : MonoBehaviour
         animator.Play("CutIn", 0, 0f);
     }
 }
-
-/*
- 明日の俺へ
-ステージ2に必要な敵とボスを作ってくださーい
- */

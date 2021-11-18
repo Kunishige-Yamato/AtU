@@ -8,12 +8,14 @@ public class bullet12 : MonoBehaviour
     float fallSpeed=0;
     //横移動速度
     float moveSpeed=0;
+    float rotSpeed;
     int direction;
 
     void Start()
     {
         direction=0;
         Invoke("Vertical",Random.Range(0.3f,2f));
+        this.rotSpeed = Random.Range(-15,15);
     }
 
     void FixedUpdate()
@@ -40,9 +42,10 @@ public class bullet12 : MonoBehaviour
         }
 
         transform.Translate(moveSpeed,-fallSpeed,0,Space.World);
+        transform.Rotate(0, 0, rotSpeed);
 
         //下まで行ったら消去
-        if(transform.position.y<-5.5f){
+        if (transform.position.y<-5.5f){
             Destroy(gameObject);
         }
     }

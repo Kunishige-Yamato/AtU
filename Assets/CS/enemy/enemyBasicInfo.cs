@@ -63,7 +63,7 @@ public class enemyBasicInfo : MonoBehaviour
         transform.Rotate(0, 0, rotSpeed);
 
         //端まで行ったら消去
-        if (transform.position.y < -6f || transform.position.y > 6f || transform.position.x < -10f || transform.position.x > 10f)
+        if (transform.position.y < -10f || transform.position.y > 10f || transform.position.x < -10f || transform.position.x > 10f)
         {
             Destroy(gameObject);
         }

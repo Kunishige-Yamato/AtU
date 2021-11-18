@@ -38,6 +38,7 @@ namespace enemyInfo
             bossObj = Resources.Load("Prefabs/Boss/" + this.name) as GameObject;
         }
     }
+
     //派生モブエネミークラス
     [System.Serializable]
     public class MobEnemy : Enemy

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3322193608145504861}
   - component: {fileID: 3322193608145504860}
-  - component: {fileID: 3322193608145504862}
+  - component: {fileID: 5076471763738479996}
   - component: {fileID: 5158336070199803032}
   - component: {fileID: -3738084322640717309}
   m_Layer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4d2162c9d7b4141b59c3c5de6af243df, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fe91f064e5a0041f48a0d32553f17769, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,8 +84,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &3322193608145504862
-CircleCollider2D:
+--- !u!61 &5076471763738479996
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -97,9 +97,19 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.35}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.8, y: 4.8}
+    newSize: {x: 4, y: 4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 2
+  m_Size: {x: 4.8, y: 3.8}
+  m_EdgeRadius: 0
 --- !u!114 &5158336070199803032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,15 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36b9bc964c66414380a8e72e6f42de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulSkin:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   bulPrefab:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1449191295878825502, guid: aaf4ca8833e874862a024749bddcf407, type: 3}
+  - {fileID: 4982377701991841805, guid: 9a99d36e3ed124e4fb0df0ac130811f7, type: 3}
+  - {fileID: 488880283681713786, guid: 666236460934d4d2a9412976dd30e2f0, type: 3}
+  - {fileID: 8394794438750486569, guid: a895df5606b1148868e6c9a0d3caa828, type: 3}
+  - {fileID: 494328128809913081, guid: b5fb88a5f6ac14a899f0ab07e2dba09d, type: 3}
