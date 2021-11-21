@@ -28,6 +28,9 @@ public class enemyBasicInfo : MonoBehaviour
     float timer;
     float lifeExpectancy;
 
+    //hp0の時に消去したくない場合falseに
+    bool defeatAndDestroy=false;
+
     //設定読み込み
     public void SetBasicInfo(string name, int hp, int hitBonus, int defeatBonus, float fallSpeed, float moveSpeed, float rotSpeed, float lifeExpectancy)
     {
@@ -54,6 +57,12 @@ public class enemyBasicInfo : MonoBehaviour
         this.fallSpeed += fallSpeed;
         this.moveSpeed += moveSpeed;
         this.rotSpeed += rotSpeed;
+    }
+
+    //hp0時にdestroyしない設定に変更
+    public void NotDestroy()
+    {
+        defeatAndDestroy = true;
     }
 
     void FixedUpdate()
@@ -110,11 +119,19 @@ public class enemyBasicInfo : MonoBehaviour
 
             if (hit >= hp)
             {
-                //爆発
-                EffectAdd(transform.position.x, transform.position.y, "defeatEffect");
                 //撃破ボーナス
                 sc.AddScore(defeatBonus);
-                Destroy(gameObject);
+                if(defeatAndDestroy)
+                {
+                    attack_enemy atkEnemy = gameObject.GetComponent<attack_enemy>();
+                    atkEnemy.defeatFlag = true;
+                }
+                else
+                {
+                    //爆発
+                    EffectAdd(transform.position.x, transform.position.y, "defeatEffect");
+                    Destroy(gameObject);
+                }
             }
         }
     }

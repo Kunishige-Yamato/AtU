@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8560336899421476412}
   - component: {fileID: 8560336899421476415}
   - component: {fileID: 8560336899421476414}
-  - component: {fileID: 8560336899421476385}
+  - component: {fileID: 4495839509659516758}
+  - component: {fileID: -2775093391842015042}
   m_Layer: 0
-  m_Name: enemy6Prefab
+  m_Name: enemy6
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0cf66c1ae66d64a1e96b4094ad4f8935, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 43f5fb23b1b2449f5aec2df0ac7230d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,8 +99,8 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.21054268}
   serializedVersion: 2
-  m_Radius: 1.6210223
---- !u!114 &8560336899421476385
+  m_Radius: 2
+--- !u!114 &4495839509659516758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,8 +109,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8560336899421476384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a750ded95c5a8442fac0683dc0d5d585, type: 3}
+  m_Script: {fileID: 11500000, guid: 9af4a8a36f22348a28dac35d8239b7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1110706272780269168, guid: b46a257d403ae4e2da66e447109bc0b5,
-    type: 3}
+--- !u!114 &-2775093391842015042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560336899421476384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bdf7bf5333404dbb8c84bb0eeab5c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulPrefab:
+  - {fileID: 1110706272780269168, guid: b46a257d403ae4e2da66e447109bc0b5, type: 3}
+  timer: 0
+  defeatFlag: 0

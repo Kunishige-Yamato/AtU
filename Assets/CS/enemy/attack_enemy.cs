@@ -16,6 +16,9 @@ public class attack_enemy : MonoBehaviour
     //敵攻撃用基底クラス
     protected attack_enemy atkClass;
 
+    //撃破フラグ
+    public bool defeatFlag; 
+
     void Start()
     {
         //敵種別番号取得
@@ -39,6 +42,21 @@ public class attack_enemy : MonoBehaviour
                 atk3.bulPrefab = bulPrefab;
                 atk3.atkClass = gameObject.GetComponent<attack_enemy>();
                 break;
+            case "4":
+                attack_enemy_4 atk4 = gameObject.AddComponent<attack_enemy_4>();
+                atk4.bulPrefab = bulPrefab;
+                atk4.atkClass = gameObject.GetComponent<attack_enemy>();
+                break;
+            case "5":
+                attack_enemy_5 atk5 = gameObject.AddComponent<attack_enemy_5>();
+                atk5.bulPrefab = bulPrefab;
+                atk5.atkClass = gameObject.GetComponent<attack_enemy>();
+                break;
+            case "6":
+                attack_enemy_6 atk6 = gameObject.AddComponent<attack_enemy_6>();
+                atk6.bulPrefab = bulPrefab;
+                atk6.atkClass = gameObject.GetComponent<attack_enemy>();
+                break;
             case "7":
                 attack_enemy_7 atk7 = gameObject.AddComponent<attack_enemy_7>();
                 atk7.bulPrefab = bulPrefab;
@@ -46,6 +64,8 @@ public class attack_enemy : MonoBehaviour
                 break;
 
         }
+
+        defeatFlag = false;
     }
 
     void FixedUpdate()
@@ -166,6 +186,163 @@ public class attack_enemy_3 : attack_enemy
         }
 
         Invoke("Shoot", 1.2f);
+    }
+}
+
+public class attack_enemy_4 : attack_enemy
+{
+    float angle;
+
+    void Start()
+    {
+        gameObject.name = "enemy4Prefab";
+
+        Shoot();
+    }
+
+    void Shoot()
+    {
+        angle = Random.Range(-180f, 360f);
+        float rad = Mathf.PI * angle / 180;
+        bulPos.x = (float)Mathf.Cos(rad) * 1.5f + transform.position.x;
+        bulPos.y = (float)Mathf.Sin(rad) * 1.5f + transform.position.y;
+        GameObject bul = Instantiate(bulPrefab[0], bulPos, Quaternion.identity);
+        bullet26 bulCom = bul.GetComponent<bullet26>();
+        bulCom.enemyPrefab = gameObject;
+        bulCom.parent = 4;
+        Invoke("Shoot", 0.07f);
+    }
+}
+
+public class attack_enemy_5 : attack_enemy
+{
+    float angle;
+    bool defeat = false;
+    Sprite image;
+    Vector3 bulletScale;
+    enemyBasicInfo basicInfo;
+
+    void Start()
+    {
+        gameObject.name = "enemy5Prefab";
+        image = Resources.Load("Textures/enemy5_2") as Sprite;
+        progress pro = GameObject.Find("Progress").GetComponent<progress>();
+        if (pro.GetDifficulty()[0] == 3 && pro.GetStageNum()[0] == 3)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = image;
+        }
+
+        basicInfo = gameObject.GetComponent<enemyBasicInfo>();
+        basicInfo.NotDestroy();
+    }
+
+    void FixedUpdate()
+    {
+        if (atkClass.defeatFlag && defeat == false)
+        {
+            Shoot();
+            defeat = true;
+        }
+    }
+
+    void Shoot()
+    {
+        for (int i = 0; i < 360; i += 15)
+        {
+            angle = i;
+            float rad = Mathf.PI * angle / 180;
+            bulPos.x = (float)Mathf.Cos(rad) * 0.5f + transform.position.x;
+            bulPos.y = (float)Mathf.Sin(rad) * 0.5f + transform.position.y;
+            GameObject bul = Instantiate(bulPrefab[0], bulPos, Quaternion.identity) as GameObject;
+            bullet26 bulCom = bul.GetComponent<bullet26>();
+            bulCom.enemyPrefab = gameObject;
+            bulCom.parent = 5;
+        }
+        Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        //ブレーキ
+        basicInfo.AddSpeed(-0.005f, 0, 0);
+        //拡大
+        bulletScale = transform.localScale;
+        bulletScale.x += 0.08f;
+        bulletScale.y += 0.08f;
+        transform.localScale = bulletScale;
+    }
+}
+
+public class attack_enemy_6 : attack_enemy
+{
+    float fallSpeed,angle;
+    bool defeat=false;
+    Vector3 bulletScale;
+    Sprite image;
+
+    void Start()
+    {
+        gameObject.name = "enemy6Prefab";
+        image = Resources.Load("Textures/enemy6_2") as Sprite;
+        progress pro = GameObject.Find("Progress").GetComponent<progress>();
+        if (pro.GetDifficulty()[0] == 3 && pro.GetStageNum()[0] == 3)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = image;
+        }
+
+        enemyBasicInfo basicInfo = gameObject.GetComponent<enemyBasicInfo>();
+        basicInfo.NotDestroy();
+    }
+
+    void FixedUpdate()
+    {
+        if (atkClass.defeatFlag && defeat==false)
+        {
+            // CapselColliderの取得
+            CircleCollider2D[] myCol = gameObject.GetComponents<CircleCollider2D>();
+            // Colliderを無効化
+            foreach (CircleCollider2D col in myCol)
+            {
+                col.enabled = false;
+            }
+
+            Shoot();
+            defeat = true;
+        }
+    }
+
+    void Shoot()
+    {
+        enemyBasicInfo basicInfo = gameObject.GetComponent<enemyBasicInfo>();
+        fallSpeed = basicInfo.GetSpeed()[0];
+
+        if (fallSpeed > 0)
+        {
+            //ブレーキ
+            basicInfo.AddSpeed(-0.003f,0,0);
+            //拡大
+            bulletScale = transform.localScale;
+            bulletScale.x += 0.009f;
+            bulletScale.y += 0.006f;
+            transform.localScale = bulletScale;
+            Invoke("Shoot", 0.05f);
+        }
+        else
+        {
+            fallSpeed = 0;
+            for (int i = 0; i < 360; i += 12)
+            {
+                angle = i;
+                float rad = Mathf.PI * angle / 180;
+                bulPos.x = (float)Mathf.Cos(rad) * 0.5f + transform.position.x;
+                bulPos.y = (float)Mathf.Sin(rad) * 0.5f + transform.position.y;
+                GameObject bul = Instantiate(bulPrefab[0], bulPos, Quaternion.identity);
+                bullet26 bulCom = bul.GetComponent<bullet26>();
+                bulCom.enemyPrefab = gameObject;
+                bulCom.parent = 6;
+                Destroy(gameObject);
+            }
+        }
     }
 }
 

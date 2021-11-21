@@ -32,8 +32,9 @@ public class attack_boss : MonoBehaviour
     //攻撃クラス
     attack_boss_1 atk1;
     attack_boss_2 atk2;
+    attack_boss_3 atk3;
 
-    void Start()
+    private void Start()
     {
         //進行用コンポーネント取得
         progress = GameObject.Find("Progress");
@@ -46,9 +47,6 @@ public class attack_boss : MonoBehaviour
         //タイマー初期化
         timer = 0;
 
-        //弾座標配列初期化
-        bulPos = new Vector3[20];
-
         //csv読み込み
         csvFile = Resources.Load("CSV/" + name) as TextAsset;
         addList();
@@ -59,14 +57,20 @@ public class attack_boss : MonoBehaviour
             case "boss1":
                 atk1=gameObject.AddComponent<attack_boss_1>();
                 atk1.bulPrefab = bulPrefab;
-                atk1.bulPos = bulPos;
+                atk1.bulPos = new Vector3[bulPrefab.Length];
+                atk1.difficulty = difficulty;
                 break;
             case "boss2":
                 atk2=gameObject.AddComponent<attack_boss_2>();
                 atk2.bulPrefab = bulPrefab;
-                atk2.bulPos = bulPos;
+                atk2.bulPos = new Vector3[bulPrefab.Length];
+                atk2.difficulty = difficulty;
                 break;
             case "boss3":
+                atk3 = gameObject.AddComponent<attack_boss_3>();
+                atk3.bulPrefab = bulPrefab;
+                atk3.bulPos = new Vector3[bulPrefab.Length];
+                atk3.difficulty = difficulty;
                 break;
             case "boss4":
                 break;
@@ -104,8 +108,9 @@ public class attack_boss : MonoBehaviour
     //攻撃
     void Generate(string n)
     {
-        //boss1:1,2,3
-        //boss2:4,5,6,7,8
+        //boss1: 1, 2, 3
+        //boss2: 4, 5, 6, 7, 8
+        //boss2: 9,10,11,12,13
 
         switch (n)
         {
@@ -132,6 +137,21 @@ public class attack_boss : MonoBehaviour
                 break;
             case "s8":
                 atk2.Shoot8();
+                break;
+            case "s9":
+                atk3.Shoot9();
+                break;
+            case "s10":
+                atk3.Shoot10();
+                break;
+            case "s11":
+                atk3.Shoot11();
+                break;
+            case "s12":
+                atk3.Shoot12();
+                break;
+            case "s13":
+                atk3.Shoot13();
                 break;
             case "end":
                 addList();
@@ -183,14 +203,14 @@ public class attack_boss_1 : attack_boss
     public void Shoot1()
     {
         //弾射出元座標設定
-        bulPos[1] = new Vector3(transform.position.x, transform.position.y - 2, 0);
+        bulPos[0] = new Vector3(transform.position.x, transform.position.y - 2, 0);
 
         if (difficulty != 3)
         {
             for (float i = -2; i <= 2; i += 0.1f)
             {
                 //弾生成，名付け
-                GameObject mb = Instantiate(bulPrefab[0], bulPos[1], Quaternion.identity);
+                GameObject mb = Instantiate(bulPrefab[0], bulPos[0], Quaternion.identity);
                 mb.name = "bullet_" + num;
                 num++;
 
@@ -202,7 +222,7 @@ public class attack_boss_1 : attack_boss
         {
             for (float i = -2; i <= 2; i += 0.05f)
             {
-                GameObject mb = Instantiate(bulPrefab[0], bulPos[1], Quaternion.identity);
+                GameObject mb = Instantiate(bulPrefab[0], bulPos[0], Quaternion.identity);
                 mb.name = "bullet_" + num;
                 GameObject bul = GameObject.Find("bullet_" + num);
                 num++;
@@ -215,11 +235,11 @@ public class attack_boss_1 : attack_boss
     public void Shoot2()
     {
         //弾射出元座標設定
-        bulPos[2] = new Vector3(transform.position.x, transform.position.y - 2, 0);
+        bulPos[1] = new Vector3(transform.position.x, transform.position.y - 2, 0);
 
         if (mov <= maxMov && dir == false)
         {
-            GameObject mb2 = Instantiate(bulPrefab[1], bulPos[2], Quaternion.identity);
+            GameObject mb2 = Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
             mb2.name = "bullet_" + num2;
             GameObject bul2 = GameObject.Find("bullet_" + num2);
             num2++;
@@ -234,7 +254,7 @@ public class attack_boss_1 : attack_boss
         }
         if (mov >= minMov && dir == true)
         {
-            GameObject mb2 = Instantiate(bulPrefab[1], bulPos[2], Quaternion.identity);
+            GameObject mb2 = Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
             mb2.name = "bullet_" + num2;
             GameObject bul2 = GameObject.Find("bullet_" + num2);
             num2++;
@@ -266,9 +286,9 @@ public class attack_boss_1 : attack_boss
     {
         int countShoot3 = 0;
         //弾射出元座標設定
-        bulPos[3].x = Random.Range(-8f, 8f);
-        bulPos[3].y = 5.5f;
-        Instantiate(bulPrefab[2], bulPos[3], Quaternion.identity);
+        bulPos[2].x = Random.Range(-8f, 8f);
+        bulPos[2].y = 5.5f;
+        Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
         countShoot3++;
 
         if (countShoot3 < 50 && selectDifficulty.difficulty != 3)
@@ -288,13 +308,16 @@ public class attack_boss_1 : attack_boss
 
 public class attack_boss_2 : attack_boss
 {
-    int countShoot4 = 0;
-    int countShoot6 = 0;
-    int countShoot8 = 0;
+    int countShoot4;
+    int countShoot6;
+    int countShoot8;
 
     void Start()
     {
-        
+        //初期化
+        countShoot4 = 0;
+        countShoot6 = 0;
+        countShoot8 = 0;
     }
 
     void FixedUpdate()
@@ -304,9 +327,9 @@ public class attack_boss_2 : attack_boss
 
     public void Shoot4()
     {
-        bulPos[4].x = Random.Range(-9, 9);
-        bulPos[4].y = 5.5f;
-        Instantiate(bulPrefab[0], bulPos[4], Quaternion.identity);
+        bulPos[0].x = Random.Range(-9, 9);
+        bulPos[0].y = 5.5f;
+        Instantiate(bulPrefab[0], bulPos[0], Quaternion.identity);
         if (countShoot4 < 80)
         {
             Invoke("Shoot4", 0.1f);
@@ -322,9 +345,9 @@ public class attack_boss_2 : attack_boss
     {
         for (int i = -8; i <= 8; i += 2)
         {
-            bulPos[5].x = i;
-            bulPos[5].y = 5.5f;
-            Instantiate(bulPrefab[1], bulPos[5], Quaternion.identity);
+            bulPos[1].x = i;
+            bulPos[1].y = 5.5f;
+            Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
         }
     }
 
@@ -334,18 +357,18 @@ public class attack_boss_2 : attack_boss
         {
             for (float i = -6; i <= 2; i += 1.5f)
             {
-                bulPos[6].x = -9.5f;
-                bulPos[6].y = i;
-                Instantiate(bulPrefab[2], bulPos[6], Quaternion.identity);
+                bulPos[2].x = -9.5f;
+                bulPos[2].y = i;
+                Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
             }
         }
         else
         {
             for (float i = -9; i <= 5; i += 1.5f)
             {
-                bulPos[6].x = -9.5f;
-                bulPos[6].y = i;
-                Instantiate(bulPrefab[2], bulPos[6], Quaternion.identity);
+                bulPos[2].x = -9.5f;
+                bulPos[2].y = i;
+                Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
             }
         }
         if (countShoot6 < 2)
@@ -363,23 +386,23 @@ public class attack_boss_2 : attack_boss
     {
         for (float i = -5.1f; i < 5; i += 2)
         {
-            bulPos[7].x = -9.5f;
-            bulPos[7].y = i;
-            Instantiate(bulPrefab[3], bulPos[7], Quaternion.identity);
+            bulPos[3].x = -9.5f;
+            bulPos[3].y = i;
+            Instantiate(bulPrefab[3], bulPos[3], Quaternion.identity);
         }
         for (float i = -9f; i < 9; i += 2f)
         {
-            bulPos[7].x = i;
-            bulPos[7].y = 5.5f;
-            Instantiate(bulPrefab[3], bulPos[7], Quaternion.identity);
+            bulPos[3].x = i;
+            bulPos[3].y = 5.5f;
+            Instantiate(bulPrefab[3], bulPos[3], Quaternion.identity);
         }
     }
 
     public void Shoot8()
     {
-        bulPos[8].x = Random.Range(-8f, 8f);
-        bulPos[8].y = -5.5f;
-        Instantiate(bulPrefab[4], bulPos[8], Quaternion.identity);
+        bulPos[4].x = Random.Range(-8f, 8f);
+        bulPos[4].y = -5.5f;
+        Instantiate(bulPrefab[4], bulPos[4], Quaternion.identity);
         if (countShoot8 < 100 && selectDifficulty.difficulty != 3)
         {
             Invoke("Shoot8", 0.1f);
@@ -393,6 +416,212 @@ public class attack_boss_2 : attack_boss
         else
         {
             countShoot8 = 0;
+        }
+    }
+}
+
+
+public class attack_boss_3 : attack_boss
+{
+    Vector3 objPlace;
+
+    int mode;
+    float moveSpeed, angle, posX;
+    int countShoot11;
+    int countShoot12;
+    int countShoot13;
+
+    void Start()
+    {
+        //初期化
+        mode = 0;
+        moveSpeed = 0;
+        angle = 0;
+        posX = -8;
+        countShoot11 = 0;
+        countShoot12 = 0;
+        countShoot13 = 0;
+
+        objPlace.x = 0;
+        objPlace.y = 3;
+        transform.position = objPlace;
+    }
+
+    void FixedUpdate()
+    {
+
+    }
+
+    public void Shoot9()
+    {
+        bulPos[0].x = 0;
+
+        //難易度クレイジーの時だけ2体出現
+        if (difficulty==3)
+        {
+            bulPos[0].y = 5.8f;
+            Instantiate(bulPrefab[0], bulPos[0], Quaternion.identity);
+            bulPos[0].y = -5.8f;
+            Instantiate(bulPrefab[0], bulPos[0], Quaternion.identity);
+        }
+        else
+        {
+            bulPos[0].y = 5.8f;
+            Instantiate(bulPrefab[0], bulPos[0], Quaternion.identity);
+        }
+        Defense();
+    }
+
+    public void Shoot10()
+    {
+        if (mode == 0)
+        {
+            //ボス上移動
+            moveSpeed = 0.01f;
+            objPlace = transform.position;
+            objPlace.y -= moveSpeed;
+            transform.position = objPlace;
+            if (transform.position.y <= 0)
+            {
+                moveSpeed = 0;
+                objPlace.x = 0;
+                objPlace.y = 0;
+                transform.position = objPlace;
+                mode = 1;
+            }
+        }
+        if (mode == 1)
+        {
+            if (angle < 720)
+            {
+                float rad = Mathf.PI * (angle + 45) / 180;
+                bulPos[1].x = (float)Mathf.Cos(rad) * 2 + transform.position.x;
+                bulPos[1].y = (float)Mathf.Sin(rad) * 2 + transform.position.y;
+                GameObject bul=Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
+                bul.transform.Rotate(0, 0, angle-90);
+                if (selectDifficulty.difficulty != 0)
+                {
+                    rad = Mathf.PI * (angle + 225) / 180;
+                    bulPos[1].x = (float)Mathf.Cos(rad) * 2 + transform.position.x;
+                    bulPos[1].y = (float)Mathf.Sin(rad) * 2 + transform.position.y;
+                    Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
+                }
+                angle += 1.5f;
+            }
+            else
+            {
+                angle = 0;
+                mode = 2;
+            }
+        }
+        if (mode == 2)
+        {
+            //ボス移動
+            moveSpeed = 0.01f;
+            objPlace = transform.position;
+            objPlace.y += moveSpeed;
+            transform.position = objPlace;
+            if (transform.position.y >= 3)
+            {
+                moveSpeed = 0;
+                objPlace.x = 0;
+                objPlace.y = 3;
+                transform.position = objPlace;
+                mode = 3;
+            }
+        }
+        if (mode == 3)
+        {
+            mode = 0;
+            Defense();
+
+        }
+        else
+        {
+            Invoke("Shoot10", 0.01f);
+        }
+    }
+
+    public void Shoot11()
+    {
+        countShoot11++;
+        for (float i = -5; i < 16; i += 2)
+        {
+            bulPos[2].y = i + i % 3;
+            bulPos[2].x = -9.5f;
+            Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
+            bulPos[2].x = 9.5f;
+            Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
+        }
+        if (countShoot11 < 5)
+        {
+            Invoke("Shoot11", 0.8f);
+        }
+        else
+        {
+            countShoot11 = 0;
+        }
+    }
+
+    public void Shoot12()
+    {
+        countShoot12++;
+
+        //上から
+        bulPos[3].x = Random.Range(-9f, 9f);
+        bulPos[3].y = 6f;
+        Instantiate(bulPrefab[3], bulPos[3], Quaternion.identity);
+        //右から
+        bulPos[3].x = 9.5f;
+        bulPos[3].y = Random.Range(-5f, 5f);
+        Instantiate(bulPrefab[3], bulPos[3], Quaternion.identity);
+        //左から
+        bulPos[3].x = -9.5f;
+        bulPos[3].y = Random.Range(-5f, 5f);
+        Instantiate(bulPrefab[3], bulPos[3], Quaternion.identity);
+
+        if (countShoot12 < 45)
+        {
+            Invoke("Shoot12", 0.2f);
+        }
+        else
+        {
+            countShoot12 = 0;
+        }
+    }
+
+    public void Shoot13()
+    {
+        if (posX > 8)
+        {
+            posX = -8;
+        }
+        bulPos[4].x = posX;
+        bulPos[4].y = 3;
+        Instantiate(bulPrefab[4], bulPos[4], Quaternion.identity);
+
+        countShoot13++;
+        posX += 0.5f;
+
+        //周回数
+        int rap = 5;
+        if (countShoot13 < 33 * rap)
+        {
+            Invoke("Shoot13", 0.05f);
+        }
+        else
+        {
+            countShoot13 = 0;
+        }
+    }
+
+    void Defense()
+    {
+        for (float i = -1.5f; i <= 1.5f; i += 1.5f)
+        {
+            bulPos[5].x = transform.position.x + i;
+            bulPos[5].y = transform.position.y - 2;
+            Instantiate(bulPrefab[5], bulPos[5], Quaternion.identity);
         }
     }
 }

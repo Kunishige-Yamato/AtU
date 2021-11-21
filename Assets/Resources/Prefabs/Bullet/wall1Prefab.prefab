@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1110706272780269168
+--- !u!1 &2566993171110351652
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1110706272780269132}
-  - component: {fileID: 1110706272780269133}
-  - component: {fileID: 1110706272780269170}
-  - component: {fileID: 1110706272780269171}
+  - component: {fileID: 2566993171110351656}
+  - component: {fileID: 2566993171110351657}
+  - component: {fileID: 2566993171110351654}
+  - component: {fileID: 2566993171110351655}
   m_Layer: 0
-  m_Name: bullet26Prefab
+  m_Name: wall1Prefab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1110706272780269132
+--- !u!4 &2566993171110351656
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110706272780269168}
+  m_GameObject: {fileID: 2566993171110351652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1110706272780269133
+--- !u!212 &2566993171110351657
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110706272780269168}
+  m_GameObject: {fileID: 2566993171110351652}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -72,25 +72,24 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5355889005028412652, guid: 9a912c4fd70864f57b9db10963e72fba,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 34b669b7e45f1454a929537e1b42b6dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.76, y: 3.6}
+  m_Size: {x: 4, y: 2.14}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1110706272780269170
-CircleCollider2D:
+--- !u!61 &2566993171110351654
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110706272780269168}
+  m_GameObject: {fileID: 2566993171110351652}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -98,22 +97,27 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.8, y: 4.8}
+    newSize: {x: 4, y: 2.14}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 1.88
---- !u!114 &1110706272780269171
+  m_Size: {x: 3, y: 2.5}
+  m_EdgeRadius: 0
+--- !u!114 &2566993171110351655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110706272780269168}
+  m_GameObject: {fileID: 2566993171110351652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 555ead11c1e034414abf6f5c7a56c6da, type: 3}
+  m_Script: {fileID: 11500000, guid: 52f3a1a151bfd4420957a9687e15d4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image0: {fileID: 5355889005028412652, guid: 9a912c4fd70864f57b9db10963e72fba, type: 3}
-  image1: {fileID: -5125285772875998412, guid: 9a912c4fd70864f57b9db10963e72fba, type: 3}
-  image2: {fileID: -7852397359438436290, guid: 9a912c4fd70864f57b9db10963e72fba, type: 3}
-  image3: {fileID: 7733557174701699591, guid: 9a912c4fd70864f57b9db10963e72fba, type: 3}
-  image4: {fileID: -8814122335438200219, guid: 9a912c4fd70864f57b9db10963e72fba, type: 3}

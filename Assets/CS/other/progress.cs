@@ -83,7 +83,7 @@ public class progress : MonoBehaviour
         endless = 0;
 
         //Debug用ステージスキップ
-        stageNum = 1;
+        stageNum = 2;
 
         //カットイン設定
         animator = cutInCanvas.GetComponent<Animator>();

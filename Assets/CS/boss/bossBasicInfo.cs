@@ -66,6 +66,10 @@ public class bossBasicInfo : MonoBehaviour
                 Destroy(del);
             }
         }
+
+        //表示レイヤーを後ろに
+        SpriteRenderer sr=gameObject.GetComponent<SpriteRenderer>();
+        sr.sortingOrder = -1;
     }
 
     void FixedUpdate()
