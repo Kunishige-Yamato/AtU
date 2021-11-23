@@ -9,7 +9,7 @@ public class enemyBasicInfo : MonoBehaviour
 {
     //スキン
     SpriteRenderer skinSpriteRenderer;
-    Sprite skinSprite;
+    public Sprite[] skinSprite;
 
     //体力
     int hp;
@@ -41,7 +41,7 @@ public class enemyBasicInfo : MonoBehaviour
         this.moveSpeed = moveSpeed;
         this.rotSpeed = rotSpeed;
         this.lifeExpectancy = lifeExpectancy;
-        skinSprite = Resources.Load<Sprite>("Textures/" + name);
+        SetSkin(0);
     }
 
     //移動量教えるやつ
@@ -133,6 +133,19 @@ public class enemyBasicInfo : MonoBehaviour
                     Destroy(gameObject);
                 }
             }
+        }
+    }
+
+    public void SetSkin(int skinNum)
+    {
+        if (skinNum < skinSprite.Length && skinSprite[skinNum] != null) 
+        {
+            skinSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            skinSpriteRenderer.sprite = skinSprite[skinNum];
+        }
+        else
+        {
+            Debug.Log(skinNum+"番にはspriteが設定されていません");
         }
     }
 }

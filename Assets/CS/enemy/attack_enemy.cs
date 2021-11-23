@@ -17,10 +17,27 @@ public class attack_enemy : MonoBehaviour
     protected attack_enemy atkClass;
 
     //撃破フラグ
-    public bool defeatFlag; 
+    public bool defeatFlag;
+
+    //ゲーム進行オブジェ
+    GameObject progress;
+    progress pro;
+
+    //難易度，モード
+    protected int[] modeDif;
+    protected int[] stageNum;
 
     void Start()
     {
+
+        //進行用コンポーネント取得
+        progress = GameObject.Find("Progress");
+        pro = progress.GetComponent<progress>();
+
+        //モード，難易度取得
+        modeDif = pro.GetDifficulty();
+        stageNum = pro.GetStageNum();
+
         //敵種別番号取得
         var pattern = "([0-9]*$)";
         var myNumber = Regex.Match(gameObject.name, pattern);
@@ -30,37 +47,58 @@ public class attack_enemy : MonoBehaviour
             case "1":
                 attack_enemy_1 atk1 = gameObject.AddComponent<attack_enemy_1>();
                 atk1.bulPrefab = bulPrefab;
+                atk1.modeDif = modeDif;
+                atk1.stageNum = stageNum;
                 atk1.atkClass = gameObject.GetComponent<attack_enemy>();
                 break;
             case "2":
                 attack_enemy_2 atk2 = gameObject.AddComponent<attack_enemy_2>();
                 atk2.bulPrefab = bulPrefab;
+                atk2.modeDif = modeDif;
+                atk2.stageNum = stageNum;
                 atk2.atkClass = gameObject.GetComponent<attack_enemy>();
                 break;
             case "3":
                 attack_enemy_3 atk3 = gameObject.AddComponent<attack_enemy_3>();
                 atk3.bulPrefab = bulPrefab;
+                atk3.modeDif = modeDif;
+                atk3.stageNum = stageNum;
                 atk3.atkClass = gameObject.GetComponent<attack_enemy>();
                 break;
             case "4":
                 attack_enemy_4 atk4 = gameObject.AddComponent<attack_enemy_4>();
                 atk4.bulPrefab = bulPrefab;
+                atk4.modeDif = modeDif;
+                atk4.stageNum = stageNum;
                 atk4.atkClass = gameObject.GetComponent<attack_enemy>();
                 break;
             case "5":
                 attack_enemy_5 atk5 = gameObject.AddComponent<attack_enemy_5>();
                 atk5.bulPrefab = bulPrefab;
+                atk5.modeDif = modeDif;
+                atk5.stageNum = stageNum;
                 atk5.atkClass = gameObject.GetComponent<attack_enemy>();
                 break;
             case "6":
                 attack_enemy_6 atk6 = gameObject.AddComponent<attack_enemy_6>();
                 atk6.bulPrefab = bulPrefab;
+                atk6.modeDif = modeDif;
+                atk6.stageNum = stageNum;
                 atk6.atkClass = gameObject.GetComponent<attack_enemy>();
                 break;
             case "7":
                 attack_enemy_7 atk7 = gameObject.AddComponent<attack_enemy_7>();
                 atk7.bulPrefab = bulPrefab;
+                atk7.modeDif = modeDif;
+                atk7.stageNum = stageNum;
                 atk7.atkClass = gameObject.GetComponent<attack_enemy>();
+                break;
+            case "8":
+                attack_enemy_8 atk8 = gameObject.AddComponent<attack_enemy_8>();
+                atk8.bulPrefab = bulPrefab;
+                atk8.modeDif = modeDif;
+                atk8.stageNum = stageNum;
+                atk8.atkClass = gameObject.GetComponent<attack_enemy>();
                 break;
 
         }
@@ -196,6 +234,13 @@ public class attack_enemy_4 : attack_enemy
     void Start()
     {
         gameObject.name = "enemy4Prefab";
+
+        //ステージによって見た目を変更
+        if(stageNum[0]==4)
+        {
+            enemyBasicInfo basicInfo = GetComponent<enemyBasicInfo>();
+            basicInfo.SetSkin(1);
+        }
 
         Shoot();
     }
@@ -371,5 +416,63 @@ public class attack_enemy_7 : attack_enemy
         enemyPlace.x = (float)Mathf.Cos(rad) * radius + 0;
         enemyPlace.y = (float)Mathf.Sin(rad) * radius + 6;
         transform.position = enemyPlace;
+    }
+}
+
+public class attack_enemy_8 : attack_enemy
+{
+    float angle, angle2;
+    int hit;
+
+    void Start()
+    {
+        gameObject.name = "enemy8Prefab";
+        angle = 0;
+        angle2 = 180;
+        Shoot();
+        Shoot2();
+        timer = 0;
+    }
+
+    void Shoot()
+    {
+        for (int i = 0; i > -25; i -= 5)
+        {
+            angle += i;
+            float rad = Mathf.PI * angle / 180;
+            bulPos.x = (float)Mathf.Cos(rad) * 1.5f + transform.position.x;
+            bulPos.y = (float)Mathf.Sin(rad) * 1.5f + transform.position.y;
+            Instantiate(bulPrefab[0], bulPos, Quaternion.identity);
+        }
+        if (angle > -180)
+        {
+            angle += 15;
+        }
+        else
+        {
+            angle = 0;
+        }
+        Invoke("Shoot", 0.3f);
+    }
+
+    void Shoot2()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            angle2 += i;
+            float rad = Mathf.PI * angle2 / 180;
+            bulPos.x = (float)Mathf.Cos(rad) * 0.8f + transform.position.x;
+            bulPos.y = (float)Mathf.Sin(rad) * 0.8f + transform.position.y;
+            Instantiate(bulPrefab[0], bulPos, Quaternion.identity);
+        }
+        if (angle2 < 360)
+        {
+            angle2 += 15;
+        }
+        else
+        {
+            angle2 = 180;
+        }
+        Invoke("Shoot2", 0.8f);
     }
 }

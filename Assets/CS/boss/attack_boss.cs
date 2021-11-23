@@ -14,7 +14,7 @@ public class attack_boss : MonoBehaviour
     protected Vector3[] bulPos;
 
     //難易度，モード
-    int[] modeDif;
+    protected int[] modeDif;
 
     //ゲーム進行オブジェ
     GameObject progress;
@@ -33,6 +33,7 @@ public class attack_boss : MonoBehaviour
     attack_boss_1 atk1;
     attack_boss_2 atk2;
     attack_boss_3 atk3;
+    attack_boss_4 atk4;
 
     private void Start()
     {
@@ -59,20 +60,28 @@ public class attack_boss : MonoBehaviour
                 atk1.bulPrefab = bulPrefab;
                 atk1.bulPos = new Vector3[bulPrefab.Length];
                 atk1.difficulty = difficulty;
+                atk1.modeDif = modeDif;
                 break;
             case "boss2":
                 atk2=gameObject.AddComponent<attack_boss_2>();
                 atk2.bulPrefab = bulPrefab;
                 atk2.bulPos = new Vector3[bulPrefab.Length];
                 atk2.difficulty = difficulty;
+                atk2.modeDif = modeDif;
                 break;
             case "boss3":
                 atk3 = gameObject.AddComponent<attack_boss_3>();
                 atk3.bulPrefab = bulPrefab;
                 atk3.bulPos = new Vector3[bulPrefab.Length];
                 atk3.difficulty = difficulty;
+                atk3.modeDif = modeDif;
                 break;
             case "boss4":
+                atk4 = gameObject.AddComponent<attack_boss_4>();
+                atk4.bulPrefab = bulPrefab;
+                atk4.bulPos = new Vector3[bulPrefab.Length];
+                atk4.difficulty = difficulty;
+                atk4.modeDif = modeDif;
                 break;
         }
     }
@@ -110,7 +119,8 @@ public class attack_boss : MonoBehaviour
     {
         //boss1: 1, 2, 3
         //boss2: 4, 5, 6, 7, 8
-        //boss2: 9,10,11,12,13
+        //boss3: 9,10,11,12,13
+        //boss4:14,15,16,17,18,19
 
         switch (n)
         {
@@ -153,10 +163,27 @@ public class attack_boss : MonoBehaviour
             case "s13":
                 atk3.Shoot13();
                 break;
+            case "s14":
+                atk4.Shoot14();
+                break;
+            case "s15":
+                atk4.Shoot15();
+                break;
+            case "s16":
+                atk4.Shoot16();
+                break;
+            case "s17":
+                atk4.Shoot17();
+                break;
+            case "s18":
+                atk4.Shoot18();
+                break;
+            case "s19":
+                atk4.Shoot19();
+                break;
             case "end":
                 addList();
                 break;
-                //wall:w1
         }
     }
 
@@ -622,6 +649,250 @@ public class attack_boss_3 : attack_boss
             bulPos[5].x = transform.position.x + i;
             bulPos[5].y = transform.position.y - 2;
             Instantiate(bulPrefab[5], bulPos[5], Quaternion.identity);
+        }
+    }
+}
+
+public class attack_boss_4 : attack_boss
+{
+    int side;
+    float angle;
+    int hit,secForm;
+    int countShoot15,countShoot17,countShoot18;
+
+    public GameObject buddyPrefab;
+    attack_boss_4 buddyClass;
+
+    bossBasicInfo bossBasicInfo;
+    int[] basicInfo;
+
+    void Awake()
+    {
+        //必要情報取得
+        bossBasicInfo = gameObject.GetComponent<bossBasicInfo>();
+        basicInfo = bossBasicInfo.GetBasicInfo();
+        secForm = basicInfo[0] / 2;
+
+        //buddyがいない時は生成，いる時は自身の設定を行う
+        buddyPrefab = GameObject.Find("boss4");
+        Debug.Log(buddyPrefab);
+        if (buddyPrefab == gameObject)
+        {
+            Debug.Log("null");
+            SetBuddy();
+        }
+        else
+        {
+            Debug.Log("find");
+            buddyClass = buddyPrefab.GetComponent<attack_boss_4>();
+            side = 1;
+        }
+    }
+
+    void Start()
+    {
+        //初期化
+        hit = 0;
+        countShoot15 = 0;
+        countShoot17 = 0;
+        countShoot18 = 0;
+    }
+
+    void FixedUpdate()
+    {
+
+    }
+
+    void SetBuddy()
+    {
+        gameObject.name = "boss4";
+        side = -1;
+        buddyPrefab = Resources.Load("Prefabs/Boss/boss4_buddy")as GameObject;
+        GameObject buddy = Instantiate(buddyPrefab, new Vector2(transform.position.x * -1, transform.position.y), Quaternion.identity);
+        buddyPrefab = buddy;
+        buddy.transform.parent = gameObject.transform;
+
+        bossBasicInfo buddyBasicInfo = buddy.GetComponent<bossBasicInfo>();
+        buddyBasicInfo.SetBasicInfo(gameObject.name, basicInfo[0], basicInfo[1], basicInfo[2], basicInfo[3]);
+    }
+
+    public void Shoot14()
+    {
+        for (float i = -4f; i < 6; i += 3)
+        {
+            bulPos[0].x = 9.5f * side;
+            bulPos[0].y = i;
+            Instantiate(bulPrefab[0], bulPos[0], Quaternion.identity);
+        }
+    }
+
+    public void Shoot15()
+    {
+        angle = Random.Range(-180f, 360f);
+        float rad = Mathf.PI * angle / 180;
+        bulPos[1].x = (float)Mathf.Cos(rad) * 2 + transform.position.x;
+        bulPos[1].y = (float)Mathf.Sin(rad) * 2 + transform.position.y;
+        Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
+        countShoot15++;
+        if (countShoot15 < 150)
+        {
+            Invoke("Shoot15", 0.08f);
+        }
+        else
+        {
+            countShoot15 = 0;
+        }
+    }
+
+    public void Shoot16()
+    {
+        if (side < 0)
+        {
+            bulPos[2].x = Random.Range(-4f, 0);
+        }
+        else
+        {
+            bulPos[2].x = Random.Range(0, 4f);
+        }
+        bulPos[2].y = 9f;
+        GameObject go = Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity) as GameObject;
+        go.name = "bullet23-1(" + side + ")";
+    }
+
+    public void Shoot17()
+    {
+        if (transform.position.x > 0)
+        {
+            int i = Random.Range(-4, 5) * 2;
+            for (int j = -8; j <= 8; j += 2)
+            {
+                bulPos[3].x = j;
+                bulPos[3].y = 6f;
+                if (i != j)
+                {
+                    Instantiate(bulPrefab[3], bulPos[3], Quaternion.identity);
+                }
+            }
+            countShoot17++;
+            if (countShoot17 < 6)
+            {
+                Invoke("Shoot17", 1.5f);
+            }
+            else
+            {
+                countShoot17 = 0;
+            }
+        }
+
+    }
+
+    public void Shoot18()
+    {
+        Instantiate(bulPrefab[4], transform.position, Quaternion.identity);
+        countShoot18++;
+        if (countShoot18 < 75)
+        {
+            Invoke("Shoot18", 0.15f);
+        }
+        else
+        {
+            countShoot18 = 0;
+        }
+    }
+
+    public void Shoot19()
+    {
+        bulPos[5].y = 6;
+        if (side > 0)
+        {
+            if (selectDifficulty.difficulty != 3)
+            {
+                for (int i = -8; i <= 8; i += 2)
+                {
+                    bulPos[5].x = i;
+                    Instantiate(bulPrefab[5], bulPos[5], Quaternion.identity);
+                }
+            }
+            else
+            {
+                for (int i = -8; i <= 8; i += 1)
+                {
+                    bulPos[5].x = i;
+                    Instantiate(bulPrefab[5], bulPos[5], Quaternion.identity);
+                }
+            }
+        }
+    }
+
+    //当たったら消去
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Bullet")
+        {
+            hit++;
+
+            //hard以上は被弾すると追尾弾ばら撒く
+            if (modeDif[0] >= 2)
+            {
+                if (hit % 10 == 0)
+                {
+                    int ran = Random.Range(0, 3);
+                    switch (ran)
+                    {
+                        case 0:
+                            Instantiate(bulPrefab[6], transform.position, Quaternion.identity);
+                            break;
+                        case 1:
+                            Instantiate(bulPrefab[7], transform.position, Quaternion.identity);
+                            break;
+                        case 2:
+                            Instantiate(bulPrefab[8], transform.position, Quaternion.identity);
+                            break;
+                    }
+                }
+                //体力半分切ったら更に頻繁にばら撒く
+                if (hit > secForm)
+                {
+                    if (hit % 10 == 5)
+                    {
+                        int ran2 = Random.Range(0, 3);
+                        switch (ran2)
+                        {
+                            case 0:
+                                Instantiate(bulPrefab[6], transform.position, Quaternion.identity);
+                                break;
+                            case 1:
+                                Instantiate(bulPrefab[7], transform.position, Quaternion.identity);
+                                break;
+                            case 2:
+                                Instantiate(bulPrefab[8], transform.position, Quaternion.identity);
+                                break;
+                        }
+                    }
+                }
+                //クレイジーは体力1/4ですごいことになる
+                if (hit > secForm / 2) 
+                {
+                    if(hit%10!=0&&hit%10!=5)
+                    {
+                        int ran2 = Random.Range(0, 3);
+                        switch (ran2)
+                        {
+                            case 0:
+                                Instantiate(bulPrefab[6], transform.position, Quaternion.identity);
+                                break;
+                            case 1:
+                                Instantiate(bulPrefab[7], transform.position, Quaternion.identity);
+                                break;
+                            case 2:
+                                Instantiate(bulPrefab[8], transform.position, Quaternion.identity);
+                                break;
+                        }
+                    }
+                }
+            }
+
+            bossBasicInfo.EqualHp(buddyPrefab);
         }
     }
 }

@@ -11,7 +11,7 @@ public class bullet22 : MonoBehaviour
     //回転速度
     float rotSpeed;
 
-    GameObject mainCake;
+    GameObject mainBoss;
     public Sprite image0;
     public Sprite image1;
     public Sprite image2;
@@ -20,7 +20,8 @@ public class bullet22 : MonoBehaviour
     void Start()
     {
         if(transform.position.x>0){
-            mainCake=GameObject.Find("boss4-2Prefab");
+            mainBoss=GameObject.Find("/boss4/boss4");
+
             int i=Random.Range(0,2);
             if(i>0){
                 this.gameObject.GetComponent<SpriteRenderer>().sprite=image0;
@@ -30,7 +31,7 @@ public class bullet22 : MonoBehaviour
             }
         }
         else{
-            mainCake=GameObject.Find("boss4-1Prefab");
+            mainBoss=GameObject.Find("/boss4");
             int i=Random.Range(0,2);
             if(i>0){
                 this.gameObject.GetComponent<SpriteRenderer>().sprite=image2;
@@ -39,8 +40,8 @@ public class bullet22 : MonoBehaviour
                 this.gameObject.GetComponent<SpriteRenderer>().sprite=image3;
             }
         }
-        fallSpeed=(transform.position.y-mainCake.transform.position.y)/25;
-        moveSpeed=(transform.position.x-mainCake.transform.position.x)/25;
+        fallSpeed=(transform.position.y-mainBoss.transform.position.y)/25;
+        moveSpeed=(transform.position.x-mainBoss.transform.position.x)/25;
         rotSpeed=8f;
     }
 

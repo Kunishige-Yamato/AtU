@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3738084322640717309}
   m_Layer: 0
   m_Name: boss2
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,6 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6719b26ba49384050b28e975c0eebae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skinSprite:
+  - {fileID: 21300000, guid: fe91f064e5a0041f48a0d32553f17769, type: 3}
 --- !u!114 &-3738084322640717309
 MonoBehaviour:
   m_ObjectHideFlags: 0

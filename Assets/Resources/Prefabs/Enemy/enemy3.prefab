@@ -112,6 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af4a8a36f22348a28dac35d8239b7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skinSprite:
+  - {fileID: 21300000, guid: 1c5b9fe0d531b40eea1217fce3c1be36, type: 3}
 --- !u!114 &2918130721391937156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,3 +129,4 @@ MonoBehaviour:
   bulPrefab:
   - {fileID: 2194332044647395328, guid: 0133a4b36dea04cd8a41d80586216e4d, type: 3}
   timer: 0
+  defeatFlag: 0

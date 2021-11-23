@@ -112,6 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af4a8a36f22348a28dac35d8239b7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skinSprite:
+  - {fileID: 21300000, guid: 43dd67e9bb944406fa49a3124d5cb21a, type: 3}
+  - {fileID: 21300000, guid: 1c296d3944ce9434aab2a055a8a15270, type: 3}
 --- !u!114 &1063563280960512063
 MonoBehaviour:
   m_ObjectHideFlags: 0

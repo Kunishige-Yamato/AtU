@@ -6,16 +6,16 @@ using UnityEngine.UI;
 
 public class bossBasicInfo : MonoBehaviour
 {
+    //スキン
+    SpriteRenderer skinSpriteRenderer;
+    public Sprite[] skinSprite;
+
     //選択された難易度
     int difficulty;
 
-    //スキン
-    SpriteRenderer skinSpriteRenderer;
-    Sprite skinSprite;
-
     //体力
     int hp;
-    int hit;
+    public int hit;
 
     //ボーナス
     int hitBonus;
@@ -37,10 +37,6 @@ public class bossBasicInfo : MonoBehaviour
 
     void Start()
     {
-        //スキン設定
-        skinSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        skinSpriteRenderer.sprite = skinSprite;
-
         //進行用コンポーネント取得
         progress = GameObject.Find("Progress");
         pro = progress.GetComponent<progress>();
@@ -81,11 +77,24 @@ public class bossBasicInfo : MonoBehaviour
     //設定読み込み
     public void SetBasicInfo(string name,int hp, int hitBonus, int defeatBonus, int timeBonus)
     {
+        gameObject.name = name;
         this.hp = hp;
         this.hitBonus = hitBonus;
         this.defeatBonus = defeatBonus;
         this.timeBonus = timeBonus;
-        skinSprite = Resources.Load<Sprite>("Textures/"+name);
+        SetSkin(0);
+    }
+
+    //設定書き出し
+    public int[] GetBasicInfo()
+    {
+        int[] basicInfo=new int[4];
+        basicInfo[0] = hp;
+        basicInfo[1] = hitBonus;
+        basicInfo[2] = defeatBonus;
+        basicInfo[3] = timeBonus;
+
+        return basicInfo;
     }
 
     //エフェクト再生用
@@ -140,6 +149,26 @@ public class bossBasicInfo : MonoBehaviour
                 }
                 Destroy(gameObject);
             }
+        }
+    }
+
+    //複数ボスの場合2人の体力を等しくする
+    public void EqualHp(GameObject buddyObj)
+    {
+        bossBasicInfo buddyBasicInfo = buddyObj.GetComponent<bossBasicInfo>();
+        buddyBasicInfo.hit = hit;
+    }
+
+    public void SetSkin(int skinNum)
+    {
+        if (skinNum < skinSprite.Length && skinSprite[skinNum] != null)
+        {
+            skinSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            skinSpriteRenderer.sprite = skinSprite[skinNum];
+        }
+        else
+        {
+            Debug.Log(skinNum + "番にはspriteが設定されていません");
         }
     }
 }

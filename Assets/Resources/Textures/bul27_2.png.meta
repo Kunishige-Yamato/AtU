@@ -1,7 +1,103 @@
 fileFormatVersion: 2
 guid: 70d12c0126aca472fa64216334e4e400
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 3665014353812103714
+    second: bul27_2_0
+  - first:
+      213: 3983224813694210012
+    second: bul27_2_1
+  - first:
+      213: -8108711183934858774
+    second: bul27_2_2
+  - first:
+      213: -4323990091913308123
+    second: bul27_2_3
+  - first:
+      213: 3911308551786540888
+    second: bul27_2_4
+  - first:
+      213: 3362742113932850953
+    second: bul27_2_5
+  - first:
+      213: 6060197384800543167
+    second: bul27_2_6
+  - first:
+      213: -1437646733310285299
+    second: bul27_2_7
+  - first:
+      213: 4546995183353315362
+    second: bul27_2_8
+  - first:
+      213: -7450558806168070582
+    second: bul27_2_9
+  - first:
+      213: 6067389590472723036
+    second: bul27_2_10
+  - first:
+      213: 5276307585646169347
+    second: bul27_2_11
+  - first:
+      213: -8705071581785201136
+    second: bul27_2_12
+  - first:
+      213: 4328139792907401399
+    second: bul27_2_13
+  - first:
+      213: 5541415920841775393
+    second: bul27_2_14
+  - first:
+      213: -8408505784435622822
+    second: bul27_2_15
+  - first:
+      213: -4988609142593097604
+    second: bul27_2_16
+  - first:
+      213: 6686337353414742335
+    second: bul27_2_17
+  - first:
+      213: 8974353961592681567
+    second: bul27_2_18
+  - first:
+      213: 524790620820437947
+    second: bul27_2_19
+  - first:
+      213: 1322852611048302888
+    second: bul27_2_20
+  - first:
+      213: -8953447302573853942
+    second: bul27_2_21
+  - first:
+      213: 7135752332751493318
+    second: bul27_2_22
+  - first:
+      213: 6962383081789300591
+    second: bul27_2_23
+  - first:
+      213: 4542787524116585634
+    second: bul27_2_24
+  - first:
+      213: 5748811906782424704
+    second: bul27_2_25
+  - first:
+      213: 8548207413795088667
+    second: bul27_2_26
+  - first:
+      213: -5315485803324181056
+    second: bul27_2_27
+  - first:
+      213: -8806896663722239466
+    second: bul27_2_28
+  - first:
+      213: -6856304157310668183
+    second: bul27_2_29
+  - first:
+      213: 652738432224650995
+    second: bul27_2_30
+  - first:
+      213: -7832710539550868113
+    second: bul27_2_31
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,7 +136,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -71,9 +167,213 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: bul27_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 240
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 222adaff22fbcd230800000000000000
+      internalID: 3665014353812103714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bul27_2_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 240
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdfc3c03dd1474730800000000000000
+      internalID: 3983224813694210012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bul27_2_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 240
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae95357d322187f80800000000000000
+      internalID: -8108711183934858774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bul27_2_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 240
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 528d23fbbe91ef3c0800000000000000
+      internalID: -4323990091913308123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bul27_2_4
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 240
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85f2f24a762c74630800000000000000
+      internalID: 3911308551786540888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bul27_2_5
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 240
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 907b634d22cdaae20800000000000000
+      internalID: 3362742113932850953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bul27_2_6
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 0
+        width: 240
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb1a9c5c9652a1450800000000000000
+      internalID: 6060197384800543167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bul27_2_7
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 0
+        width: 240
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0a2a8cb9e37c0ce0800000000000000
+      internalID: -1437646733310285299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

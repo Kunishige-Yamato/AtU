@@ -1650,7 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7807d58a72aa482e80584c54edcbdcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2873087280651238562, guid: 2c8b494052e7147ec8bfe91b6087b125,
+  bulletPrefab: {fileID: 1423812507934702453, guid: 733230ca9293c41c98af9c4a573ca25d,
     type: 3}
   imageNum: 0
   hitNum: 0
