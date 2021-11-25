@@ -12,11 +12,7 @@ public class bullet26 : MonoBehaviour
     float rotSpeed;
 
     public GameObject enemyPrefab;
-    public Sprite image0;
-    public Sprite image1;
-    public Sprite image2;
-    public Sprite image3;
-    public Sprite image4;
+    public Sprite[] image=new Sprite[4];
     public float timer=0;
 
     public int parent=0;
@@ -47,23 +43,26 @@ public class bullet26 : MonoBehaviour
 
             rotSpeed = 10f;
 
-            int i = Random.Range(0, 5);
-            switch (i)
+            progress pro = GameObject.Find("Progress").GetComponent<progress>();
+            int ran = Random.Range(0, 4);
+            int num;
+            if(pro.GetStageNum()[0]==4)
+            {
+                num = 2;
+            }
+            else
+            {
+                num = 0;
+            }
+            switch (ran)
             {
                 case 0:
-                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image0;
-                    break;
                 case 1:
-                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image1;
-                    break;
                 case 2:
-                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image2;
+                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image[0+num];
                     break;
                 case 3:
-                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image3;
-                    break;
-                case 4:
-                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image4;
+                    this.gameObject.GetComponent<SpriteRenderer>().sprite = image[1+num];
                     break;
             }
         }

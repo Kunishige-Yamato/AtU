@@ -112,10 +112,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 0}
-  image0: {fileID: 21300000, guid: 3661ed014a3794d54b2aa4b83d9110d5, type: 3}
-  image1: {fileID: 21300000, guid: 3661ed014a3794d54b2aa4b83d9110d5, type: 3}
-  image2: {fileID: 21300000, guid: 3661ed014a3794d54b2aa4b83d9110d5, type: 3}
-  image3: {fileID: 21300000, guid: 3661ed014a3794d54b2aa4b83d9110d5, type: 3}
-  image4: {fileID: 21300000, guid: 4a99ad2589e1e4d1e965db85a312bc69, type: 3}
+  image:
+  - {fileID: 21300000, guid: 3661ed014a3794d54b2aa4b83d9110d5, type: 3}
+  - {fileID: 21300000, guid: 4a99ad2589e1e4d1e965db85a312bc69, type: 3}
+  - {fileID: 21300000, guid: 4b815fb8b72724c47b6eaf75588331b0, type: 3}
+  - {fileID: 21300000, guid: 01f7e0f9c55f440d7bc54cbbbb18d8b5, type: 3}
   timer: 0
   parent: 0

@@ -98,7 +98,7 @@ public class bossBasicInfo : MonoBehaviour
     }
 
     //エフェクト再生用
-    void EffectAdd(float x, float y, string name)
+    public void EffectAdd(float x, float y, string name)
     {
         GameObject explosionPrefab = Resources.Load("Prefabs/Effect/" + name) as GameObject;
         Vector3 pos = new Vector3(x, y, 0);
@@ -157,6 +157,12 @@ public class bossBasicInfo : MonoBehaviour
     {
         bossBasicInfo buddyBasicInfo = buddyObj.GetComponent<bossBasicInfo>();
         buddyBasicInfo.hit = hit;
+        //死んでたらバディも撃破
+        if (buddyBasicInfo.hit >= hp) 
+        {
+            buddyBasicInfo.EffectAdd(buddyObj.transform.position.x, buddyObj.transform.position.y, "defeatEffect");
+            Destroy(buddyObj);
+        }
     }
 
     public void SetSkin(int skinNum)

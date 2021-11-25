@@ -19,6 +19,7 @@ public class buttonNext : MonoBehaviour
 
     //UI
     public GameObject totalResultCanvas;
+    public GameObject resultCanvas;
     public Text nextButtonText;
 
     void Start()
@@ -30,9 +31,6 @@ public class buttonNext : MonoBehaviour
         //難易度取得
         modeDif = pro.GetDifficulty();
         endless = modeDif[1];
-
-        //ステージ番号取得
-        stage = pro.GetStageNum();
     }
 
     void FixedUpdate()
@@ -55,6 +53,9 @@ public class buttonNext : MonoBehaviour
 
     public void OnClick()
     {
+        //ステージ番号取得
+        stage = pro.GetStageNum();
+
         Cursor.lockState=CursorLockMode.Locked;
         if(endless==1){
             //エンドレスモードリザルト時のボタン処理
@@ -92,6 +93,7 @@ public class buttonNext : MonoBehaviour
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
                     totalResultCanvas.SetActive(true);
+                    resultCanvas.SetActive(false);
                 }
             }
             else

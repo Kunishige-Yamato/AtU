@@ -211,6 +211,8 @@ public class attack_boss_1 : attack_boss
     //弾名前用
     int num, num2;
 
+    int countShoot3;
+
     void Start()
     {
         //変数初期化
@@ -220,6 +222,7 @@ public class attack_boss_1 : attack_boss
         maxMov = mov * -1;
         minMov = mov;
         dir = false;
+        countShoot3 = 0;
     }
 
     void FixedUpdate()
@@ -311,18 +314,17 @@ public class attack_boss_1 : attack_boss
 
     public void Shoot3()
     {
-        int countShoot3 = 0;
         //弾射出元座標設定
         bulPos[2].x = Random.Range(-8f, 8f);
         bulPos[2].y = 5.5f;
         Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
         countShoot3++;
 
-        if (countShoot3 < 50 && selectDifficulty.difficulty != 3)
+        if (countShoot3 < 50 && difficulty != 3)
         {
             Invoke("Shoot3", Random.Range(0.1f, 0.3f));
         }
-        else if (countShoot3 < 100 && selectDifficulty.difficulty == 3)
+        else if (countShoot3 < 100 && difficulty == 3)
         {
             Invoke("Shoot3", Random.Range(0.05f, 0.15f));
         }
@@ -675,15 +677,12 @@ public class attack_boss_4 : attack_boss
 
         //buddyがいない時は生成，いる時は自身の設定を行う
         buddyPrefab = GameObject.Find("boss4");
-        Debug.Log(buddyPrefab);
         if (buddyPrefab == gameObject)
         {
-            Debug.Log("null");
             SetBuddy();
         }
         else
         {
-            Debug.Log("find");
             buddyClass = buddyPrefab.GetComponent<attack_boss_4>();
             side = 1;
         }

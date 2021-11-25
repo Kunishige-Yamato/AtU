@@ -364,7 +364,7 @@ public class attack_enemy_6 : attack_enemy
         if (fallSpeed > 0)
         {
             //ブレーキ
-            basicInfo.AddSpeed(-0.003f,0,0);
+            basicInfo.AddSpeed(-0.002f,0,0);
             //拡大
             bulletScale = transform.localScale;
             bulletScale.x += 0.009f;
@@ -400,18 +400,35 @@ public class attack_enemy_7 : attack_enemy
     void Start()
     {
         angle = Random.Range(30f, 150f);
-        radius = Random.Range(3f, 6f);
+        radius = Random.Range(5f, 8f);
         speed = Random.Range(1f, 3f);
         if (angle % 2 < 1)
         {
             speed *= -1;
         }
+        Move();
     }
 
     void FixedUpdate()
     {
+        Move();
+    }
+
+    void Move()
+    {
         enemyPlace = transform.position;
         angle += speed;
+        if (0 < angle % 360 && angle % 360 < 180 || -360 < angle % 360 && angle % 360 < -180) 
+        {
+            if(speed<0)
+            {
+                angle = 0;
+            }
+            else
+            {
+                angle = 180;
+            }
+        }
         float rad = Mathf.PI * angle / 180;
         enemyPlace.x = (float)Mathf.Cos(rad) * radius + 0;
         enemyPlace.y = (float)Mathf.Sin(rad) * radius + 6;

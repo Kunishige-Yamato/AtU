@@ -83,7 +83,7 @@ public class progress : MonoBehaviour
         endless = 0;
 
         //Debug用ステージスキップ
-        stageNum = 0;
+        stageNum = 3;
 
         //カットイン設定
         animator = cutInCanvas.GetComponent<Animator>();
@@ -172,6 +172,9 @@ public class progress : MonoBehaviour
         stageText.text = "Stage-" + stageNum;
         GameObject scoreCounter = GameObject.Find("ScoreCounter");
         ScoreCount sc = scoreCounter.GetComponent<ScoreCount>();
+        //トータルリザルト画面にステージごとのスコアを作成
+        sc.SetTotalResult(stageNum, sc.GetScore() - stageScore, Mathf.Floor(sc.GetTime()[0] * 100) / 100);
+        //リザルト画面にスコア表示
         scoreText.text = "Score:" + (sc.GetScore() - stageScore);
         stageScore = sc.GetScore();
         timeText.text = "Time:" + (Mathf.Floor(sc.GetTime()[0] * 100) / 100);
@@ -239,7 +242,7 @@ public class progress : MonoBehaviour
 
             timer = 0;
             //Debug用ステージ早送り
-            //timer = 60;
+            timer = 60;
         }
     }
 
