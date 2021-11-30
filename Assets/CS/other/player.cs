@@ -15,12 +15,16 @@ public class player : MonoBehaviour
     public bool canMove=true;
     int maxLife=30;
     public bool gameOver=false;
-    GameObject eg;
-    EnemyGenerator2 enemyGenerator2;
     Slider hpBar;
+
+    int difficulty,endless;
 
     public CanvasGroup resultGroup;
     public CanvasGroup pauseGroup;
+
+    //進行用
+    GameObject progress;
+    progress pro;
 
     // 位置座標
 	private Vector3 mousePosition;
@@ -46,14 +50,8 @@ public class player : MonoBehaviour
         timer=coolTime;
         imageNum=0;
 
-        if(selectDifficulty.endless){
-            eg=GameObject.Find("EG");
-            enemyGenerator2=eg.GetComponent<EnemyGenerator2>();
-            //hpバー制御
-            hpBar=GameObject.Find("Slider-Player").GetComponent<Slider>();
-            hpBar.maxValue=maxLife;
-            hpBar.value=hpBar.maxValue;
-        }
+        progress = GameObject.Find("Progress");
+        pro = progress.GetComponent<progress>();
 
         // 初期動作
         Cursor.lockState=wantedMode;
@@ -61,6 +59,20 @@ public class player : MonoBehaviour
         Cursor.visible=false; 
         Cursor.lockState=CursorLockMode.Locked;
         Invoke("CursorMove",0.1f);
+    }
+
+    public void SetInfo(int dif, int end)
+    {
+        difficulty = dif;
+        endless = end;
+
+        if (endless == 1)
+        {
+            //hpバー制御
+            hpBar = GameObject.Find("EndlessHP/Slider-Player").GetComponent<Slider>();
+            hpBar.maxValue = maxLife;
+            hpBar.value = hpBar.maxValue;
+        }
     }
 
     void CursorMove()
@@ -131,7 +143,9 @@ public class player : MonoBehaviour
     {
         timer+=Time.deltaTime;
 
-        if(selectDifficulty.endless){
+        //エンドレスモードの時hpバー表示
+        if(endless==1)
+        {
             hpBar.value=maxLife-hitNum;
         }
 
@@ -240,15 +254,15 @@ public class player : MonoBehaviour
             //スコア大幅減点
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
             ScoreCount sc=scoreCounter.GetComponent<ScoreCount>();
-            sc.AddScore(-100*(selectDifficulty.difficulty+1));
+            sc.AddScore(-100 * (difficulty + 1));
 		
             hitNum++;
 
             if(hitNum>=maxLife){
                 gameOver=true;
-                if (selectDifficulty.endless)
+                if (endless==1)
                 {
-                    enemyGenerator2.DisplayResult();
+                    pro.DisplayResult();
                 }
             }
         }

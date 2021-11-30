@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class buttonRestart : MonoBehaviour
 {
-    public GameObject EG;
-    EnemyGenerator eg;
     public CanvasGroup pauseGroup;
 
     void Start()
@@ -20,20 +18,7 @@ public class buttonRestart : MonoBehaviour
 
     public void OnClick()
     {
-        eg=EG.GetComponent<EnemyGenerator>();
-
         Clear();
-
-        //ポーズ画面非表示
-        pauseGroup.alpha=0f;
-        pauseGroup.interactable=false;
-
-        //各変数のリセット
-        eg.timer=0;
-        eg.sumTime=0;
-        eg.stageNum=0;
-
-        eg.ReadFile();
     }
 
     void Clear()

@@ -382,7 +382,7 @@ public class attack_boss_2 : attack_boss
 
     public void Shoot6()
     {
-        if (selectDifficulty.difficulty != 3)
+        if (difficulty != 3)
         {
             for (float i = -6; i <= 2; i += 1.5f)
             {
@@ -432,12 +432,12 @@ public class attack_boss_2 : attack_boss
         bulPos[4].x = Random.Range(-8f, 8f);
         bulPos[4].y = -5.5f;
         Instantiate(bulPrefab[4], bulPos[4], Quaternion.identity);
-        if (countShoot8 < 100 && selectDifficulty.difficulty != 3)
+        if (countShoot8 < 100 && difficulty != 3)
         {
             Invoke("Shoot8", 0.1f);
             countShoot8++;
         }
-        else if (countShoot8 < 200 && selectDifficulty.difficulty == 3)
+        else if (countShoot8 < 200 && difficulty == 3)
         {
             Invoke("Shoot8", 0.05f);
             countShoot8++;
@@ -528,7 +528,7 @@ public class attack_boss_3 : attack_boss
                 bulPos[1].y = (float)Mathf.Sin(rad) * 2 + transform.position.y;
                 GameObject bul=Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
                 bul.transform.Rotate(0, 0, angle-90);
-                if (selectDifficulty.difficulty != 0)
+                if (difficulty != 0)
                 {
                     rad = Mathf.PI * (angle + 225) / 180;
                     bulPos[1].x = (float)Mathf.Cos(rad) * 2 + transform.position.x;
@@ -804,7 +804,7 @@ public class attack_boss_4 : attack_boss
         bulPos[5].y = 6;
         if (side > 0)
         {
-            if (selectDifficulty.difficulty != 3)
+            if (difficulty != 3)
             {
                 for (int i = -8; i <= 8; i += 2)
                 {
@@ -870,7 +870,7 @@ public class attack_boss_4 : attack_boss
                     }
                 }
                 //クレイジーは体力1/4ですごいことになる
-                if (hit > secForm / 2) 
+                if (hit > secForm / 2 && modeDif[0] == 3)  
                 {
                     if(hit%10!=0&&hit%10!=5)
                     {

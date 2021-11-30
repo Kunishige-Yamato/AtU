@@ -59,8 +59,7 @@ public class buttonNext : MonoBehaviour
         Cursor.lockState=CursorLockMode.Locked;
         if(endless==1){
             //エンドレスモードリザルト時のボタン処理
-            /*
-            if(enemyGenerator2.gameOver==true || gameObject.name=="RetireButton")
+            if(pro.gameOver==true || gameObject.name=="RetireButton")
             {
                 //カーソル表示
                 Cursor.visible = true;
@@ -69,9 +68,8 @@ public class buttonNext : MonoBehaviour
                 SceneManager.LoadScene("score");
             }
             else{
-                enemyGenerator2.ReadFile();
+                StartCoroutine(pro.EndlessStageStart());
             }
-            */
         }
         else{
             //ストーリーモードのリザルトのボタン処理
@@ -103,7 +101,7 @@ public class buttonNext : MonoBehaviour
                 {
                     nextButtonText.text = "Total Result";
                 }
-                pro.StageStart();
+                pro.StoryStageStart();
             }
         }
     }

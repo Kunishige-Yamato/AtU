@@ -11,7 +11,7 @@ public class bossBasicInfo : MonoBehaviour
     public Sprite[] skinSprite;
 
     //選択された難易度
-    int difficulty;
+    int difficulty,endless;
 
     //体力
     int hp;
@@ -44,9 +44,17 @@ public class bossBasicInfo : MonoBehaviour
         //モード，難易度取得
         modeDif = pro.GetDifficulty();
         difficulty = modeDif[0];
+        endless = modeDif[1];
 
         //hpバー設定
-        hpBar = GameObject.Find("HP/Slider").GetComponent<Slider>();
+        if(endless==0)
+        {
+            hpBar = GameObject.Find("StoryHP/Slider").GetComponent<Slider>();
+        }
+        else
+        {
+            hpBar = GameObject.Find("EndlessHP/Slider").GetComponent<Slider>();
+        }
         hpBar.maxValue = hp;
         hpBar.value = hpBar.maxValue;
 
