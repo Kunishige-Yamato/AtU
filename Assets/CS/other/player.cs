@@ -18,7 +18,7 @@ public class player : MonoBehaviour
 
     int difficulty,endless;
 
-    public CanvasGroup resultGroup;
+    CanvasGroup resultGroup;
     public CanvasGroup pauseGroup;
 
     //進行用
@@ -49,21 +49,13 @@ public class player : MonoBehaviour
         timer=coolTime;
         imageNum=0;
 
+        //進行用コンポーネント
         progress = GameObject.Find("Progress");
         pro = progress.GetComponent<progress>();
 
-        // 初期動作
-        Cursor.lockState=wantedMode;
-        Cursor.lockState=wantedMode=CursorLockMode.Confined;
-        Cursor.visible=false; 
-        Cursor.lockState=CursorLockMode.Locked;
-        Invoke("CursorMove",0.1f);
-    }
-
-    public void SetInfo(int dif, int end)
-    {
-        difficulty = dif;
-        endless = end;
+        //難易度とモードを取得
+        difficulty = pro.GetDifficulty()[0];
+        endless = pro.GetDifficulty()[1];
 
         if (endless == 1)
         {
@@ -72,6 +64,23 @@ public class player : MonoBehaviour
             hpBar.maxValue = maxLife;
             hpBar.value = hpBar.maxValue;
         }
+
+        //リザルト消去
+        if (endless == 0)
+        {
+            resultGroup = GameObject.Find("PauseCanvas/Result").GetComponent<CanvasGroup>();
+        }
+        else
+        {
+            resultGroup = GameObject.Find("PauseCanvas/TotalResult").GetComponent<CanvasGroup>();
+        }
+
+        // 初期動作
+        Cursor.lockState=wantedMode;
+        Cursor.lockState=wantedMode=CursorLockMode.Confined;
+        Cursor.visible=false; 
+        Cursor.lockState=CursorLockMode.Locked;
+        Invoke("CursorMove",0.1f);
     }
 
     void CursorMove()
@@ -152,7 +161,7 @@ public class player : MonoBehaviour
         bulPos.y=gameObject.transform.position.y+0.6f;
         bulPos.z=gameObject.transform.position.z;
 
-        if (Input.GetKey (KeyCode.Escape)&&resultGroup.alpha!=1f)
+        if (Input.GetKey(KeyCode.Escape) && resultGroup.alpha != 1f) 
         {
             //自機停止
             canMove=false;
@@ -245,7 +254,7 @@ public class player : MonoBehaviour
     //当たったら死
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag=="Enemy"|| col.gameObject.tag == "Boss")
+        if ((col.gameObject.tag == "Enemy" || col.gameObject.tag == "Boss") && pro.gameOver == false) 
         {
             // 爆発エフェクトを生成する	
 		    Instantiate (explosionPrefab, transform.position, Quaternion.identity);

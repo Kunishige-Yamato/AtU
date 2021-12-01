@@ -2205,7 +2205,6 @@ MonoBehaviour:
   imageNum: 0
   hitNum: 0
   canMove: 1
-  resultGroup: {fileID: 780829238}
   pauseGroup: {fileID: 887104131}
   screenToWorldPointPosition: {x: 0, y: 0, z: 0}
   explosionPrefab: {fileID: 100000, guid: 4c5a17ca1f9fec84e941441ebb8be079, type: 3}
@@ -5274,7 +5273,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Retire
+  m_Text: Exit
 --- !u!222 &2005351363
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5298,7 +5297,7 @@ GameObject:
   - component: {fileID: 2007176237}
   - component: {fileID: 2007176236}
   m_Layer: 5
-  m_Name: RetireButton
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5402,8 +5401,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Onclick
+      - m_Target: {fileID: 2007176236}
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

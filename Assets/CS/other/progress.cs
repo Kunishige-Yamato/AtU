@@ -66,15 +66,18 @@ public class progress : MonoBehaviour
     Animator animator;
     public Sprite[] cutImage;
 
+    //Startより早く計算される
     void Awake()
     {
         //難易度設定
         difficulty = PlayerPrefs.GetInt("difficulty");
         endless = PlayerPrefs.GetInt("endless");
-        Debug.Log(difficulty + "," + endless);
-        //仮設定
-        difficulty = 0;
-        endless = 1;
+
+        //debug用モード仮設定
+        //difficulty = 0;
+        //endless = 1;
+
+        Debug.Log("mode:"+difficulty + "," + endless+","+PlayerPrefs.GetInt("gambling"));
     }
 
     void Start()
@@ -99,18 +102,26 @@ public class progress : MonoBehaviour
         scoreCounter = GameObject.Find("ScoreCounter");
         sc = scoreCounter.GetComponent<ScoreCount>();
 
+        //カーソル固定
+        Cursor.lockState = CursorLockMode.Locked;
+
         //リザルト消去
         if (endless==0)
         {
-            GameObject.Find("PauseCanvas/TotalResult").SetActive(false);
+            CanvasGroup cg = GameObject.Find("PauseCanvas/TotalResult").GetComponent<CanvasGroup>();
+            cg.alpha = 0;
+            cg.interactable = false;
             resultGroup = GameObject.Find("PauseCanvas/Result").GetComponent<CanvasGroup>();
         }
         else
         {
-            GameObject.Find("PauseCanvas/Result").SetActive(false);
+            CanvasGroup cg = GameObject.Find("PauseCanvas/Result").GetComponent<CanvasGroup>();
+            cg.alpha = 0;
+            cg.interactable = false;
             resultGroup = GameObject.Find("PauseCanvas/TotalResult").GetComponent<CanvasGroup>();
         }
 
+        //リザルト消去
         resultGroup.alpha = 0f;
         resultGroup.interactable = false;
 
@@ -121,8 +132,6 @@ public class progress : MonoBehaviour
         //自機取得
         player = GameObject.Find("Player");
         pl = player.GetComponent<player>();
-
-        pl.SetInfo(difficulty, endless);
 
         if(endless==0)
         {
@@ -226,11 +235,20 @@ public class progress : MonoBehaviour
         resultGroup.interactable = true;
 
         //トータルリザルト画面にステージごとのスコアを作成
-        sc.SetTotalResult(stageNum, sc.GetScore() - stageScore, Mathf.Floor(sc.GetTime()[0] * 100) / 100);
+        if (gameOver && PlayerPrefs.GetInt("gambling") == 1) 
+        {
+            sc.SetTotalResult(stageNum, 0, Mathf.Floor(sc.GetTime()[0] * 100) / 100);
+        }
+        else
+        {
+            sc.SetTotalResult(stageNum, sc.GetScore() - stageScore, Mathf.Floor(sc.GetTime()[0] * 100) / 100);
+        }
 
         //リザルト画面にスコア表示
-        if(endless==0)
+        if (endless==0)
         {
+            //トータルリザルトのタイトル変更
+            titleText.text = "Conquer All Stages!";
             stageText.text = "Stage-" + stageNum;
             scoreText.text = "Score:" + (sc.GetScore() - stageScore);
             timeText.text = "Time:" + (Mathf.Floor(sc.GetTime()[0] * 100) / 100);
@@ -318,7 +336,7 @@ public class progress : MonoBehaviour
             timer = 0;
             sc.ResetTimer();
             //Debug用ステージ早送り
-            //timer = 60;
+            timer = 60;
         }
 
         yield return null;
@@ -330,7 +348,7 @@ public class progress : MonoBehaviour
         Cursor.visible = false;
         pl.canMove = true;
         Cursor.lockState = CursorLockMode.Locked;
-        CursorMove();
+        Invoke("CursorMove", 0.1f);
 
         //hpバー消去
         hpBarGroup.alpha = 0f;
@@ -344,8 +362,6 @@ public class progress : MonoBehaviour
         pauseGroup.interactable = false;
 
         stageNum++;
-
-        Debug.Log("dif:" + difficulty);
 
         //boss呼び出し
         for (int i = 0; i < selectBoss.Length; i++)
@@ -391,7 +407,6 @@ public class progress : MonoBehaviour
             csvDatas.Add(line.Split(','));
         }
 
-        Debug.Log("boss:"+bossRan);
         float posX = float.Parse(csvDatas[bossRan - 1][1]);
         float posY = float.Parse(csvDatas[bossRan - 1][2]);
         enemyApp.BossAppearance(bossList[bossRan - 1], posX, posY);
@@ -404,11 +419,13 @@ public class progress : MonoBehaviour
 
     void CursorMove()
     {
+        //カーソルのロック解除
         Cursor.lockState = CursorLockMode.Confined;
     }
 
     void CutIn()
     {
+        //ステージごとに背景変更
         switch (stageNum)
         {
             case 1:

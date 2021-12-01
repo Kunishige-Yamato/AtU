@@ -20,6 +20,9 @@ public class ScoreCount : MonoBehaviour
     {
         score=0;
 
+        PlayerPrefs.DeleteKey("score");
+        PlayerPrefs.DeleteKey("time");
+
         sumTime = 0;
 
         pro = GameObject.Find("Progress").GetComponent<progress>();
@@ -38,6 +41,12 @@ public class ScoreCount : MonoBehaviour
 
     public int GetScore()
     {
+        //エンドレスのギャンブルモードは死んだら全て失う
+        if (modeDif[1] == 1 && PlayerPrefs.GetInt("gambling") == 1 && pro.gameOver) 
+        {
+            Debug.Log("score lost!");
+            ResetScore();
+        }
         return score;
     }
 
@@ -49,7 +58,7 @@ public class ScoreCount : MonoBehaviour
 
     public void ResetScore()
     {
-        score=0;
+        score = 0;
     }
 
     public void ResetTimer()
@@ -96,5 +105,11 @@ public class ScoreCount : MonoBehaviour
 
         //合計スコア,タイム表示用
         sectionObj.transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    public void ResultSave()
+    {
+        PlayerPrefs.SetFloat("score", GetScore());
+        PlayerPrefs.SetFloat("time", Mathf.Floor(GetTime()[1] * 100) / 100);
     }
 }

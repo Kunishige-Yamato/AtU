@@ -31,6 +31,12 @@ public class buttonNext : MonoBehaviour
         //難易度取得
         modeDif = pro.GetDifficulty();
         endless = modeDif[1];
+
+        //ストーリーモードはリタイアボタンなし
+        if (endless == 0 && gameObject.name == "ExitButton") 
+        {
+            Destroy(gameObject);
+        }
     }
 
     void FixedUpdate()
@@ -43,7 +49,8 @@ public class buttonNext : MonoBehaviour
                 nextButtonText.text="Score";
             }
 
-            if (pro.gameOver && gameObject.name == "RetireButton")
+            //ゲームオーバーになったらリトライ不能
+            if (pro.gameOver && gameObject.name == "ExitButton")
             {
                 Destroy(gameObject);
             }
@@ -57,23 +64,28 @@ public class buttonNext : MonoBehaviour
 
         Cursor.lockState=CursorLockMode.Locked;
         if(endless==1){
-            //エンドレスモードリザルト時のボタン処理
-            if(pro.gameOver==true || gameObject.name=="RetireButton")
+            //エンドレスモード｜途中退席
+            if(pro.gameOver==true || gameObject.name=="ExitButton")
             {
                 //カーソル表示
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+
+                //点数を保存させる処理
+                GameObject.Find("ScoreCounter").GetComponent<ScoreCount>().ResultSave();
+
                 //スコア画面へ
                 SceneManager.LoadScene("score");
             }
-            else{
+            else
+            {
                 StartCoroutine(pro.EndlessStageStart());
             }
         }
         else{
             //ストーリーモードのリザルトのボタン処理
             //全ステージクリアしてたら
-            if(stage[0]==stage[1])
+            if (stage[0]==stage[1])
             {
                 //totlaResult表示してからスコアかタイトルへ
                 if(gameObject.name == "TotalResultNextStageButton")
@@ -89,8 +101,14 @@ public class buttonNext : MonoBehaviour
                     //カーソル表示
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
-                    totalResultCanvas.SetActive(true);
-                    resultCanvas.SetActive(false);
+
+                    //リザルト切り替えて表示
+                    CanvasGroup cg=totalResultCanvas.GetComponent<CanvasGroup>();
+                    cg.alpha = 1;
+                    cg.interactable = true;
+                    cg=resultCanvas.GetComponent<CanvasGroup>();
+                    cg.alpha = 0;
+                    cg.interactable = false;
                 }
             }
             else
@@ -105,8 +123,3 @@ public class buttonNext : MonoBehaviour
         }
     }
 }
-
-/*
- 明日の俺へ
-リザルト頑張って♡
- */
