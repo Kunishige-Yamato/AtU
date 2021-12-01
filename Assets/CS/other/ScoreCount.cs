@@ -82,8 +82,8 @@ public class ScoreCount : MonoBehaviour
         {
             childText[0].text = "Section-" + stageNum;
         }
-        childText[1].text = "Score:" + stageScore ;
-        childText[2].text = "Time :" + stageTime;
+        childText[1].text = "Score : " + stageScore ;
+        childText[2].text = "Time : " + stageTime;
 
         //Name,Score,Timeのテキスト
         GameObject totalTextParent=totalResultCanvas.transform.Find("TotalResults/").gameObject;
@@ -91,8 +91,8 @@ public class ScoreCount : MonoBehaviour
         sumTime += timer;
 
         //totalresultsの中身書き込み
-        totalTexts[1].text = "Score:" + GetScore();
-        totalTexts[2].text = "Time :" + (Mathf.Floor(GetTime()[1] * 100) / 100);
+        totalTexts[1].text = "Score : " + GetScore();
+        totalTexts[2].text = "Time : " + (Mathf.Floor(GetTime()[1] * 100) / 100);
 
         //合計スコア,タイム表示用
         sectionObj.transform.localScale = new Vector3(1, 1, 1);

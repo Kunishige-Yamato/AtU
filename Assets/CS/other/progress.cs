@@ -55,7 +55,7 @@ public class progress : MonoBehaviour
     CanvasGroup resultGroup;
     public CanvasGroup pauseGroup;
     CanvasGroup hpBarGroup;
-    public Text stageText, scoreText, timeText, hitText;
+    public Text titleText, stageText, scoreText, timeText, hitText;
     int stageScore = 0, stageHit = 0;
     //背景
     public GameObject backGround;
@@ -73,8 +73,8 @@ public class progress : MonoBehaviour
         endless = PlayerPrefs.GetInt("endless");
         Debug.Log(difficulty + "," + endless);
         //仮設定
-        //difficulty = 0;
-        //endless = 1;
+        difficulty = 0;
+        endless = 1;
     }
 
     void Start()
@@ -215,6 +215,11 @@ public class progress : MonoBehaviour
         {
             Destroy(del);
         }
+        enemys = GameObject.FindGameObjectsWithTag("Boss");
+        foreach (GameObject del in enemys)
+        {
+            Destroy(del);
+        }
 
         //リザルト表示
         resultGroup.alpha = 1f;
@@ -232,17 +237,25 @@ public class progress : MonoBehaviour
             hitText.text = "Hit:" + (pl.hitNum - stageHit);
             stageScore = sc.GetScore();
             stageHit = pl.hitNum;
-            sc.ResetTimer();
         }
         else
         {
-            stageText.text = "Section-" + stageNum;
-            scoreText.text = "Score:" + (sc.GetScore() - stageScore);
-            timeText.text = "Time:" + (Mathf.Floor(sc.GetTime()[0] * 100) / 100);
-            hitText.text = "Hit:" + (pl.hitNum - stageHit);
+            if(gameOver)
+            {
+                //文字変更
+                titleText.text = "Game Over";
+                //色変更：赤
+                titleText.color = Color.red;
+                //フォント変更：明朝体
+                Font font = Resources.Load<Font>("Font/brelaregular");
+                titleText.font = font;
+                //bold解除
+                titleText.fontStyle = FontStyle.Normal;
+                //位置調整
+                titleText.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,172,0);
+            }
             stageScore = sc.GetScore();
             stageHit = pl.hitNum;
-            sc.ResetTimer();
         }
     }
 
@@ -383,6 +396,8 @@ public class progress : MonoBehaviour
         float posY = float.Parse(csvDatas[bossRan - 1][2]);
         enemyApp.BossAppearance(bossList[bossRan - 1], posX, posY);
         hpBarGroup.alpha = 1f;
+
+        sc.ResetTimer();
 
         yield return null;
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class buttonRestart : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class buttonRestart : MonoBehaviour
 
     void Start()
     {
-
+        if (SceneManager.GetActiveScene().name == "loading")
+        {
+            SceneManager.LoadScene("game_1");
+        }
     }
 
     void FixedUpdate()
@@ -18,19 +22,6 @@ public class buttonRestart : MonoBehaviour
 
     public void OnClick()
     {
-        Clear();
-    }
-
-    void Clear()
-    {
-        //タグつきを全て格納
-        GameObject[] enemys=GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject del in enemys) {
-            Destroy(del);
-        }
-        GameObject[] bullets=GameObject.FindGameObjectsWithTag("Bullet");
-        foreach (GameObject del in enemys) {
-            Destroy(del);
-        }
+        SceneManager.LoadScene("loading");
     }
 }

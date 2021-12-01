@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class selectDifficulty : MonoBehaviour
 {
-    int difficulty;
-    int endlessMode;
+    void Start()
+    {
+        PlayerPrefs.DeleteKey("difficulty");
+        PlayerPrefs.DeleteKey("endless");
+        PlayerPrefs.DeleteKey("gambling");
+    }
 
     public void OnClick()
     {

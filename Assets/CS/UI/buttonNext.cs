@@ -37,17 +37,16 @@ public class buttonNext : MonoBehaviour
     {
         if(endless==1){
             //エンドレスモードゲームオーバー処理
-            /*
-            if(enemyGenerator2.gameOver)
+            if(pro.gameOver)
             {
                 Cursor.lockState = CursorLockMode.None;
-                nextButtonText.text="Total Result";
+                nextButtonText.text="Score";
             }
 
-            if (enemyGenerator2.gameOver && gameObject.name == "RetireButton")
+            if (pro.gameOver && gameObject.name == "RetireButton")
             {
                 Destroy(gameObject);
-            }*/
+            }
         }
     }
 
@@ -101,8 +100,13 @@ public class buttonNext : MonoBehaviour
                 {
                     nextButtonText.text = "Total Result";
                 }
-                pro.StoryStageStart();
+                StartCoroutine(pro.StoryStageStart());
             }
         }
     }
 }
+
+/*
+ 明日の俺へ
+リザルト頑張って♡
+ */

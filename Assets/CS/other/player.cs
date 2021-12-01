@@ -14,7 +14,6 @@ public class player : MonoBehaviour
     public int hitNum;
     public bool canMove=true;
     int maxLife=30;
-    public bool gameOver=false;
     Slider hpBar;
 
     int difficulty,endless;
@@ -246,7 +245,7 @@ public class player : MonoBehaviour
     //当たったら死
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag=="Enemy")
+        if(col.gameObject.tag=="Enemy"|| col.gameObject.tag == "Boss")
         {
             // 爆発エフェクトを生成する	
 		    Instantiate (explosionPrefab, transform.position, Quaternion.identity);
@@ -259,10 +258,11 @@ public class player : MonoBehaviour
             hitNum++;
 
             if(hitNum>=maxLife){
-                gameOver=true;
                 if (endless==1)
                 {
+                    pro.gameOver=true;
                     pro.DisplayResult();
+                    Destroy(gameObject);
                 }
             }
         }
