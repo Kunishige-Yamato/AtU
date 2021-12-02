@@ -2,66 +2,102 @@
 using System.Collections.Generic;
 using UnityEngine;
 using enemyInfo;
+using scoreInfo;
 using System.Text.RegularExpressions;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class jsonReceive
 {
-    //ボス情報保管リスト
-    enemyInfoList enemyInfoList;
-
-    //受け取り用配列
+    //ゲーム用受け取り用配列
     Boss[] bossList;
     MobEnemy[] enemyList;
+    //スコア用受け取り用配列
+    PersonalScore scoreList;
+
+
+    //ボス情報保管リスト
+    enemyInfoList enemyInfoList;
 
     //DB接続
     public IEnumerator ConnectDB(string id)
     {
-        //UnityWebRequestを生成
-        //ボスの情報取得
-        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?enemy=Boss";
-        UnityWebRequest request = UnityWebRequest.Get(url);
-
-        // SendWebRequestを実行して送受信開始
-        yield return request.SendWebRequest();
-
-        // isNetworkErrorとisHttpErrorでエラー判定
-        if (request.isNetworkError || request.isHttpError)
+        //ゲームシーンのDB接続
+        if (SceneManager.GetActiveScene().name == "game_1")
         {
-            Debug.Log(request.error);
-        }
-        else
-        {
-            // phpから受け取った値を&で区切って配列を生成
-            string getBossData = request.downloadHandler.text;
-            bossList = ReceiveBossData(getBossData);
-        }
-        //モブの情報取得
-        url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?enemy=Mob";
-        request = UnityWebRequest.Get(url);
+            //UnityWebRequestを生成
+            //ボスの情報取得
+            string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?enemy=Boss";
+            UnityWebRequest request = UnityWebRequest.Get(url);
 
-        // SendWebRequestを実行して送受信開始
-        yield return request.SendWebRequest();
+            // SendWebRequestを実行して送受信開始
+            yield return request.SendWebRequest();
 
-        // isNetworkErrorとisHttpErrorでエラー判定
-        if (request.isNetworkError || request.isHttpError)
-        {
-            Debug.Log(request.error);
+            // isNetworkErrorとisHttpErrorでエラー判定
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+            }
+            else
+            {
+                // phpから受け取った値を&で区切って配列を生成
+                string getBossData = request.downloadHandler.text;
+                bossList = ReceiveBossData(getBossData);
+            }
+            //モブの情報取得
+            url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?enemy=Mob";
+            request = UnityWebRequest.Get(url);
+
+            // SendWebRequestを実行して送受信開始
+            yield return request.SendWebRequest();
+
+            // isNetworkErrorとisHttpErrorでエラー判定
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+            }
+            else
+            {
+                // phpから受け取った値を&で区切って配列を生成
+                string getEnemyData = request.downloadHandler.text;
+                enemyList = ReceiveEnemyData(getEnemyData);
+            }
+            SetEnemyList(bossList, enemyList);
         }
-        else
+        else if (SceneManager.GetActiveScene().name == "score")
         {
-            // phpから受け取った値を&で区切って配列を生成
-            string getEnemyData = request.downloadHandler.text;
-            enemyList = ReceiveEnemyData(getEnemyData);
+            //UnityWebRequestを生成
+            //ボスの情報取得
+            string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?get_score=personal&id="+id;
+            UnityWebRequest request = UnityWebRequest.Get(url);
+
+            // SendWebRequestを実行して送受信開始
+            yield return request.SendWebRequest();
+
+            // isNetworkErrorとisHttpErrorでエラー判定
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+            }
+            else
+            {
+                // phpから受け取った値を&で区切って配列を生成
+                string getScoreData = request.downloadHandler.text;
+                scoreList = ReceiveScoreData(getScoreData);
+            }
         }
-        SetEnemyList();
     }
 
-    public void SetEnemyList()
+    public void SetEnemyList(Boss[] bossList, MobEnemy[] enemyList)
     {
         progress pro = GameObject.Find("Progress").GetComponent<progress>();
         pro.bossList = bossList;
         pro.enemyList = enemyList;
+    }
+
+    public PersonalScore GetPersonalScore()
+    {
+        return scoreList;
     }
 
     //DBからbossの情報を受け取る
@@ -120,5 +156,18 @@ public class jsonReceive
         }
 
         return enemyInfoList.enemy;
+    }
+
+    //DBからスコアの情報を受け取る
+    public PersonalScore ReceiveScoreData(string jsonString)
+    {
+        //データを分割して配列へ
+        Regex regex = new Regex("^.|.$");
+        jsonString = regex.Replace(jsonString, "");
+
+        //jsonからオブジェクトに格納
+        PersonalScore p_score = JsonUtility.FromJson<PersonalScore>(jsonString);
+
+        return p_score;
     }
 }

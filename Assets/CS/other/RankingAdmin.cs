@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using scoreInfo;
 
 public class RankingAdmin : MonoBehaviour
 {
@@ -13,10 +14,12 @@ public class RankingAdmin : MonoBehaviour
     public GameObject parentContent;
     public GameObject parentContent2;
 
+    //DB接続用
+    jsonReceive jsonRec = new jsonReceive();
 
     void Start()
     {
-        PersonalProfile();
+        StartCoroutine(PersonalProfile());
     }
 
     void FixedUpdate()
@@ -25,17 +28,21 @@ public class RankingAdmin : MonoBehaviour
     }
 
     //個人用プロフィールの生成
-    public void PersonalProfile()
+    public IEnumerator PersonalProfile()
     {
+        //敵情報をDBから受け取る
+        yield return StartCoroutine(jsonRec.ConnectDB(PlayerPrefs.GetString("ID")));
+        PersonalScore p_score=jsonRec.GetPersonalScore();
+
         //userTitle
         GameObject userObj = GameObject.Find("UserTitle");
         Text userText = userObj.GetComponent<Text>();
-        userText.text = "期待のルーキー";
+        userText.text = p_score.achieve;
 
         //UserName
         userObj = GameObject.Find("UserName");
         userText = userObj.GetComponent<Text>();
-        userText.text = "User01";
+        userText.text = p_score.name;
 
         //userIcon
         userObj = GameObject.Find("UserIcon");
@@ -43,53 +50,49 @@ public class RankingAdmin : MonoBehaviour
         //StoryMode
         for(int i=0;i<4;i++)
         {
-            string difKind="",modeName="";
             switch(i)
             {
                 case 0:
-                    difKind = "e";
-                    modeName = "Easy Mode : ";
+                    userObj = GameObject.Find("S_Score_e");
+                    userText = userObj.GetComponent<Text>();
+                    userText.text = "Easy Mode  " + p_score.s_easy.ToString("D8");
                     break;
                 case 1:
-                    difKind = "n";
-                    modeName = "Normal Mode : ";
+                    userObj = GameObject.Find("S_Score_n");
+                    userText = userObj.GetComponent<Text>();
+                    userText.text = "Normal Mode  " + p_score.s_normal.ToString("D8");
                     break;
                 case 2:
-                    difKind = "h";
-                    modeName = "Hard Mode : ";
+                    userObj = GameObject.Find("S_Score_h");
+                    userText = userObj.GetComponent<Text>();
+                    userText.text = "Hard Mode  " + p_score.s_hard.ToString("D8");
                     break;
                 case 3:
-                    difKind = "c";
-                    modeName = "Crazy Mode : ";
+                    userObj = GameObject.Find("S_Score_c");
+                    userText = userObj.GetComponent<Text>();
+                    userText.text = "Crazy Mode  " + p_score.s_crazy.ToString("D8");
                     break;
 
             }
-            userObj = GameObject.Find("S_Score_"+difKind);
-            userText = userObj.GetComponent<Text>();
-            int scoreText = i * 100 + 50;
-            userText.text = modeName + scoreText.ToString("D8");
         }
 
         //EndlessMode
         for (int i = 0; i < 2; i++)
         {
-            string difKind = "",modeName = "";
             switch (i)
             {
                 case 0:
-                    difKind = "n";
-                    modeName = "Easy Mode : ";
+                    userObj = GameObject.Find("E_Score_n");
+                    userText = userObj.GetComponent<Text>();
+                    userText.text = "Easy Mode  " + p_score.e_normal.ToString("D8");
                     break;
                 case 1:
-                    difKind = "g";
-                    modeName = "Gambling Mode : ";
+                    userObj = GameObject.Find("E_Score_g");
+                    userText = userObj.GetComponent<Text>();
+                    userText.text = "Gambling Mode  " + p_score.e_gambling.ToString("D8");
                     break;
 
             }
-            userObj = GameObject.Find("E_Score_" + difKind);
-            userText = userObj.GetComponent<Text>();
-            int scoreText = i * 200 +25;
-            userText.text = modeName + scoreText.ToString("D8");
         }
     }
 

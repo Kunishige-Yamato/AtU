@@ -709,7 +709,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Crazy Mode : 00000000'
+  m_Text: Crazy Mode  00000000
 --- !u!222 &631194022
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1128,7 +1128,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Gambling : 00000000'
+  m_Text: Gambling  00000000
 --- !u!222 &776683031
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2243,7 +2243,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Normal Mode : 00000000'
+  m_Text: Normal Mode  00000000
 --- !u!222 &1260530532
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2506,7 +2506,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Hard Mode : 00000000'
+  m_Text: Hard Mode  00000000
 --- !u!222 &1547158364
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3541,7 +3541,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Normal Mode : 00000000'
+  m_Text: Normal Mode  00000000
 --- !u!114 &1455933539429974591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3867,7 +3867,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Easy Mode : 00000000'
+  m_Text: Easy Mode  00000000
 --- !u!224 &5509440931767917769
 RectTransform:
   m_ObjectHideFlags: 0
