@@ -22,9 +22,9 @@ public class RankingAdmin : MonoBehaviour
         StartCoroutine(PersonalProfile());
     }
 
-    void FixedUpdate()
+    public void ShowPersonalProfile()
     {
-        
+        StartCoroutine(PersonalProfile());
     }
 
     //個人用プロフィールの生成
@@ -84,7 +84,7 @@ public class RankingAdmin : MonoBehaviour
                 case 0:
                     userObj = GameObject.Find("E_Score_n");
                     userText = userObj.GetComponent<Text>();
-                    userText.text = "Easy Mode  " + p_score.e_normal.ToString("D8");
+                    userText.text = "Normal Mode  " + p_score.e_normal.ToString("D8");
                     break;
                 case 1:
                     userObj = GameObject.Find("E_Score_g");

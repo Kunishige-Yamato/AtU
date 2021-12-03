@@ -170,4 +170,61 @@ public class jsonReceive
 
         return p_score;
     }
+
+    //DBにスコア保存
+    public IEnumerator SaveScoreData(string id, int mode, int dif, int score)
+    {
+        //難易度を設定
+        string game_mode="";
+        if (mode == 0) 
+        {
+            switch(dif)
+            {
+                case 0:
+                    game_mode = "s_easy";
+                    break;
+                case 1:
+                    game_mode = "s_normal";
+                    break;
+                case 2:
+                    game_mode = "s_hard";
+                    break;
+                case 3:
+                    game_mode = "s_crazy";
+                    break;
+            }
+        }
+        else if(mode==1)
+        {
+            switch(PlayerPrefs.GetInt("gambling"))
+            {
+                case 0:
+                    game_mode = "e_normal";
+                    break;
+                case 1:
+                    game_mode = "e_gamble";
+                    break;
+            }
+        }
+
+        //UnityWebRequestを生成
+        //ボスの情報取得
+        Debug.Log("before set:" + id + "," + game_mode + "," + score);
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?id="+id+"&game_mode="+game_mode+"&put_score="+score;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        // SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            string result = request.downloadHandler.text;
+            Debug.Log(result);
+        }
+    }
 }

@@ -106,10 +106,4 @@ public class ScoreCount : MonoBehaviour
         //合計スコア,タイム表示用
         sectionObj.transform.localScale = new Vector3(1, 1, 1);
     }
-
-    public void ResultSave()
-    {
-        PlayerPrefs.SetFloat("score", GetScore());
-        PlayerPrefs.SetFloat("time", Mathf.Floor(GetTime()[1] * 100) / 100);
-    }
 }

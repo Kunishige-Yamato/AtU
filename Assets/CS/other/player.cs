@@ -169,7 +169,8 @@ public class player : MonoBehaviour
 
             //ポーズ画面表示
             pauseGroup.alpha=1f;
-            pauseGroup.interactable=true;
+            pauseGroup.interactable = true;
+            pauseGroup.blocksRaycasts = true;
         }
 
         /*

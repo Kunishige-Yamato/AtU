@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class buttonMoveScene : MonoBehaviour
 {
     void Start()
     {
-        
+
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        
+
     }
 
     public void Onclick()
@@ -28,6 +29,10 @@ public class buttonMoveScene : MonoBehaviour
                 SceneManager.LoadScene("achievement");
                 break;
             default:
+                if(SceneManager.GetActiveScene().name=="game_1")
+                {
+                    GameObject.Find("Progress").GetComponent<progress>().SaveScore();
+                }
                 SceneManager.LoadScene("title");
                 break;
         }

@@ -72,7 +72,7 @@ public class buttonNext : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
 
                 //点数を保存させる処理
-                GameObject.Find("ScoreCounter").GetComponent<ScoreCount>().ResultSave();
+                pro.SaveScore();
 
                 //スコア画面へ
                 SceneManager.LoadScene("score");
@@ -93,6 +93,10 @@ public class buttonNext : MonoBehaviour
                     //カーソル表示
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
+
+                    //スコア保存
+                    pro.SaveScore();
+
                     //スコア画面へ
                     SceneManager.LoadScene("score");
                 }
@@ -106,9 +110,11 @@ public class buttonNext : MonoBehaviour
                     CanvasGroup cg=totalResultCanvas.GetComponent<CanvasGroup>();
                     cg.alpha = 1;
                     cg.interactable = true;
+                    cg.blocksRaycasts = true;
                     cg=resultCanvas.GetComponent<CanvasGroup>();
                     cg.alpha = 0;
                     cg.interactable = false;
+                    cg.blocksRaycasts = false;
                 }
             }
             else

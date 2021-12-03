@@ -111,6 +111,7 @@ public class progress : MonoBehaviour
             CanvasGroup cg = GameObject.Find("PauseCanvas/TotalResult").GetComponent<CanvasGroup>();
             cg.alpha = 0;
             cg.interactable = false;
+            cg.blocksRaycasts = false;
             resultGroup = GameObject.Find("PauseCanvas/Result").GetComponent<CanvasGroup>();
         }
         else
@@ -118,16 +119,19 @@ public class progress : MonoBehaviour
             CanvasGroup cg = GameObject.Find("PauseCanvas/Result").GetComponent<CanvasGroup>();
             cg.alpha = 0;
             cg.interactable = false;
+            cg.blocksRaycasts = false;
             resultGroup = GameObject.Find("PauseCanvas/TotalResult").GetComponent<CanvasGroup>();
         }
 
         //リザルト消去
         resultGroup.alpha = 0f;
         resultGroup.interactable = false;
+        resultGroup.blocksRaycasts = false;
 
         //ポーズ画面消去
         pauseGroup.alpha = 0f;
         pauseGroup.interactable = false;
+        pauseGroup.blocksRaycasts = false;
 
         //自機取得
         player = GameObject.Find("Player");
@@ -233,6 +237,7 @@ public class progress : MonoBehaviour
         //リザルト表示
         resultGroup.alpha = 1f;
         resultGroup.interactable = true;
+        resultGroup.blocksRaycasts = true;
 
         //トータルリザルト画面にステージごとのスコアを作成
         if (gameOver && PlayerPrefs.GetInt("gambling") == 1) 
@@ -291,10 +296,12 @@ public class progress : MonoBehaviour
         //リザルト消去
         resultGroup.alpha = 0f;
         resultGroup.interactable = false;
+        resultGroup.blocksRaycasts = false;
 
         //ポーズ画面消去
         pauseGroup.alpha = 0f;
         pauseGroup.interactable = false;
+        pauseGroup.blocksRaycasts = false;
 
         //背景設定
         backGround.GetComponent<Image>().sprite = backGroundSprites[stageNum];
@@ -356,10 +363,12 @@ public class progress : MonoBehaviour
         //リザルト消去
         resultGroup.alpha = 0f;
         resultGroup.interactable = false;
+        resultGroup.blocksRaycasts = false;
 
         //ポーズ画面消去
         pauseGroup.alpha = 0f;
         pauseGroup.interactable = false;
+        pauseGroup.blocksRaycasts = false;
 
         stageNum++;
 
@@ -442,5 +451,13 @@ public class progress : MonoBehaviour
                 break;
         }
         animator.Play("CutIn", 0, 0f);
+    }
+
+    public void SaveScore()
+    {
+        int score = sc.GetScore();
+
+        //DB保存
+        StartCoroutine(jsonRec.SaveScoreData(PlayerPrefs.GetString("ID"), endless, difficulty, score));
     }
 }

@@ -24,7 +24,8 @@ public class buttonContinue : MonoBehaviour
     {
         //ポーズ画面消去
         pauseGroup.alpha=0f;
-        pauseGroup.interactable=false;
+        pauseGroup.interactable = false;
+        pauseGroup.blocksRaycasts = false;
 
         pl.canMove=true;
 
