@@ -18,4 +18,17 @@
             this.e_gambling = e_gambling;
         }
     }
+
+    public class RankingScore
+    {
+        public string achieve, name;
+        public int score;
+
+        public RankingScore(string achieve, string name, int score)
+        {
+            this.achieve = achieve;
+            this.name = name;
+            this.score = score;
+        }
+    }
 }

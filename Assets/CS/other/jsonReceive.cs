@@ -13,7 +13,8 @@ public class jsonReceive
     Boss[] bossList;
     MobEnemy[] enemyList;
     //スコア用受け取り用配列
-    PersonalScore scoreList;
+    PersonalScore p_score;
+    RankingScore[] ranking_score;
 
 
     //ボス情報保管リスト
@@ -22,70 +23,45 @@ public class jsonReceive
     //DB接続
     public IEnumerator ConnectDB(string id)
     {
-        //ゲームシーンのDB接続
-        if (SceneManager.GetActiveScene().name == "game_1")
+        //UnityWebRequestを生成
+        //ボスの情報取得
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?enemy=Boss";
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        // SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
         {
-            //UnityWebRequestを生成
-            //ボスの情報取得
-            string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?enemy=Boss";
-            UnityWebRequest request = UnityWebRequest.Get(url);
-
-            // SendWebRequestを実行して送受信開始
-            yield return request.SendWebRequest();
-
-            // isNetworkErrorとisHttpErrorでエラー判定
-            if (request.isNetworkError || request.isHttpError)
-            {
-                Debug.Log(request.error);
-            }
-            else
-            {
-                // phpから受け取った値を&で区切って配列を生成
-                string getBossData = request.downloadHandler.text;
-                bossList = ReceiveBossData(getBossData);
-            }
-            //モブの情報取得
-            url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?enemy=Mob";
-            request = UnityWebRequest.Get(url);
-
-            // SendWebRequestを実行して送受信開始
-            yield return request.SendWebRequest();
-
-            // isNetworkErrorとisHttpErrorでエラー判定
-            if (request.isNetworkError || request.isHttpError)
-            {
-                Debug.Log(request.error);
-            }
-            else
-            {
-                // phpから受け取った値を&で区切って配列を生成
-                string getEnemyData = request.downloadHandler.text;
-                enemyList = ReceiveEnemyData(getEnemyData);
-            }
-            SetEnemyList(bossList, enemyList);
+            Debug.Log(request.error);
         }
-        else if (SceneManager.GetActiveScene().name == "score")
+        else
         {
-            //UnityWebRequestを生成
-            //ボスの情報取得
-            string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?get_score=personal&id="+id;
-            UnityWebRequest request = UnityWebRequest.Get(url);
-
-            // SendWebRequestを実行して送受信開始
-            yield return request.SendWebRequest();
-
-            // isNetworkErrorとisHttpErrorでエラー判定
-            if (request.isNetworkError || request.isHttpError)
-            {
-                Debug.Log(request.error);
-            }
-            else
-            {
-                // phpから受け取った値を&で区切って配列を生成
-                string getScoreData = request.downloadHandler.text;
-                scoreList = ReceiveScoreData(getScoreData);
-            }
+            // phpから受け取った値を&で区切って配列を生成
+            string getBossData = request.downloadHandler.text;
+            bossList = ReceiveBossData(getBossData);
         }
+
+        //モブの情報取得
+        url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?enemy=Mob";
+        request = UnityWebRequest.Get(url);
+
+        // SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            // phpから受け取った値を&で区切って配列を生成
+            string getEnemyData = request.downloadHandler.text;
+            enemyList = ReceiveEnemyData(getEnemyData);
+        }
+        SetEnemyList(bossList, enemyList);
     }
 
     public void SetEnemyList(Boss[] bossList, MobEnemy[] enemyList)
@@ -93,11 +69,6 @@ public class jsonReceive
         progress pro = GameObject.Find("Progress").GetComponent<progress>();
         pro.bossList = bossList;
         pro.enemyList = enemyList;
-    }
-
-    public PersonalScore GetPersonalScore()
-    {
-        return scoreList;
     }
 
     //DBからbossの情報を受け取る
@@ -158,17 +129,100 @@ public class jsonReceive
         return enemyInfoList.enemy;
     }
 
-    //DBからスコアの情報を受け取る
-    public PersonalScore ReceiveScoreData(string jsonString)
+    //DBから自分のスコアの情報を受け取る
+    public IEnumerator ReceivePersonalScoreData(string id)
     {
+        //自分のスコアの情報取得
+        string getScoreData="";
+
+        //UnityWebRequestを生成
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?get_score=personal&id=" + id;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        // SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            // phpから受け取った値を&で区切って配列を生成
+            getScoreData = request.downloadHandler.text;
+        }
+
+        //データを分割して配列へ
+        Regex regex = new Regex("^.|.$");
+        getScoreData = regex.Replace(getScoreData, "");
+
+        //jsonからオブジェクトに格納
+        p_score = JsonUtility.FromJson<PersonalScore>(getScoreData);
+
+        yield return null;
+    }
+
+    public PersonalScore GetPersonalScore()
+    {
+        return p_score;
+    }
+
+    //DBからワールドランキングの情報を受け取る
+    public IEnumerator ReceiveRankingScoreData(string id, string kind)
+    {
+        //全体ランキングのスコアの情報取得
+        string jsonString = "";
+
+        //kindは "world" or "friend"
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?get_score=" + kind + "&id=" + id;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        // SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            // phpから受け取った値を&で区切って配列を生成
+            jsonString = request.downloadHandler.text;
+        }
+
         //データを分割して配列へ
         Regex regex = new Regex("^.|.$");
         jsonString = regex.Replace(jsonString, "");
+        regex = new Regex("},{");
+        jsonString = regex.Replace(jsonString, "}&{");
+
+        //Debug用
+        if (kind == "world")
+        {
+            jsonString = "{\"achieve\":\"HelloWorld\",\"name\":\"testUser_1\",\"score\":33333}&{\"achieve\":\"永遠の二番手\",\"name\":\"testUser_2\",\"score\":22222}&{\"achieve\":\"末っ子\",\"name\":\"testUser_3\",\"score\":11111}";
+        }
+        else
+        {
+            jsonString = "{\"achieve\":\"友達一号\",\"name\":\"testUser_4\",\"score\":666666}&{\"achieve\":\"友達候補\",\"name\":\"testUser_5\",\"score\":55555}&{\"achieve\":\"N村くん\",\"name\":\"testUser_6\",\"score\":44444}";
+        }
+        var jsonDatas = jsonString.Split('&');
 
         //jsonからオブジェクトに格納
-        PersonalScore p_score = JsonUtility.FromJson<PersonalScore>(jsonString);
+        RankingScore[] r_score=new RankingScore[jsonDatas.Length];
+        for (int i = 0; i < jsonDatas.Length; i++)
+        {
+            r_score[i] = JsonUtility.FromJson<RankingScore>(jsonDatas[i]);
+        }
+        ranking_score = r_score;
 
-        return p_score;
+        yield return null;
+    }
+
+    public RankingScore[] GetRankingScore()
+    {
+        return ranking_score;
     }
 
     //DBにスコア保存

@@ -27,12 +27,22 @@ public class RankingAdmin : MonoBehaviour
         StartCoroutine(PersonalProfile());
     }
 
+    public void ShowWorldRanking()
+    {
+        StartCoroutine(OthersRanking("world"));
+    }
+
+    public void ShowFriendRanking()
+    {
+        StartCoroutine(OthersRanking("friend"));
+    }
+
     //個人用プロフィールの生成
     public IEnumerator PersonalProfile()
     {
         //敵情報をDBから受け取る
-        yield return StartCoroutine(jsonRec.ConnectDB(PlayerPrefs.GetString("ID")));
-        PersonalScore p_score=jsonRec.GetPersonalScore();
+        yield return StartCoroutine(jsonRec.ReceivePersonalScoreData(PlayerPrefs.GetString("ID")));
+        PersonalScore p_score = jsonRec.GetPersonalScore();
 
         //userTitle
         GameObject userObj = GameObject.Find("UserTitle");
@@ -97,60 +107,52 @@ public class RankingAdmin : MonoBehaviour
     }
 
     //ワールドランキングの中身生成
-    public void AllWorldRanking()
+    public IEnumerator OthersRanking(string kind)
     {
-        for(int i=0;i<10;i++)
+        //敵情報をDBから受け取る
+        yield return StartCoroutine(jsonRec.ReceiveRankingScoreData(PlayerPrefs.GetString("ID"),kind));
+        RankingScore[] ranking_score = jsonRec.GetRankingScore();
+
+        //親設定
+        GameObject rankingParentContent = null;
+        if (kind == "world")
         {
-            GameObject ranking=Instantiate(scorePrefab,new Vector3(0,0,0),Quaternion.identity)as GameObject;
-            ranking.transform.SetParent(parentContent.transform);
-
-            //ここでデータを書き換える
-
-            //UserTitle
-            GameObject rankUserTitle = ranking.transform.Find("UserTitle").gameObject;
-            Text title = rankUserTitle.GetComponent<Text>();
-            title.text = "期待のルーキー";
-
-            //UserName
-            GameObject rankUserName = ranking.transform.Find("UserName").gameObject;
-            Text name = rankUserName.GetComponent<Text>();
-            name.text = "user-" + i;
-
-            //S_Score
-            GameObject score = ranking.transform.Find("Score").gameObject;
-            Text text = score.GetComponent<Text>();
-            //スコア代入的な
-            int j = i * 50;
-            text.text = "Hi Score : " + j.ToString("D8");
+            rankingParentContent = parentContent;
         }
-    }
-
-    //フレンドランキングの中身生成
-    public void FriendRanking()
-    {
-        for (int i = 0; i < 10; i++)
+        else if (kind == "friend") 
         {
-            GameObject ranking = Instantiate(scorePrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-            ranking.transform.SetParent(parentContent2.transform);
+            rankingParentContent = parentContent2;
+        }
+
+        //中身一旦削除
+        Transform children = rankingParentContent.GetComponentInChildren<Transform>();
+        foreach (Transform ob in children)
+        {
+            Destroy(ob.gameObject);
+        }
+
+        //表示人数分ループ
+        for (int i=0;i<ranking_score.Length;i++)
+        {
+            GameObject ranking = Instantiate(scorePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            ranking.transform.SetParent(rankingParentContent.transform);
 
             //ここでデータを書き換える
 
             //UserTitle
             GameObject rankUserTitle = ranking.transform.Find("UserTitle").gameObject;
             Text title = rankUserTitle.GetComponent<Text>();
-            title.text = "期待のルーキー";
+            title.text = ranking_score[i].achieve;
 
             //UserName
             GameObject rankUserName = ranking.transform.Find("UserName").gameObject;
             Text name = rankUserName.GetComponent<Text>();
-            name.text = "user-" + i;
+            name.text = ranking_score[i].name;
 
             //S_Score
             GameObject score = ranking.transform.Find("Score").gameObject;
             Text text = score.GetComponent<Text>();
-            //スコア代入的な
-            int j = i * 50;
-            text.text = "Hi Score : " + j.ToString("D8");
+            text.text = "Hi Score : " + ranking_score[i].score.ToString("D8");
         }
     }
 }
