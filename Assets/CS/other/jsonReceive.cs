@@ -199,14 +199,14 @@ public class jsonReceive
         jsonString = regex.Replace(jsonString, "}&{");
 
         //Debug用
-        if (kind == "world")
+        /*if (kind == "world")
         {
             jsonString = "{\"achieve\":\"HelloWorld\",\"name\":\"testUser_1\",\"score\":33333}&{\"achieve\":\"永遠の二番手\",\"name\":\"testUser_2\",\"score\":22222}&{\"achieve\":\"末っ子\",\"name\":\"testUser_3\",\"score\":11111}";
         }
         else
         {
             jsonString = "{\"achieve\":\"友達一号\",\"name\":\"testUser_4\",\"score\":666666}&{\"achieve\":\"友達候補\",\"name\":\"testUser_5\",\"score\":55555}&{\"achieve\":\"N村くん\",\"name\":\"testUser_6\",\"score\":44444}";
-        }
+        }*/
         var jsonDatas = jsonString.Split('&');
 
         //jsonからオブジェクトに格納
