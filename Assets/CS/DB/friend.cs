@@ -9,26 +9,28 @@ public class friend : MonoBehaviour
 {
     public InputField UserIdInput;
 
+    public GameObject FriCanvas;
+    public GameObject FoundFriend;
+
     public GameObject UserListInfo;
     public GameObject AppPrefab;
     public GameObject ParentContent;
 
-    public GameObject FoundFriend;
     public Image FoundImage;
     public Text FoundID;
     public Text FoundName;
     public Text FoundScore;
 
-    public Text AppID;
-    public Text AppName;
-
     string inputID;
     string returnData;
-
 
     // フレンドタブのボタンを押した時
     public void btnFriend()
     {
+        FriCanvas.SetActive(true);
+        FoundFriend.SetActive(false);
+
+
         // フレンド申請チェック
         StartCoroutine(checkApp(PlayerPrefs.GetString("ID")));
     }
@@ -38,9 +40,6 @@ public class friend : MonoBehaviour
         //UnityWebRequestを生成
         string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?chkApp=" + id;
         UnityWebRequest request = UnityWebRequest.Get(url);
-
-        // ヘッダーにJSON形式を指定
-        // request.SetRequestHeader("Content-Type", "application/json");
 
         // SendWebRequestを実行して送受信開始
         yield return request.SendWebRequest();
@@ -52,35 +51,53 @@ public class friend : MonoBehaviour
         }
         else
         {
-            // phpから受け取った値を&で区切って配列を生成
-            string[] getData = request.downloadHandler.text.Split('&');
-            ListFormat list_format;
-            list_format = UserListInfo.GetComponent<ListFormat>();
-            list_format.SetUserList(getData, "app");
-            Debug.Log(list_format.app_list[1].name);
-
-            for (int i = 0; i < list_format.app_list.Length; i++)
+            // フレンド申請一覧のプレハブを消す
+            GameObject content = GameObject.Find("FriendCanvas/Application_Approval/Scroll View/Viewport/Content");
+            foreach (Transform child in content.transform)
             {
-                GameObject app = Instantiate(AppPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-                app.transform.SetParent(ParentContent.transform);
-                foreach (Transform child in app.transform)
+                Destroy(child.gameObject);
+            }
+
+            string res = request.downloadHandler.text;
+            if (res == "failure")
+            {
+                Debug.Log("取得件数 = ０件");
+            }
+            else
+            {
+                // phpから受け取った値を&で区切って配列を生成
+                string[] getData = res.Split('&');
+                ListFormat list_format;
+                list_format = UserListInfo.GetComponent<ListFormat>();
+                list_format.SetUserList(getData, "app");
+
+                for (int i = 0; i < list_format.app_list.Length; i++)
                 {
-                    Debug.Log(child.name);
-                    if (child.name == "FriendID")
+                    GameObject app = Instantiate(AppPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+                    app.transform.SetParent(ParentContent.transform);
+                    foreach (Transform child in app.transform)
                     {
-                        Text f_id = child.GetComponent<Text>();
-                        f_id.text = list_format.app_list[i].id;
-                    }
-                    if (child.name == "FriendName")
-                    {
-                        Text f_name = child.GetComponent<Text>();
-                        f_name.text = list_format.app_list[i].name;
+
+                        Text f_id;
+                        Text f_name;
+
+                        //Debug.Log(child.name);
+                    
+                        if (child.name == "FriendID")
+                        {
+                            f_id = child.GetComponent<Text>();
+                            f_id.text = list_format.app_list[i].id;
+                        }
+                        if (child.name == "FriendName")
+                        {
+                            f_name = child.GetComponent<Text>();
+                            f_name.text = list_format.app_list[i].name;
+                        }
                     }
                 }
             }
         }
     }
-
 
     // 検索ボタン押した時
     public void btnSearch()
@@ -162,13 +179,22 @@ public class friend : MonoBehaviour
         else
         {
             result = request.downloadHandler.text;
-            if (result == "success")
-            {
-                Debug.Log("フレンド申請を送信しました");
-            }
-            else if(result == "false")
+            if (result == "already")
             {
                 Debug.Log("既にフレンド登録されています");
+            }
+            else if (result == "requested")
+            {
+                Debug.Log("フレンド申請済みのユーザーです");
+            }
+            else if (result == "success")
+            {
+                Debug.Log("フレンド申請を送信しました");
+                FoundFriend.SetActive(false);
+            }
+            else if(result == "failure")
+            {
+                Debug.Log("登録に失敗しました");
             }
             else
             {
@@ -183,7 +209,4 @@ public class friend : MonoBehaviour
     {
         FoundFriend.SetActive(false);
     }
-
-
-
 }
