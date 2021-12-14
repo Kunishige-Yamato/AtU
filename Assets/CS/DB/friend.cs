@@ -52,7 +52,7 @@ public class friend : MonoBehaviour
         else
         {
             // フレンド申請一覧のプレハブを消す
-            GameObject content = GameObject.Find("FriendCanvas/Application_Approval/Scroll View/Viewport/Content");
+            GameObject content = FriCanvas.transform.Find("Application_Approval/Scroll View/Viewport/Content").gameObject;
             foreach (Transform child in content.transform)
             {
                 Destroy(child.gameObject);

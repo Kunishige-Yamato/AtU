@@ -490,8 +490,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: -10}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -200, y: -10}
+  m_SizeDelta: {x: 750, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1834714226414245649
 CanvasRenderer:
@@ -530,7 +530,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: <Conditions for Release>
@@ -661,7 +661,7 @@ GameObject:
   - component: {fileID: 854516124787249832}
   - component: {fileID: 1981475101722376695}
   - component: {fileID: 7653413308725598712}
-  - component: {fileID: 402671488669718966}
+  - component: {fileID: 8809552960247633422}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -771,7 +771,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 402671488669718966}
+      - m_Target: {fileID: 8809552960247633422}
         m_MethodName: Onclick
         m_Mode: 1
         m_Arguments:
@@ -782,7 +782,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &402671488669718966
+--- !u!114 &8809552960247633422
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

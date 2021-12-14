@@ -569,7 +569,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: b18451f0eee1c4a6291bf91ffd91db4c, type: 3}
-    m_FontSize: 50
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -726,7 +726,7 @@ GameObject:
   - component: {fileID: 977852599}
   - component: {fileID: 977852598}
   m_Layer: 5
-  m_Name: FriendScorePanel
+  m_Name: AchievementPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -937,6 +937,7 @@ GameObject:
   - component: {fileID: 1189075262}
   - component: {fileID: 1189075261}
   - component: {fileID: 1189075260}
+  - component: {fileID: 1189075264}
   m_Layer: 5
   m_Name: BackTitleButton
   m_TagString: Untagged
@@ -1030,6 +1031,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1189075264}
+        m_MethodName: SaveDecoration
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1189075262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1067,6 +1079,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1189075258}
   m_CullTransparentMesh: 0
+--- !u!114 &1189075264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189075258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ea976f0d05b488bb945621e3960a79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1230203378
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,11 +1297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b01c9877b0a6445f48b56d81fd2e7863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingSkin: {fileID: 1230203380}
   trophyPrefab: {fileID: 1834714226866006995, guid: 8f669286ce484490a9f8a56998704b02,
     type: 3}
   parentContent: {fileID: 2131134235}
-  testSkin: {fileID: 21300000, guid: c42147bb2760f436d9583a5fbf02aa38, type: 3}
 --- !u!4 &1392236998
 Transform:
   m_ObjectHideFlags: 0
@@ -1302,7 +1324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1517781332}
   m_Layer: 5
-  m_Name: FriendTab
+  m_Name: AchievementTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1477,11 +1499,11 @@ MonoBehaviour:
   m_Content: {fileID: 2131134236}
   m_Horizontal: 1
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 402941435}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 806330921}

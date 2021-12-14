@@ -111,7 +111,7 @@ public class RankingAdmin : MonoBehaviour
     {
         //敵情報をDBから受け取る
         yield return StartCoroutine(jsonRec.ReceiveRankingScoreData(PlayerPrefs.GetString("ID"),kind));
-        RankingScore[] ranking_score = jsonRec.GetRankingScore();
+        RankingScore[] Ranking = jsonRec.GetRankingScore();
 
         //親設定
         GameObject rankingParentContent = null;
@@ -132,7 +132,7 @@ public class RankingAdmin : MonoBehaviour
         }
 
         //表示人数分ループ
-        for (int i=0;i<ranking_score.Length;i++)
+        for (int i=0;i<Ranking.Length;i++)
         {
             GameObject ranking = Instantiate(scorePrefab, new Vector3(0, 0, 0), Quaternion.identity);
             ranking.transform.SetParent(rankingParentContent.transform);
@@ -142,17 +142,17 @@ public class RankingAdmin : MonoBehaviour
             //UserTitle
             GameObject rankUserTitle = ranking.transform.Find("UserTitle").gameObject;
             Text title = rankUserTitle.GetComponent<Text>();
-            title.text = ranking_score[i].achieve;
+            title.text = Ranking[i].achieve;
 
             //UserName
             GameObject rankUserName = ranking.transform.Find("UserName").gameObject;
             Text name = rankUserName.GetComponent<Text>();
-            name.text = ranking_score[i].name;
+            name.text = Ranking[i].name;
 
             //S_Score
             GameObject score = ranking.transform.Find("Score").gameObject;
             Text text = score.GetComponent<Text>();
-            text.text = "Hi Score : " + ranking_score[i].score.ToString("D8");
+            text.text = "Hi Score : " + Ranking[i].score.ToString("D8");
         }
     }
 }

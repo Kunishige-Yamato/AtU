@@ -26,7 +26,7 @@ public class backSelectMode : MonoBehaviour
     public void OnClick()
     {
         BG.gameObject.GetComponent<Image>().color=new Color(0.471f,0.471f,0f,0.471f);
-        if(modeCanvas1.transform.position.x<400){
+        if(modeCanvas1.transform.position.x<modeCanvas2.transform.position.x){
             animator2=modeCanvas1.GetComponent<Animator>();
         }
         else{

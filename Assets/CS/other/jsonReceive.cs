@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using enemyInfo;
 using scoreInfo;
+using achievementInfo;
 using System.Text.RegularExpressions;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -14,7 +15,11 @@ public class jsonReceive
     MobEnemy[] enemyList;
     //スコア用受け取り用配列
     PersonalScore p_score;
-    RankingScore[] ranking_score;
+    RankingScore[] rankingScore;
+    //称号用受け取り配列
+    AchievementList[] achieve;
+    string[] myAchieve;
+    string[] mySetAchieve;
 
 
     //ボス情報保管リスト
@@ -215,14 +220,14 @@ public class jsonReceive
         {
             r_score[i] = JsonUtility.FromJson<RankingScore>(jsonDatas[i]);
         }
-        ranking_score = r_score;
+        rankingScore = r_score;
 
         yield return null;
     }
 
     public RankingScore[] GetRankingScore()
     {
-        return ranking_score;
+        return rankingScore;
     }
 
     //DBにスコア保存
@@ -263,7 +268,6 @@ public class jsonReceive
 
         //UnityWebRequestを生成
         //ボスの情報取得
-        Debug.Log("before set:" + id + "," + game_mode + "," + score);
         string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?id="+id+"&game_mode="+game_mode+"&put_score="+score;
         UnityWebRequest request = UnityWebRequest.Get(url);
 
@@ -280,5 +284,130 @@ public class jsonReceive
             string result = request.downloadHandler.text;
             Debug.Log(result);
         }
+    }
+
+    public IEnumerator RecieveAchievement()
+    {
+        //称号の情報取得
+        string jsonString = "";
+
+        //UnityWebRequestを生成
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?get_achievement=all";
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        // SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            // phpから受け取った値を&で区切って配列を生成
+            jsonString = request.downloadHandler.text;
+        }
+
+        //データを分割して配列へ
+        Regex regex = new Regex("^.|.$");
+        jsonString = regex.Replace(jsonString, "");
+        regex = new Regex("},{");
+        jsonString = regex.Replace(jsonString, "}&{");
+
+        jsonString = "{\"id\":1,\"type\":\"title\",\"achieveID\":\"1\",\"hintText\":\"はじめの一歩\",\"explanationText\":\"ゲームを一回プレイする。\",\"achievement\":\"HelloWorld\"}&{\"id\":2,\"type\":\"title\",\"achieveID\":\"2\",\"hintText\":\"がんばろーる\",\"explanationText\":\"猛者はスコープを使わないって？\",\"achievement\":\"私は大砲よ\"}&{\"id\":3,\"type\":\"skin\",\"achieveID\":\"1\",\"hintText\":\"クリップは髪留めのこと\",\"explanationText\":\"これはマガジンよ(ドヤ)\",\"achievement\":\"banga.png\"}&{\"id\":4,\"type\":\"title\",\"achieveID\":\"3\",\"hintText\":\"顔が性犯罪者\",\"explanationText\":\"PHPでショッピングサイトを作成する。\",\"achievement\":\"Mr.KUNII\"}&{\"id\":5,\"type\":\"skin\",\"achieveID\":\"2\",\"hintText\":\"開発者\",\"explanationText\":\"テストの時はこのスキンだった\",\"achievement\":\"SelfMachine.png\"}";
+        var jsonDatas = jsonString.Split('&');
+
+        //jsonからオブジェクトに格納
+        AchievementList[] a_list = new AchievementList[jsonDatas.Length];
+        for (int i = 0; i < jsonDatas.Length; i++)
+        {
+            a_list[i] = JsonUtility.FromJson<AchievementList>(jsonDatas[i]);
+        }
+        achieve = a_list;
+
+        yield return null;
+    }
+
+    public AchievementList[] GetAchievementList()
+    {
+        return achieve;
+    }
+
+    public IEnumerator RecieveMyAchieve(string id)
+    {
+        //自分のスコアの情報取得
+        string getAchieveData = "";
+
+        //自分の獲得済みのトロフィーを取得
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?get_achievement=mine&id=" + id;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        // SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            // phpから受け取った値を&で区切って配列を生成
+            getAchieveData = request.downloadHandler.text;
+        }
+
+        //データを分割して配列へ
+        //dubug用
+        getAchieveData = "[{1,3,4,5}]";
+
+        Regex regex = new Regex("^..|..$");
+        getAchieveData = regex.Replace(getAchieveData, "");
+        //カンマ区切りで配列格納
+        myAchieve = getAchieveData.Split(',');
+
+        //自分の今セットしてるやつ取得
+        url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?get_achievement=set&id=" + id;
+        request = UnityWebRequest.Get(url);
+
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            // phpから受け取った値を&で区切って配列を生成
+            getAchieveData = request.downloadHandler.text;
+        }
+
+        //データを分割して配列へ
+        //dubug用
+        getAchieveData = "[{1,1}]";
+
+        regex = new Regex("^..|..$");
+        getAchieveData = regex.Replace(getAchieveData, "");
+
+        //カンマ区切りで配列格納
+        mySetAchieve = getAchieveData.Split(',');
+    }
+
+    public string[] GetMyAchieve()
+    {
+        return myAchieve;
+    }
+
+    public string[] GetMySetAchieve()
+    {
+        return mySetAchieve;
+    }
+
+    public IEnumerator SaveDecoration(string id, int skinNum, int titleNum)
+    {
+        //プレビューにある
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?set_skin=" + skinNum + "&set_title=" + titleNum + "&id=" + id;
+        yield return null;
     }
 }
