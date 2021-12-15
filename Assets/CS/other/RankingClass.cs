@@ -21,11 +21,12 @@
 
     public class RankingScore
     {
-        public string achieve, name;
+        public string id,achieve, name;
         public int score;
 
-        public RankingScore(string achieve, string name, int score)
+        public RankingScore(string id, string achieve, string name, int score)
         {
+            this.id = id;
             this.achieve = achieve;
             this.name = name;
             this.score = score;

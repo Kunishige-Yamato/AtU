@@ -148,6 +148,12 @@ public class RankingAdmin : MonoBehaviour
             GameObject rankUserName = ranking.transform.Find("UserName").gameObject;
             Text name = rankUserName.GetComponent<Text>();
             name.text = Ranking[i].name;
+            //自分のスコアはテキストに変化を
+            if(PlayerPrefs.GetString("ID")==Ranking[i].id)
+            {
+                name.color = Color.red;
+                ranking.transform.Find("Panel").GetComponent<Image>().color = new Color(255, 0, 0, 0.3f);
+            }
 
             //S_Score
             GameObject score = ranking.transform.Find("Score").gameObject;
