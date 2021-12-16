@@ -90,6 +90,8 @@ public class buttonNext : MonoBehaviour
                 //totlaResult表示してからスコアかタイトルへ
                 if(gameObject.name == "TotalResultNextStageButton")
                 {
+                    nextButtonText.text = "Score";
+
                     //カーソル表示
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;

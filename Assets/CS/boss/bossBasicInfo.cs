@@ -106,7 +106,6 @@ public class bossBasicInfo : MonoBehaviour
                 isFadeIn = false;
             }
             audioSource.volume = (float)(fadeDeltaTime / fadeInSeconds);
-            Debug.Log("in:" + audioSource.volume);
         }
         else
         {
@@ -127,7 +126,6 @@ public class bossBasicInfo : MonoBehaviour
                 isFadeIn = true;
             }
             audioSource.volume = (float)(1.0 - fadeDeltaTime2 / fadeOutSeconds);
-            Debug.Log("out:" + audioSource.volume);
         }
         else
         {

@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 7075078889700950088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1490563138715461214, guid: b1ec989b5884c47bf9ae3be3121dcb9b,
+  m_Sprite: {fileID: -8869174290545694648, guid: c6b151bb69e0f4f8fae0bc97599c6d7c,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,7 +99,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.7999998
+  m_Radius: 0.7
 --- !u!114 &7075078889700950089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,10 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2d140c005cc4209b58a6bf3486c2db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image0: {fileID: 1490563138715461214, guid: b1ec989b5884c47bf9ae3be3121dcb9b, type: 3}
-  image1: {fileID: -4539095080987529807, guid: b1ec989b5884c47bf9ae3be3121dcb9b, type: 3}
-  image2: {fileID: 5811846772260565856, guid: b1ec989b5884c47bf9ae3be3121dcb9b, type: 3}
-  image3: {fileID: -2812385102360627270, guid: b1ec989b5884c47bf9ae3be3121dcb9b, type: 3}
-  image4: {fileID: 5559637592224353727, guid: b1ec989b5884c47bf9ae3be3121dcb9b, type: 3}
-  image5: {fileID: -7929379965316308621, guid: b1ec989b5884c47bf9ae3be3121dcb9b, type: 3}
-  image6: {fileID: 5404917680548447911, guid: b1ec989b5884c47bf9ae3be3121dcb9b, type: 3}
+  image0: {fileID: -2040479121922635413, guid: c6b151bb69e0f4f8fae0bc97599c6d7c, type: 3}
+  image1: {fileID: -8869174290545694648, guid: c6b151bb69e0f4f8fae0bc97599c6d7c, type: 3}
+  image2: {fileID: 4016589440147025981, guid: c6b151bb69e0f4f8fae0bc97599c6d7c, type: 3}
+  image3: {fileID: -2040479121922635413, guid: c6b151bb69e0f4f8fae0bc97599c6d7c, type: 3}
+  image4: {fileID: -8869174290545694648, guid: c6b151bb69e0f4f8fae0bc97599c6d7c, type: 3}
+  image5: {fileID: 4016589440147025981, guid: c6b151bb69e0f4f8fae0bc97599c6d7c, type: 3}

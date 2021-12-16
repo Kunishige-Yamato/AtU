@@ -100,6 +100,13 @@ public class attack_enemy : MonoBehaviour
                 atk8.stageNum = stageNum;
                 atk8.atkClass = gameObject.GetComponent<attack_enemy>();
                 break;
+            case "9":
+                attack_enemy_9 atk9 = gameObject.AddComponent<attack_enemy_9>();
+                atk9.bulPrefab = bulPrefab;
+                atk9.modeDif = modeDif;
+                atk9.stageNum = stageNum;
+                atk9.atkClass = gameObject.GetComponent<attack_enemy>();
+                break;
 
         }
 
@@ -266,12 +273,13 @@ public class attack_enemy_5 : attack_enemy
     Sprite image;
     Vector3 bulletScale;
     enemyBasicInfo basicInfo;
+    progress pro;
 
     void Start()
     {
         gameObject.name = "enemy5Prefab";
-        image = Resources.Load("Textures/enemy5_2") as Sprite;
-        progress pro = GameObject.Find("Progress").GetComponent<progress>();
+        image = Resources.Load<Sprite>("Textures/enemy5_2");
+        pro = GameObject.Find("Progress").GetComponent<progress>();
         if (pro.GetDifficulty()[0] == 3 && pro.GetStageNum()[0] == 3)
         {
             gameObject.GetComponent<SpriteRenderer>().sprite = image;
@@ -285,8 +293,15 @@ public class attack_enemy_5 : attack_enemy
     {
         if (atkClass.defeatFlag && defeat == false)
         {
-            Shoot();
-            defeat = true;
+            if (pro.GetDifficulty()[0] == 3 && pro.GetStageNum()[0] == 3) 
+            {
+
+            }
+            else
+            {
+                Shoot();
+                defeat = true;
+            }
         }
     }
 
@@ -308,13 +323,20 @@ public class attack_enemy_5 : attack_enemy
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        //ブレーキ
-        basicInfo.AddSpeed(-0.005f, 0, 0);
-        //拡大
-        bulletScale = transform.localScale;
-        bulletScale.x += 0.08f;
-        bulletScale.y += 0.08f;
-        transform.localScale = bulletScale;
+        if (pro.GetDifficulty()[0] == 3 && pro.GetStageNum()[0] == 3)
+        {
+            //クレイジーの時は無敵
+        }
+        else
+        {
+            //ブレーキ
+            basicInfo.AddSpeed(-0.005f, 0, 0);
+            //拡大
+            bulletScale = transform.localScale;
+            bulletScale.x += 0.08f;
+            bulletScale.y += 0.08f;
+            transform.localScale = bulletScale;
+        }
     }
 }
 
@@ -324,12 +346,13 @@ public class attack_enemy_6 : attack_enemy
     bool defeat=false;
     Vector3 bulletScale;
     Sprite image;
+    progress pro;
 
     void Start()
     {
         gameObject.name = "enemy6Prefab";
-        image = Resources.Load("Textures/enemy6_2") as Sprite;
-        progress pro = GameObject.Find("Progress").GetComponent<progress>();
+        image = Resources.Load<Sprite>("Textures/enemy6_2");
+        pro= GameObject.Find("Progress").GetComponent<progress>();
         if (pro.GetDifficulty()[0] == 3 && pro.GetStageNum()[0] == 3)
         {
             gameObject.GetComponent<SpriteRenderer>().sprite = image;
@@ -341,14 +364,21 @@ public class attack_enemy_6 : attack_enemy
 
     void FixedUpdate()
     {
-        if (atkClass.defeatFlag && defeat==false)
+        if (atkClass.defeatFlag && defeat == false)
         {
-            // CapselColliderの取得
-            CircleCollider2D[] myCol = gameObject.GetComponents<CircleCollider2D>();
-            // Colliderを無効化
-            foreach (CircleCollider2D col in myCol)
+            if (pro.GetDifficulty()[0] == 3 && pro.GetStageNum()[0] == 3)
             {
-                col.enabled = false;
+
+            }
+            else
+            {
+                // CapselColliderの取得
+                CircleCollider2D[] myCol = gameObject.GetComponents<CircleCollider2D>();
+                // Colliderを無効化
+                foreach (CircleCollider2D col in myCol)
+                {
+                    col.enabled = false;
+                }
             }
 
             Shoot();
@@ -491,5 +521,49 @@ public class attack_enemy_8 : attack_enemy
             angle2 = 180;
         }
         Invoke("Shoot2", 0.8f);
+    }
+}
+
+public class attack_enemy_9 : attack_enemy
+{
+    GameObject player;
+    float angle;
+
+
+    void Start()
+    {
+        //タグつきを全て格納
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject del in enemys)
+        {
+            if (del != gameObject)
+            {
+                Destroy(del);
+            }
+        }
+
+        gameObject.name = "enemy9Prefab";
+        player = GameObject.Find("Player");
+        angle = 0;
+        Invoke("Shoot", 1.5f);
+    }
+
+    void Shoot()
+    {
+        angle = 0;
+        int i = Random.Range(0, 24);
+        for (int j = 0; j < 24; j++)
+        {
+            angle = j * 15;
+            float rad = Mathf.PI * angle / 180;
+            bulPos.x = (float)Mathf.Cos(rad) * 3f + player.transform.position.x;
+            bulPos.y = (float)Mathf.Sin(rad) * 3f + player.transform.position.y;
+            if (i != j && (i - 1) != j && (i + 1) != j)
+            {
+                Instantiate(bulPrefab[0], bulPos, Quaternion.identity);
+            }
+        }
+        Invoke("Shoot", 4f);
+
     }
 }

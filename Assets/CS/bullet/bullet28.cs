@@ -19,7 +19,6 @@ public class bullet28 : MonoBehaviour
     public Sprite image3;
     public Sprite image4;
     public Sprite image5;
-    public Sprite image6;
 
     void Start()
     {
@@ -28,7 +27,7 @@ public class bullet28 : MonoBehaviour
         fallSpeed=(transform.position.y-player.transform.position.y)/-20;
         moveSpeed=(transform.position.x-player.transform.position.x)/-20;
 
-        int i=Random.Range(0,7);
+        int i=Random.Range(0,6);
         switch(i){
             case 0:
                 this.gameObject.GetComponent<SpriteRenderer>().sprite=image0;
@@ -47,9 +46,6 @@ public class bullet28 : MonoBehaviour
                 break;
             case 5:
                 this.gameObject.GetComponent<SpriteRenderer>().sprite=image5;
-                break;
-            case 6:
-                this.gameObject.GetComponent<SpriteRenderer>().sprite=image6;
                 break;
         }
 

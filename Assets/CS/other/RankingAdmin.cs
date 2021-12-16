@@ -3,6 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using scoreInfo;
+using System.Text.RegularExpressions;
+
+namespace scoreInfo
+{
+    public class PersonalScore
+    {
+        public string achieve, name;
+        public int s_easy, s_normal, s_hard, s_crazy;
+        public int e_normal, e_gambling;
+
+        public PersonalScore(string achieve, string name, int s_easy, int s_normal, int s_hard, int s_crazy, int e_normal, int e_gambling)
+        {
+            this.achieve = achieve;
+            this.name = name;
+            this.s_easy = s_easy;
+            this.s_normal = s_normal;
+            this.s_hard = s_hard;
+            this.s_crazy = s_crazy;
+            this.e_normal = e_normal;
+            this.e_gambling = e_gambling;
+        }
+    }
+
+    public class RankingScore
+    {
+        public string id, title, name, skin; 
+        public int score;
+
+        public RankingScore(string id, string title, string skin, string name, int score)
+        {
+            this.id = id;
+            this.title = title;
+            this.skin = skin;
+            this.name = name;
+            this.score = score;
+        }
+    }
+}
 
 public class RankingAdmin : MonoBehaviour
 {
@@ -56,9 +94,11 @@ public class RankingAdmin : MonoBehaviour
 
         //userIcon
         userObj = GameObject.Find("UserIcon");
+        Image icon = userObj.GetComponent<Image>();
+        icon.sprite= Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(PlayerPrefs.GetString("SKIN"), @"\.png$", ""));
 
         //StoryMode
-        for(int i=0;i<4;i++)
+        for (int i=0;i<4;i++)
         {
             switch(i)
             {
@@ -142,23 +182,29 @@ public class RankingAdmin : MonoBehaviour
             //UserTitle
             GameObject rankUserTitle = ranking.transform.Find("UserTitle").gameObject;
             Text title = rankUserTitle.GetComponent<Text>();
-            title.text = Ranking[i].achieve;
+            title.text = Ranking[i].title;
+
+            //userIcon
+            GameObject userIcon = ranking.transform.Find("UserIcon").gameObject;
+            Image icon = userIcon.GetComponent<Image>();
+            icon.sprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(Ranking[i].skin, @"\.png$", ""));
 
             //UserName
             GameObject rankUserName = ranking.transform.Find("UserName").gameObject;
             Text name = rankUserName.GetComponent<Text>();
             name.text = Ranking[i].name;
-            //自分のスコアはテキストに変化を
-            if(PlayerPrefs.GetString("ID")==Ranking[i].id)
-            {
-                name.color = Color.red;
-                ranking.transform.Find("Panel").GetComponent<Image>().color = new Color(255, 0, 0, 0.3f);
-            }
 
             //S_Score
             GameObject score = ranking.transform.Find("Score").gameObject;
             Text text = score.GetComponent<Text>();
             text.text = "Hi Score : " + Ranking[i].score.ToString("D8");
+
+            //自分のスコアはテキストに変化を
+            if (PlayerPrefs.GetString("ID") == Ranking[i].id)
+            {
+                name.color = Color.red;
+                ranking.transform.Find("Panel").GetComponent<Image>().color = new Color(255, 0, 0, 0.3f);
+            }
         }
     }
 }

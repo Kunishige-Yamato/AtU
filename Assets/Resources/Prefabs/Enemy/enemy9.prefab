@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8217779634986312101}
   - component: {fileID: 8217779634986312122}
   - component: {fileID: 8217779634986312123}
-  - component: {fileID: 8217779634986312100}
+  - component: {fileID: 4140081025073408786}
+  - component: {fileID: 5019230247848463389}
   m_Layer: 0
-  m_Name: enemy9Prefab
+  m_Name: enemy9
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8217779634986312120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f7dc1b66125c74ffc892a7b7b7270f0e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0002c359b9578416a9d8e8a56bea28cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,8 +99,8 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
---- !u!114 &8217779634986312100
+  m_Radius: 3
+--- !u!114 &4140081025073408786
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,8 +109,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 8217779634986312120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d777691a2d7ac4a9083624a35f47d65f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9af4a8a36f22348a28dac35d8239b7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 7075078889700950088, guid: a56c0d0f5855a400abac57023d75ce43,
-    type: 3}
+  skinSprite: []
+--- !u!114 &5019230247848463389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8217779634986312120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bdf7bf5333404dbb8c84bb0eeab5c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulPrefab:
+  - {fileID: 7075078889700950088, guid: a56c0d0f5855a400abac57023d75ce43, type: 3}
+  timer: 0
+  defeatFlag: 0

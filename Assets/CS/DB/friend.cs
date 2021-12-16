@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using scoreInfo;
+using System.Text.RegularExpressions;
 
 public class friend : MonoBehaviour
 {
@@ -15,6 +17,10 @@ public class friend : MonoBehaviour
     public GameObject UserListInfo;
     public GameObject AppPrefab;
     public GameObject ParentContent;
+
+    //フレンドリスト用
+    public GameObject friendPrefab;
+    public GameObject friendListParent;
 
     public Image FoundImage;
     public Text FoundID;
@@ -30,10 +36,89 @@ public class friend : MonoBehaviour
         FriCanvas.SetActive(true);
         FoundFriend.SetActive(false);
 
+        //フレンドリスト作成
+        StartCoroutine(FriendList(PlayerPrefs.GetString("ID")));
 
         // フレンド申請チェック
         StartCoroutine(checkApp(PlayerPrefs.GetString("ID")));
     }
+
+    //フレンドリスト
+    public IEnumerator FriendList(string id)
+    {
+        string jsonString="";
+
+        //UnityWebRequestを生成
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?get_friend=" + id;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        // SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+            yield break;
+        }
+        else
+        {
+            // phpから受け取った値を&で区切って配列を生成
+            jsonString = request.downloadHandler.text;
+        }
+
+        //データを分割して配列へ
+        Regex regex = new Regex("^.|.$");
+        jsonString = regex.Replace(jsonString, "");
+        regex = new Regex("},{");
+        jsonString = regex.Replace(jsonString, "}&{");
+
+        var jsonDatas = jsonString.Split('&');
+
+        //jsonからオブジェクトに格納
+        RankingScore[] r_score = new RankingScore[jsonDatas.Length];
+        for (int i = 0; i < jsonDatas.Length; i++)
+        {
+            r_score[i] = JsonUtility.FromJson<RankingScore>(jsonDatas[i]);
+        }
+
+        //中身一旦削除
+        Transform children = friendListParent.GetComponentInChildren<Transform>();
+        foreach (Transform ob in children)
+        {
+            Destroy(ob.gameObject);
+        }
+
+        //表示人数分ループ
+        for (int i = 0; i < r_score.Length; i++)
+        {
+            GameObject ranking = Instantiate(friendPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            ranking.transform.SetParent(friendListParent.transform);
+
+            //ここでデータを書き換える
+
+            //userIcon
+            GameObject userIcon = ranking.transform.Find("UserIcon").gameObject;
+            Image icon = userIcon.GetComponent<Image>();
+            icon.sprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(r_score[i].skin, @"\.png$", ""));
+
+            //UserTitle
+            GameObject userTitle = ranking.transform.Find("UserTitle").gameObject;
+            Text title = userTitle.GetComponent<Text>();
+            title.text = r_score[i].title;
+
+            //UserName
+            GameObject userName = ranking.transform.Find("UserName").gameObject;
+            Text name = userName.GetComponent<Text>();
+            name.text = r_score[i].name;
+
+            //S_Score
+            GameObject score = ranking.transform.Find("Score").gameObject;
+            Text text = score.GetComponent<Text>();
+            text.text = "Hi Score : " + r_score[i].score.ToString("D8");
+        }
+    }
+
     // フレンド申請チェック
     public IEnumerator checkApp(string id)
     {
@@ -113,6 +198,7 @@ public class friend : MonoBehaviour
             Debug.Log("ID値が正しくありません");
         }
     }
+
     // 検索メソッド
     public IEnumerator search(string id)
     {
@@ -151,7 +237,6 @@ public class friend : MonoBehaviour
             }
         }
     }
-
 
     // OKボタンを押した時
     public void btnOK()
@@ -202,7 +287,6 @@ public class friend : MonoBehaviour
             }
         }
     }
-
 
     // キャンセルボタン押した時
     public void btnCancel()

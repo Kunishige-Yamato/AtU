@@ -144,8 +144,8 @@ public class player : MonoBehaviour
             Destroy(GetComponent<Rigidbody2D>());
             */
 
-            SpriteRenderer image = gameObject.GetComponent<SpriteRenderer>();
-            image.sprite = commandImg;
+            //色変化
+            gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
 
             //当たり判定縮小する強化
             CircleCollider2D collider = GetComponent<CircleCollider2D>();

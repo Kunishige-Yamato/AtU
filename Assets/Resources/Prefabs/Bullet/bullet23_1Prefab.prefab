@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6414444185982178677}
   - component: {fileID: 6414444185982178634}
   m_Layer: 0
-  m_Name: bullet23-1Prefab
+  m_Name: bullet23_1Prefab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

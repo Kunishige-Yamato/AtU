@@ -31,6 +31,7 @@ public class enemyAppearance : MonoBehaviour
     public void BulletAppearance(string name, float posX, float posY)
     {
         //bulletオブジェクトを画面に生成する
+        Debug.Log(name);
         GameObject bulObjPrefab = Resources.Load<GameObject>("Prefabs/Bullet/" + name);
         enemyObj = Instantiate(bulObjPrefab, new Vector3(posX, posY, 0), Quaternion.identity);
         enemyObj.name = name;

@@ -145,8 +145,8 @@ public class progress : MonoBehaviour
 
         if(endless==0)
         {
-            //Debug用ステージスキップ
-            //stageNum = 3;
+            //Debug用ステージスキップ ステージ数-1で入力
+            stageNum = 2;
 
             //カットイン設定
             animator = cutInCanvas.GetComponent<Animator>();
@@ -213,7 +213,6 @@ public class progress : MonoBehaviour
                 isFadeIn = false;
             }
             audioSource.volume = (float)(fadeDeltaTime / fadeInSeconds);
-            Debug.Log("in:"+audioSource.volume);
         }
         else
         {
@@ -234,7 +233,6 @@ public class progress : MonoBehaviour
                 isFadeIn = true;
             }
             audioSource.volume = (float)(1.0 - fadeDeltaTime2 / fadeOutSeconds);
-            Debug.Log("out:"+audioSource.volume);
         }
         else
         {
@@ -398,7 +396,7 @@ public class progress : MonoBehaviour
             timer = 0;
             sc.ResetTimer();
             //Debug用ステージ早送り
-            timer = 60;
+            //timer = 60;
         }
 
         yield return null;
@@ -457,14 +455,6 @@ public class progress : MonoBehaviour
 
         //背景設定
         backGround.GetComponent<Image>().sprite = backGroundSprites[bossRan - 1];
-
-        //BGM設定
-        GameObject mainAudio = GameObject.Find("AudioObj");
-        audioSource = mainAudio.GetComponent<AudioSource>();
-        audioSource.clip = audioClips[bossRan];
-        audioSource.volume = 0;
-        audioSource.Play();
-        isFadeIn = true;
 
         //敵情報をDBから受け取る
         yield return StartCoroutine(jsonRec.ConnectDB(PlayerPrefs.GetString("ID")));

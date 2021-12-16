@@ -18,6 +18,15 @@ public class bullet23_1 : MonoBehaviour
         moveSpeed=Random.Range(-0.3f,0.3f);
         moveSpeed-=transform.position.x/10;
 
+        if (transform.position.x < 0)
+        {
+            gameObject.name="bullet23-1(-1)";
+        }
+        else
+        {
+            gameObject.name="bullet23-1(1)";
+        }
+
         Instantiate(bullet2Prefab,transform.position,Quaternion.identity);
 
         Shoot();
