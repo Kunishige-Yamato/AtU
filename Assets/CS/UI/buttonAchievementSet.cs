@@ -20,7 +20,7 @@ public class buttonAchievementSet : MonoBehaviour
 
     //タイトル戻るボタンのコンポーネント
     //押されたタイミングでdecorationを保存
-    buttonAchievementSave achieveSave;
+    buttonAchievementSave achieveSave,backBtn;
 
     void Start()
     {
@@ -34,7 +34,8 @@ public class buttonAchievementSet : MonoBehaviour
         acqSkin = gameObject.transform.Find("AcquiredSkin").gameObject;
         acqTitle = gameObject.transform.Find("AcquiredTitle").gameObject;
 
-        achieveSave = GameObject.Find("Canvas/BackTitleButton").GetComponent<buttonAchievementSave>();
+        achieveSave = GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>();
+        backBtn = GameObject.Find("Canvas/BackTitleButton").GetComponent<buttonAchievementSave>();
     }
 
     void FixedUpdate()
@@ -59,6 +60,7 @@ public class buttonAchievementSet : MonoBehaviour
                 //スキン変更
                 preSkin.sprite = mySprite.sprite;
                 achieveSave.GetSkinNum(achieveNum);
+                backBtn.GetSkinNum(achieveNum);
             }
         }
         else if(acqTitle.activeSelf)
@@ -70,6 +72,7 @@ public class buttonAchievementSet : MonoBehaviour
                 //称号変更
                 preTitle.text = myTitle.text;
                 achieveSave.GetTitleNum(achieveNum);
+                backBtn.GetTitleNum(achieveNum);
             }
         }
     }

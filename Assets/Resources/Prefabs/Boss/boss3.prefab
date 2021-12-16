@@ -114,6 +114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinSprite:
   - {fileID: 21300000, guid: 810c09f63a2e24acab48f30332522d4d, type: 3}
+  hit: 0
+  audioClip: {fileID: 8300000, guid: 61d6bd6c8fa20411bab962f9c252fcb7, type: 3}
 --- !u!114 &-7928022023820575989
 MonoBehaviour:
   m_ObjectHideFlags: 0

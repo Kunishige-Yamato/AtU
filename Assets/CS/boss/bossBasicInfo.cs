@@ -35,6 +35,12 @@ public class bossBasicInfo : MonoBehaviour
     //タイマー
     float timer;
 
+    //BGM関係
+    AudioSource audioSource;
+    public AudioClip audioClip;
+    float fadeInSeconds = 1.0f, fadeOutSeconds = 1.0f, fadeDeltaTime, fadeDeltaTime2;
+    bool isFadeIn = false, bgmChange = false;
+
     void Start()
     {
         //進行用コンポーネント取得
@@ -74,12 +80,59 @@ public class bossBasicInfo : MonoBehaviour
         //表示レイヤーを後ろに
         SpriteRenderer sr=gameObject.GetComponent<SpriteRenderer>();
         sr.sortingOrder = -1;
+
+        //BGMをボス専用に切り替え
+        if(audioClip!=null)
+        {
+            GameObject mainAudio = GameObject.Find("AudioObj");
+            audioSource = mainAudio.GetComponent<AudioSource>();
+            bgmChange = true;
+        }
+
     }
 
     void FixedUpdate()
     {
         //時間計測
         timer += Time.deltaTime;
+
+        //BGMフェードイン
+        if (isFadeIn)
+        {
+            fadeDeltaTime += Time.deltaTime;
+            if (fadeDeltaTime >= fadeInSeconds)
+            {
+                fadeDeltaTime = fadeInSeconds;
+                isFadeIn = false;
+            }
+            audioSource.volume = (float)(fadeDeltaTime / fadeInSeconds);
+            Debug.Log("in:" + audioSource.volume);
+        }
+        else
+        {
+            fadeDeltaTime = 0;
+        }
+
+        //BGMフェードアウト
+        if (bgmChange)
+        {
+            fadeDeltaTime2 += Time.deltaTime;
+            if (fadeDeltaTime2 >= fadeOutSeconds)
+            {
+                fadeDeltaTime2 = fadeOutSeconds;
+                bgmChange = false;
+                //BGM変更
+                audioSource.clip = audioClip;
+                audioSource.Play();
+                isFadeIn = true;
+            }
+            audioSource.volume = (float)(1.0 - fadeDeltaTime2 / fadeOutSeconds);
+            Debug.Log("out:" + audioSource.volume);
+        }
+        else
+        {
+            fadeDeltaTime2 = 0;
+        }
     }
 
     //設定読み込み
@@ -186,3 +239,11 @@ public class bossBasicInfo : MonoBehaviour
         }
     }
 }
+
+/*
+ * 
+ * boss登場でBGM変更
+ * BGMフェードアウト→BGM変更→BGMフェードイン
+ * progressのisFadeInとisFadeOutをtrueにすることで
+ * 
+ */

@@ -2171,7 +2171,7 @@ SpriteRenderer:
   m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1038589227
@@ -3330,6 +3330,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c71091ff51e914b3a92684df0839caf9, type: 3}
   - {fileID: 21300000, guid: b1f91cad7eb8e4536b12f0650d080436, type: 3}
   - {fileID: 21300000, guid: 83253390e42694e249e933f16c458424, type: 3}
+  audioClips:
+  - {fileID: 8300000, guid: cf97878a37e9e4e6aa288ae3080c9e8f, type: 3}
+  - {fileID: 8300000, guid: c2c218e2a762e41059d1cdf2bfd73686, type: 3}
 --- !u!4 &1408321053
 Transform:
   m_ObjectHideFlags: 0

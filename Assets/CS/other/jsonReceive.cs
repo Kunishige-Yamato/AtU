@@ -315,7 +315,7 @@ public class jsonReceive
         regex = new Regex("},{");
         jsonString = regex.Replace(jsonString, "}&{");
 
-        jsonString = "{\"id\":1,\"type\":\"title\",\"achieveID\":\"1\",\"hintText\":\"はじめの一歩\",\"explanationText\":\"ゲームを一回プレイする。\",\"achievement\":\"HelloWorld\"}&{\"id\":2,\"type\":\"title\",\"achieveID\":\"2\",\"hintText\":\"がんばろーる\",\"explanationText\":\"猛者はスコープを使わないって？\",\"achievement\":\"私は大砲よ\"}&{\"id\":3,\"type\":\"skin\",\"achieveID\":\"1\",\"hintText\":\"クリップは髪留めのこと\",\"explanationText\":\"これはマガジンよ(ドヤ)\",\"achievement\":\"banga.png\"}&{\"id\":4,\"type\":\"title\",\"achieveID\":\"3\",\"hintText\":\"顔が性犯罪者\",\"explanationText\":\"PHPでショッピングサイトを作成する。\",\"achievement\":\"Mr.KUNII\"}&{\"id\":5,\"type\":\"skin\",\"achieveID\":\"2\",\"hintText\":\"開発者\",\"explanationText\":\"テストの時はこのスキンだった\",\"achievement\":\"SelfMachine.png\"}";
+        //jsonString = "{\"id\":1,\"type\":\"title\",\"achieveID\":\"1\",\"hintText\":\"はじめの一歩\",\"explanationText\":\"ゲームを一回プレイする。\",\"achievement\":\"HelloWorld\"}&{\"id\":2,\"type\":\"title\",\"achieveID\":\"2\",\"hintText\":\"がんばろーる\",\"explanationText\":\"猛者はスコープを使わないって？\",\"achievement\":\"私は大砲よ\"}&{\"id\":3,\"type\":\"skin\",\"achieveID\":\"1\",\"hintText\":\"クリップは髪留めのこと\",\"explanationText\":\"これはマガジンよ(ドヤ)\",\"achievement\":\"banga.png\"}&{\"id\":4,\"type\":\"title\",\"achieveID\":\"3\",\"hintText\":\"顔が性犯罪者\",\"explanationText\":\"PHPでショッピングサイトを作成する。\",\"achievement\":\"Mr.KUNII\"}&{\"id\":5,\"type\":\"skin\",\"achieveID\":\"2\",\"hintText\":\"開発者\",\"explanationText\":\"テストの時はこのスキンだった\",\"achievement\":\"SelfMachine.png\"}";
         var jsonDatas = jsonString.Split('&');
 
         //jsonからオブジェクトに格納
@@ -359,10 +359,8 @@ public class jsonReceive
 
         //データを分割して配列へ
         //dubug用
-        getAchieveData = "[{1,3,4,5}]";
+        //getAchieveData = "1,3,4,5";
 
-        Regex regex = new Regex("^..|..$");
-        getAchieveData = regex.Replace(getAchieveData, "");
         //カンマ区切りで配列格納
         myAchieve = getAchieveData.Split(',');
 
@@ -385,12 +383,10 @@ public class jsonReceive
 
         //データを分割して配列へ
         //dubug用
-        getAchieveData = "[{1,1}]";
-
-        regex = new Regex("^..|..$");
-        getAchieveData = regex.Replace(getAchieveData, "");
+        //getAchieveData = "1,1";
 
         //カンマ区切りで配列格納
+        //[title],[skin]の順でIDが来る
         mySetAchieve = getAchieveData.Split(',');
     }
 
@@ -404,10 +400,29 @@ public class jsonReceive
         return mySetAchieve;
     }
 
-    public IEnumerator SaveDecoration(string id, int skinNum, int titleNum)
+    public IEnumerator SaveDecoration(string id, int titleNum, int skinNum)
     {
         //プレビューにある
-        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?set_skin=" + skinNum + "&set_title=" + titleNum + "&id=" + id;
-        yield return null;
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?set_title=" + titleNum + "&set_skin=" + skinNum + "&id=" + id;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        //SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            //カンマ区切りで配列格納
+            string[] decoration = request.downloadHandler.text.Split(',');
+            Debug.Log(decoration[0] + "," + decoration[1]);
+
+            PlayerPrefs.SetString("TITLE", decoration[0]);
+            PlayerPrefs.SetString("SKIN", decoration[1]);
+            PlayerPrefs.Save();
+        }
     }
 }

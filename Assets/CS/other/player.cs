@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class player : MonoBehaviour
 {
@@ -74,6 +75,11 @@ public class player : MonoBehaviour
         {
             resultGroup = GameObject.Find("PauseCanvas/TotalResult").GetComponent<CanvasGroup>();
         }
+
+        //スキン設定
+        gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(PlayerPrefs.GetString("SKIN"), @"\.png$", ""));
+        Debug.Log(PlayerPrefs.GetString("SKIN"));
+        Debug.Log(Regex.Replace(PlayerPrefs.GetString("SKIN"), @"\.png$", ""));
 
         // 初期動作
         Cursor.lockState=wantedMode;

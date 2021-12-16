@@ -14,17 +14,17 @@ namespace achievementInfo
         public string type;
         public int achieveID;
         public string hintText;
-        public string explanationText;
-        public string achievement;
+        public string exp;
+        public string s_or_t;
 
-        public AchievementList(int id, string type, int achieveID, string hintText, string explanationText, string achievement)
+        public AchievementList(int id, string type, int achieveID, string hintText, string exp, string s_or_t)
         {
             this.id = id;
             this.type = type;
             this.achieveID = achieveID;
             this.hintText = hintText;
-            this.explanationText = explanationText;
-            this.achievement = achievement;
+            this.exp = exp;
+            this.s_or_t = s_or_t;
         }
     }
 }
@@ -86,7 +86,7 @@ public class achievementManager : MonoBehaviour
             //Achievement Explanation
             GameObject troExpl = trophy.transform.Find("AchievementExplanation").gameObject;
             Text explText = troExpl.GetComponent<Text>();
-            explText.text = achievementList[i].explanationText;
+            explText.text = achievementList[i].exp;
 
             //獲得商品。スキンか称号かのどちらか
             GameObject troBtn = trophy.transform.Find("Button").gameObject;
@@ -100,22 +100,25 @@ public class achievementManager : MonoBehaviour
                 //スキンの場合
                 Image acqSkin = troSkin.GetComponent<Image>();
                 //テスト用画像を設定，挿入
-                Sprite skinSprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(achievementList[i].achievement, @"\.png$", ""));
+                Sprite skinSprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(achievementList[i].s_or_t, @"\.png$", ""));
                 acqSkin.sprite = skinSprite;
 
                 troTitle.SetActive(false);
 
                 //セットされているスキンだったらプレビューに反映
-                if(achievementList[i].achieveID==int.Parse(mySetAchieve[0]))
+                if(achievementList[i].achieveID==int.Parse(mySetAchieve[1]))
                 {
                     settingSkin.sprite = skinSprite;
+
+                    //セット済みのスキン番号を渡す
+                    GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>().GetDefSkinNum(achievementList[i].achieveID);
                 }
             }
             else if (achievementList[i].type == "title") 
             {
                 //称号の場合
                 Text acqText = troTitle.GetComponent<Text>();
-                acqText.text = achievementList[i].achievement;
+                acqText.text = achievementList[i].s_or_t;
 
                 troSkin.SetActive(false);
 
@@ -123,7 +126,10 @@ public class achievementManager : MonoBehaviour
                 if (achievementList[i].achieveID == int.Parse(mySetAchieve[0]))
                 {
                     Text settingTitleText = settingTitle.GetComponent<Text>();
-                    settingTitleText.text = achievementList[i].achievement;
+                    settingTitleText.text = achievementList[i].s_or_t;
+
+                    //セット済みの称号番号を渡す
+                    GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>().GetDefTitleNum(achievementList[i].achieveID);
                 }
             }
             else

@@ -66,6 +66,12 @@ public class progress : MonoBehaviour
     Animator animator;
     public Sprite[] cutImage;
 
+    //BGM関係
+    AudioSource audioSource;
+    public AudioClip[] audioClips;
+    float fadeInSeconds = 1.0f, fadeOutSeconds = 1.0f, fadeDeltaTime, fadeDeltaTime2;
+    bool isFadeIn = false, isFadeOut = false;
+
     //Startより早く計算される
     void Awake()
     {
@@ -196,6 +202,44 @@ public class progress : MonoBehaviour
                 }
             }
         }
+
+        //BGMフェードイン
+        if (isFadeIn)
+        {
+            fadeDeltaTime += Time.deltaTime;
+            if (fadeDeltaTime >= fadeInSeconds)
+            {
+                fadeDeltaTime = fadeInSeconds;
+                isFadeIn = false;
+            }
+            audioSource.volume = (float)(fadeDeltaTime / fadeInSeconds);
+            Debug.Log("in:"+audioSource.volume);
+        }
+        else
+        {
+            fadeDeltaTime = 0;
+        }
+
+        //BGMフェードアウト
+        if (isFadeOut)
+        {
+            fadeDeltaTime2 += Time.deltaTime;
+            if (fadeDeltaTime2 >= fadeOutSeconds)
+            {
+                fadeDeltaTime2 = fadeOutSeconds;
+                isFadeOut = false;
+                //音楽を変更して再生
+                audioSource.clip = audioClips[1];
+                audioSource.Play();
+                isFadeIn = true;
+            }
+            audioSource.volume = (float)(1.0 - fadeDeltaTime2 / fadeOutSeconds);
+            Debug.Log("out:"+audioSource.volume);
+        }
+        else
+        {
+            fadeDeltaTime2 = 0;
+        }
     }
 
     public int[] GetDifficulty()
@@ -220,6 +264,9 @@ public class progress : MonoBehaviour
 
         //hpバー消去
         hpBarGroup.alpha = 0f;
+
+        //音楽をタイトルのものに変更
+        isFadeOut = true;
 
         //敵消去
         //タグつきを全て格納
@@ -305,6 +352,14 @@ public class progress : MonoBehaviour
 
         //背景設定
         backGround.GetComponent<Image>().sprite = backGroundSprites[stageNum];
+
+        //BGM設定
+        GameObject mainAudio = GameObject.Find("AudioObj");
+        audioSource = mainAudio.GetComponent<AudioSource>();
+        audioSource.clip = audioClips[0];
+        audioSource.volume = 0;
+        audioSource.Play();
+        isFadeIn = true;
 
         stageNum++;
 
@@ -402,6 +457,14 @@ public class progress : MonoBehaviour
 
         //背景設定
         backGround.GetComponent<Image>().sprite = backGroundSprites[bossRan - 1];
+
+        //BGM設定
+        GameObject mainAudio = GameObject.Find("AudioObj");
+        audioSource = mainAudio.GetComponent<AudioSource>();
+        audioSource.clip = audioClips[bossRan];
+        audioSource.volume = 0;
+        audioSource.Play();
+        isFadeIn = true;
 
         //敵情報をDBから受け取る
         yield return StartCoroutine(jsonRec.ConnectDB(PlayerPrefs.GetString("ID")));
