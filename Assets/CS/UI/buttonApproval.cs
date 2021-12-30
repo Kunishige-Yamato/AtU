@@ -41,6 +41,11 @@ public class buttonApproval : MonoBehaviour
             else if (res == "failure")
             {
                 Debug.Log("既に拒否された申請です");
+                Reload();
+            }
+            else
+            {
+                Debug.Log(res);
             }
         }
     }
@@ -76,9 +81,19 @@ public class buttonApproval : MonoBehaviour
                 Debug.Log("申請を承認しました");
                 Reload();
             }
+            else if (res == "overlapped")
+            {
+                Debug.Log("重複する為、申請を削除しました");
+                Reload();
+            }
             else if (res == "failure")
             {
                 Debug.Log("既に承認された申請です");
+                Reload();
+            }
+            else
+            {
+                Debug.Log(res);
             }
         }
     }

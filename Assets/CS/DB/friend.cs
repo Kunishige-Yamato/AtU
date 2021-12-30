@@ -189,13 +189,13 @@ public class friend : MonoBehaviour
     {
         inputID = UserIdInput.text;
 
-        if (System.Text.RegularExpressions.Regex.IsMatch(inputID, @"^[0-9]{9}$"))
+        if(inputID == PlayerPrefs.GetString("ID") || !System.Text.RegularExpressions.Regex.IsMatch(inputID, @"^[0-9]{9}$"))
         {
-            StartCoroutine(search(inputID));
+            Debug.Log("このIDは検索できません");
         }
         else
         {
-            Debug.Log("ID値が正しくありません");
+            StartCoroutine(search(inputID));
         }
     }
 
