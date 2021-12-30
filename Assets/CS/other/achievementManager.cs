@@ -46,6 +46,15 @@ public class achievementManager : MonoBehaviour
     //スクロール部品のcontent
     public GameObject parentContent;
 
+    //ローディングのPrefab
+    GameObject loadingPrefab;
+
+    private void Awake()
+    {
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/Other/LoadingCanvas");
+        loadingPrefab = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity)as GameObject;
+    }
+
     void Start()
     {
         //プレビュー用オブジェ取得
@@ -94,72 +103,96 @@ public class achievementManager : MonoBehaviour
             GameObject troTitle = troBtn.transform.Find("AcquiredTitle").gameObject;
             //報酬番号設定
             troBtn.GetComponent<buttonAchievementSet>().SetAchieveNum(achievementList[i].achieveID);
-            //スキンと称号判定
-            if (achievementList[i].type == "skin") 
+
+            //解放されているか番号で確認
+            if (myAchieve[0] != "null")
             {
-                //スキンの場合
-                Image acqSkin = troSkin.GetComponent<Image>();
-                //テスト用画像を設定，挿入
-                Sprite skinSprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(achievementList[i].s_or_t, @"\.png$", ""));
-                acqSkin.sprite = skinSprite;
-
-                troTitle.SetActive(false);
-
-                //セットされているスキンだったらプレビューに反映
-                if(achievementList[i].achieveID==int.Parse(mySetAchieve[1]))
+                //スキンと称号判定
+                if (achievementList[i].type == "skin") 
                 {
-                    settingSkin.sprite = skinSprite;
+                    //スキンの場合
+                    Image acqSkin = troSkin.GetComponent<Image>();
+                    //テスト用画像を設定，挿入
+                    Sprite skinSprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(achievementList[i].s_or_t, @"\.png$", ""));
+                    acqSkin.sprite = skinSprite;
 
-                    //セット済みのスキン番号を渡す
-                    GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>().GetDefSkinNum(achievementList[i].achieveID);
+                    troTitle.SetActive(false);
+
+                    //セットされているスキンだったらプレビューに反映
+                    if(mySetAchieve[1]!="")
+                    {
+                        if (achievementList[i].achieveID == int.Parse(mySetAchieve[1]))
+                        {
+                            settingSkin.sprite = skinSprite;
+
+                            //セット済みのスキン番号を渡す
+                            GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>().GetDefSkinNum(achievementList[i].achieveID);
+                        }
+                    }
                 }
-            }
-            else if (achievementList[i].type == "title") 
-            {
-                //称号の場合
-                Text acqText = troTitle.GetComponent<Text>();
-                acqText.text = achievementList[i].s_or_t;
-
-                troSkin.SetActive(false);
-
-                //セットされている称号だったらプレビューに反映
-                if (achievementList[i].achieveID == int.Parse(mySetAchieve[0]))
+                else if (achievementList[i].type == "title") 
                 {
-                    Text settingTitleText = settingTitle.GetComponent<Text>();
-                    settingTitleText.text = achievementList[i].s_or_t;
+                    //称号の場合
+                    Text acqText = troTitle.GetComponent<Text>();
+                    acqText.text = achievementList[i].s_or_t;
 
-                    //セット済みの称号番号を渡す
-                    GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>().GetDefTitleNum(achievementList[i].achieveID);
+                    troSkin.SetActive(false);
+
+                    //セットされている称号だったらプレビューに反映
+                    if(mySetAchieve[0]!="")
+                    {
+                        if (achievementList[i].achieveID == int.Parse(mySetAchieve[0]))
+                        {
+                            Text settingTitleText = settingTitle.GetComponent<Text>();
+                            settingTitleText.text = achievementList[i].s_or_t;
+
+                            //セット済みの称号番号を渡す
+                            GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>().GetDefTitleNum(achievementList[i].achieveID);
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.Log("typeが不正です。");
+                }
+
+                //開放しているかどうかチェック
+                for (int j = 0; j < myAchieve.Length; j++)
+                {
+                    if (i == int.Parse(myAchieve[j])-1)
+                    {
+                        //グレーを解除，？？？を解除
+                        GameObject interference = trophy.transform.Find("NotReleasedPanel").gameObject;
+                        Destroy(interference);
+                        interference = trophy.transform.Find("Button/q").gameObject;
+                        Destroy(interference);
+                        break;
+                    }
+                    else if (j==myAchieve.Length-1)
+                    {
+                        //獲得商品を非表示に
+                        Destroy(troSkin);
+                        Destroy(troTitle);
+
+                        //説明文を？に置換
+                        Regex reg = new Regex(".");
+                        explText.text = reg.Replace(explText.text, "?");
+                    }
                 }
             }
             else
             {
-                Debug.Log("typeが不正です。");
-            }
+                //獲得商品を非表示に
+                Destroy(troSkin);
+                Destroy(troTitle);
 
-            //解放されているか番号で確認
-            for (int j = 0; j < myAchieve.Length; j++)
-            {
-                if (i == int.Parse(myAchieve[j])-1)
-                {
-                    //グレーを解除，？？？を解除
-                    GameObject interference = trophy.transform.Find("NotReleasedPanel").gameObject;
-                    Destroy(interference);
-                    interference = trophy.transform.Find("Button/q").gameObject;
-                    Destroy(interference);
-                    break;
-                }
-                else if (j==myAchieve.Length-1)
-                {
-                    //獲得商品を非表示に
-                    Destroy(troSkin);
-                    Destroy(troTitle);
-
-                    //説明文を？に置換
-                    Regex reg = new Regex(".");
-                    explText.text = reg.Replace(explText.text, "?");
-                }
+                //説明文を？に置換
+                Regex reg = new Regex(".");
+                explText.text = reg.Replace(explText.text, "?");
             }
         }
+
+        //loading解除
+        Destroy(loadingPrefab.gameObject);
     }
 }

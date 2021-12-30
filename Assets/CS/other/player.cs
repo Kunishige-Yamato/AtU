@@ -14,7 +14,10 @@ public class player : MonoBehaviour
     public int imageNum;
     public int hitNum;
     public bool canMove=true;
-    int maxLife=30;
+
+    //プレイヤーの体力
+    int maxLife=5;
+
     Slider hpBar;
 
     int difficulty,endless;
@@ -77,9 +80,16 @@ public class player : MonoBehaviour
         }
 
         //スキン設定
+        if (PlayerPrefs.HasKey("SKIN") == false || Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(PlayerPrefs.GetString("SKIN"), @"\.png$", "")) == null)  
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("AchievementImage/default");
+            PlayerPrefs.SetString("SKIN", "default.png");
+            PlayerPrefs.Save();
+        }
+        else
+        {
         gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(PlayerPrefs.GetString("SKIN"), @"\.png$", ""));
-        Debug.Log(PlayerPrefs.GetString("SKIN"));
-        Debug.Log(Regex.Replace(PlayerPrefs.GetString("SKIN"), @"\.png$", ""));
+        }
 
         // 初期動作
         Cursor.lockState=wantedMode;
@@ -145,7 +155,9 @@ public class player : MonoBehaviour
             */
 
             //色変化
-            gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+            Color myColor=gameObject.GetComponent<SpriteRenderer>().color;
+            myColor.a = 0.5f;
+            gameObject.GetComponent<SpriteRenderer>().color = myColor;
 
             //当たり判定縮小する強化
             CircleCollider2D collider = GetComponent<CircleCollider2D>();

@@ -55,6 +55,15 @@ public class RankingAdmin : MonoBehaviour
     //DB接続用
     jsonReceive jsonRec = new jsonReceive();
 
+    //ローディングのPrefab
+    GameObject loadingPrefab;
+
+    private void Awake()
+    {
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/Other/LoadingCanvas");
+        loadingPrefab = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+    }
+
     void Start()
     {
         StartCoroutine(PersonalProfile());
@@ -144,6 +153,8 @@ public class RankingAdmin : MonoBehaviour
 
             }
         }
+
+        Destroy(loadingPrefab.gameObject);
     }
 
     //ワールドランキングの中身生成

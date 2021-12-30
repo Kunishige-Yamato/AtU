@@ -32,10 +32,19 @@ public class buttonNext : MonoBehaviour
         modeDif = pro.GetDifficulty();
         endless = modeDif[1];
 
-        //ストーリーモードはリタイアボタンなし
-        if (endless == 0 && gameObject.name == "ExitButton") 
+        if (endless == 0)
         {
-            Destroy(gameObject);
+            //ストーリーモードはリタイアボタンなし
+            if (gameObject.name=="ExitButton")
+            {
+                Destroy(gameObject);
+            }
+
+            //ストーリーモードのトータルリザルトのテキスト変化
+            if (gameObject.name == "TotalResultNextStageButton")
+            {
+                nextButtonText.text = "Score";
+            }
         }
     }
 
@@ -70,12 +79,6 @@ public class buttonNext : MonoBehaviour
                 //カーソル表示
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-
-                //点数を保存させる処理
-                pro.SaveScore();
-
-                //スコア画面へ
-                SceneManager.LoadScene("score");
             }
             else
             {
@@ -90,14 +93,13 @@ public class buttonNext : MonoBehaviour
                 //totlaResult表示してからスコアかタイトルへ
                 if(gameObject.name == "TotalResultNextStageButton")
                 {
-                    nextButtonText.text = "Score";
-
                     //カーソル表示
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
 
                     //スコア保存
-                    pro.SaveScore();
+                    StartCoroutine(pro.SaveScore());
+                    StartCoroutine(pro.SaveUserData());
 
                     //スコア画面へ
                     SceneManager.LoadScene("score");
@@ -129,5 +131,15 @@ public class buttonNext : MonoBehaviour
                 StartCoroutine(pro.StoryStageStart());
             }
         }
+    }
+
+    public IEnumerator SaveScore()
+    {
+        //点数を保存させる処理
+        yield return StartCoroutine(pro.SaveScore());
+        yield return StartCoroutine(pro.SaveUserData());
+
+        //スコア画面へ
+        SceneManager.LoadScene("score");
     }
 }

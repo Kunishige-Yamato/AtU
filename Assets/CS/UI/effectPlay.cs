@@ -9,6 +9,8 @@ public class effectPlay : MonoBehaviour
     public Sprite[] sprites;
     //画像更新の速さ
     public float speed;
+    //ループするかどうか
+    public bool roop;
 
     //Imageコンポーネント用
     private Image image;
@@ -22,23 +24,46 @@ public class effectPlay : MonoBehaviour
         image.sprite = sprites[0];
 
         current = 0f;
-        IEnumerator coroutine = updateImg();
-        StartCoroutine(coroutine);
+        StartCoroutine(updateImg());
     }
 
     //エフェクト再生
     private IEnumerator updateImg()
     {
         int index = 0;
-        while (index < sprites.Length - 1)
+        if(roop)
         {
-            current += Time.deltaTime * speed;
-            index = (int)(current) % sprites.Length;
-            if (index > sprites.Length - 1) index = sprites.Length - 1;
-            image.sprite = sprites[index];
-            yield return new WaitForSeconds(0.01f);
-        }
+            while (true)
+            {
+                current += Time.deltaTime * speed;
+                index = (int)(current) % sprites.Length;
+                if (index >= sprites.Length - 1)
+                {
+                    image.color = new Color(1,1,1,0);
+                    yield return new WaitForSeconds(0.1f);
+                    image.color = new Color(1, 1, 1, 1);
+                    continue;
 
-        Destroy(gameObject);
+                }
+                image.sprite = sprites[index];
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+        else
+        {
+            while (index < sprites.Length - 1)
+            {
+                current += Time.deltaTime * speed;
+                index = (int)(current) % sprites.Length;
+                if (index > sprites.Length - 1)
+                {
+                    index = sprites.Length - 1;
+                }
+                image.sprite = sprites[index];
+                yield return new WaitForSeconds(0.01f);
+            }
+
+            Destroy(gameObject);
+        }
     }
 }

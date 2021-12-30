@@ -18,7 +18,8 @@ public class buttonMoveScene : MonoBehaviour
 
     public void Onclick()
     {
-        switch(gameObject.name){
+        switch (gameObject.name)
+        {
             case "StartBtn":
                 SceneManager.LoadScene("selectMode");
                 break;
@@ -29,12 +30,23 @@ public class buttonMoveScene : MonoBehaviour
                 SceneManager.LoadScene("achievement");
                 break;
             default:
-                if(SceneManager.GetActiveScene().name=="game_1")
+                if (SceneManager.GetActiveScene().name == "game_1" && gameObject.name != "PauseBackTitleButton")
                 {
-                    GameObject.Find("Progress").GetComponent<progress>().SaveScore();
+                    progress pro = GameObject.Find("Progress").GetComponent<progress>();
+
+                    StartCoroutine(SaveData(pro));
                 }
-                SceneManager.LoadScene("title");
                 break;
         }
+    }
+
+    public IEnumerator SaveData(progress pro)
+    {
+        //点数を保存させる処理
+        yield return StartCoroutine(pro.SaveScore());
+        yield return StartCoroutine(pro.SaveUserData());
+
+        //スコア画面へ
+        SceneManager.LoadScene("title");
     }
 }

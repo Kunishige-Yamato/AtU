@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class titleAdmin : MonoBehaviour
 {
     public GameObject audioPrefab;
+    public AudioClip defaultClip;
 
     void Start()
     {
@@ -15,6 +18,7 @@ public class titleAdmin : MonoBehaviour
             mainAudio.name = "AudioObj";
             DontDestroyOnLoad(mainAudio);
         }
+        mainAudio.GetComponent<AudioSource>().clip = defaultClip;
     }
 
     void Update()

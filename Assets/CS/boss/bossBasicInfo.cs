@@ -237,11 +237,3 @@ public class bossBasicInfo : MonoBehaviour
         }
     }
 }
-
-/*
- * 
- * boss登場でBGM変更
- * BGMフェードアウト→BGM変更→BGMフェードイン
- * progressのisFadeInとisFadeOutをtrueにすることで
- * 
- */

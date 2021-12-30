@@ -1118,8 +1118,8 @@ RectTransform:
   m_Father: {fileID: 98721635}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1541,7 +1541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &206240459
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2021,7 +2021,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: 0, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &392300860
 MonoBehaviour:
@@ -2358,7 +2358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &435578699
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2689,6 +2689,7 @@ GameObject:
   m_Component:
   - component: {fileID: 482489999}
   - component: {fileID: 482490000}
+  - component: {fileID: 482490001}
   m_Layer: 5
   m_Name: SE Slider
   m_TagString: Untagged
@@ -2762,12 +2763,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1857397831}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &482490001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482489998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 976e4307d37f0467681d62990553e585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &503585133
 GameObject:
   m_ObjectHideFlags: 0
@@ -3776,7 +3789,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: -17}
+  m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &847548217
 MonoBehaviour:
@@ -3896,7 +3909,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3913,7 +3926,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5613208, g: 0.9483906, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4512,6 +4525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioPrefab: {fileID: 2299577941876532274, guid: cee39844656dc4949ba723108cf419e4,
     type: 3}
+  defaultClip: {fileID: 8300000, guid: c2c218e2a762e41059d1cdf2bfd73686, type: 3}
 --- !u!1 &1204035471
 GameObject:
   m_ObjectHideFlags: 0
@@ -4568,7 +4582,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4d6ab1ac568b641e1916b18ade66b8fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c609906aaa744407c832bdfe6dd2c99c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5173,6 +5187,9 @@ MonoBehaviour:
   AppPrefab: {fileID: 3659541864344650357, guid: 8b506b0229c264bbe8ce97deb6191465,
     type: 3}
   ParentContent: {fileID: 1945203445}
+  friendPrefab: {fileID: 439663671348866269, guid: e5f8a64920d5c43c38ad2ea979c50799,
+    type: 3}
+  friendListParent: {fileID: 1454579852}
   FoundImage: {fileID: 394604248}
   FoundID: {fileID: 170909180}
   FoundName: {fileID: 1631103209}
@@ -5378,7 +5395,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5395,7 +5412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5613208, g: 0.9483906, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6519,8 +6536,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: 0, y: 50}
+  m_AnchoredPosition: {x: 590, y: -30}
+  m_SizeDelta: {x: 1170, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1498304726
 MonoBehaviour:
@@ -6803,6 +6820,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1601926101}
   - component: {fileID: 1601926102}
+  - component: {fileID: 1601926103}
   m_Layer: 5
   m_Name: BGM Slider
   m_TagString: Untagged
@@ -6876,12 +6894,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 163531948}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1601926103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601926100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 976e4307d37f0467681d62990553e585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1631103207
 GameObject:
   m_ObjectHideFlags: 0
@@ -7578,8 +7608,8 @@ RectTransform:
   m_Father: {fileID: 2142635030}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

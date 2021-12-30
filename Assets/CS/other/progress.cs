@@ -72,9 +72,15 @@ public class progress : MonoBehaviour
     float fadeInSeconds = 1.0f, fadeOutSeconds = 1.0f, fadeDeltaTime, fadeDeltaTime2;
     bool isFadeIn = false, isFadeOut = false;
 
+    //ローディングのPrefab
+    GameObject loadingPrefab;
+
     //Startより早く計算される
     void Awake()
     {
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/Other/LoadingCanvas");
+        loadingPrefab = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+
         //難易度設定
         difficulty = PlayerPrefs.GetInt("difficulty");
         endless = PlayerPrefs.GetInt("endless");
@@ -143,10 +149,14 @@ public class progress : MonoBehaviour
         player = GameObject.Find("Player");
         pl = player.GetComponent<player>();
 
-        if(endless==0)
+        //BGM設定
+        GameObject mainAudio = GameObject.Find("AudioObj");
+        audioSource = mainAudio.GetComponent<AudioSource>();
+
+        if (endless==0)
         {
             //Debug用ステージスキップ ステージ数-1で入力
-            stageNum = 2;
+            //stageNum = 2;
 
             //カットイン設定
             animator = cutInCanvas.GetComponent<Animator>();
@@ -352,8 +362,6 @@ public class progress : MonoBehaviour
         backGround.GetComponent<Image>().sprite = backGroundSprites[stageNum];
 
         //BGM設定
-        GameObject mainAudio = GameObject.Find("AudioObj");
-        audioSource = mainAudio.GetComponent<AudioSource>();
         audioSource.clip = audioClips[0];
         audioSource.volume = 0;
         audioSource.Play();
@@ -396,9 +404,10 @@ public class progress : MonoBehaviour
             timer = 0;
             sc.ResetTimer();
             //Debug用ステージ早送り
-            //timer = 60;
+            timer = 60;
         }
 
+        Destroy(loadingPrefab.gameObject);
         yield return null;
     }
 
@@ -476,6 +485,7 @@ public class progress : MonoBehaviour
 
         sc.ResetTimer();
 
+        Destroy(loadingPrefab.gameObject);
         yield return null;
     }
 
@@ -506,11 +516,24 @@ public class progress : MonoBehaviour
         animator.Play("CutIn", 0, 0f);
     }
 
-    public void SaveScore()
+    public IEnumerator SaveScore()
     {
         int score = sc.GetScore();
 
         //DB保存
         StartCoroutine(jsonRec.SaveScoreData(PlayerPrefs.GetString("ID"), endless, difficulty, score));
+
+        yield return null;
+    }
+
+    public IEnumerator SaveUserData()
+    {
+        yield return StartCoroutine(jsonRec.SaveUserData(PlayerPrefs.GetString("ID"), pl.hitNum, stageNum));
     }
 }
+
+/*
+
+データベースのtitleとskinを0埋め
+
+ */

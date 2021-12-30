@@ -282,7 +282,6 @@ public class jsonReceive
         else
         {
             string result = request.downloadHandler.text;
-            Debug.Log(result);
         }
     }
 
@@ -423,6 +422,26 @@ public class jsonReceive
             PlayerPrefs.SetString("TITLE", decoration[0]);
             PlayerPrefs.SetString("SKIN", decoration[1]);
             PlayerPrefs.Save();
+        }
+    }
+
+    public IEnumerator SaveUserData(string id, int hitNum, int stageNum)
+    {
+        //UserData保存
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?id="+id+"&hit_num="+hitNum+"&stage_num="+stageNum;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        //SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            Debug.Log(request.downloadHandler.text);
         }
     }
 }
