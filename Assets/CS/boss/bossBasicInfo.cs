@@ -41,6 +41,10 @@ public class bossBasicInfo : MonoBehaviour
     float fadeInSeconds = 1.0f, fadeOutSeconds = 1.0f, fadeDeltaTime, fadeDeltaTime2;
     bool isFadeIn = false, bgmChange = false;
 
+    //SE関係
+    AudioSource audioSESource;
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
         //進行用コンポーネント取得
@@ -89,6 +93,9 @@ public class bossBasicInfo : MonoBehaviour
             bgmChange = true;
         }
 
+        //SE再生用コンポーネント取得
+        audioSESource = GameObject.Find("AudioSEObj").GetComponent<AudioSource>();
+
     }
 
     void FixedUpdate()
@@ -105,7 +112,7 @@ public class bossBasicInfo : MonoBehaviour
                 fadeDeltaTime = fadeInSeconds;
                 isFadeIn = false;
             }
-            audioSource.volume = (float)(fadeDeltaTime / fadeInSeconds);
+            audioSource.volume = (float)(fadeDeltaTime / fadeInSeconds) * PlayerPrefs.GetFloat("BGMVOL");
         }
         else
         {
@@ -125,7 +132,7 @@ public class bossBasicInfo : MonoBehaviour
                 audioSource.Play();
                 isFadeIn = true;
             }
-            audioSource.volume = (float)(1.0 - fadeDeltaTime2 / fadeOutSeconds);
+            audioSource.volume = (float)(1.0 - fadeDeltaTime2 / fadeOutSeconds) * PlayerPrefs.GetFloat("BGMVOL");
         }
         else
         {
@@ -181,13 +188,17 @@ public class bossBasicInfo : MonoBehaviour
             ScoreCount sc = scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(10 + hitBonus * (modeDif[0] + 1));
 
+            //被弾演出
             EffectAdd(col.transform.position.x,col.transform.position.y,"hitEffect");
+            audioSESource.PlayOneShot(audioSEClips[0]);
+
             Destroy(col.gameObject);
 
             if (hit >= hp)
             {
                 //爆発
                 EffectAdd(transform.position.x, transform.position.y, "defeatEffect");
+                audioSESource.PlayOneShot(audioSEClips[1]);
 
                 //撃破ボーナス
                 sc.AddScore(defeatBonus);

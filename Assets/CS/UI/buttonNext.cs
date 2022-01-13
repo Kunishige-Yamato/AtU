@@ -22,6 +22,9 @@ public class buttonNext : MonoBehaviour
     public GameObject resultCanvas;
     public Text nextButtonText;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
         //進行用取得
@@ -68,6 +71,9 @@ public class buttonNext : MonoBehaviour
 
     public void OnClick()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         //ステージ番号取得
         stage = pro.GetStageNum();
 
@@ -76,9 +82,8 @@ public class buttonNext : MonoBehaviour
             //エンドレスモード｜途中退席
             if(pro.gameOver==true || gameObject.name=="ExitButton")
             {
-                //カーソル表示
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                //スコア保存
+                StartCoroutine(SaveScore());
             }
             else
             {
@@ -98,8 +103,7 @@ public class buttonNext : MonoBehaviour
                     Cursor.lockState = CursorLockMode.None;
 
                     //スコア保存
-                    StartCoroutine(pro.SaveScore());
-                    StartCoroutine(pro.SaveUserData());
+                    StartCoroutine(SaveScore());
 
                     //スコア画面へ
                     SceneManager.LoadScene("score");
@@ -138,6 +142,10 @@ public class buttonNext : MonoBehaviour
         //点数を保存させる処理
         yield return StartCoroutine(pro.SaveScore());
         yield return StartCoroutine(pro.SaveUserData());
+
+        //カーソル表示
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
 
         //スコア画面へ
         SceneManager.LoadScene("score");

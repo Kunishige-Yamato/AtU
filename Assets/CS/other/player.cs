@@ -43,6 +43,10 @@ public class player : MonoBehaviour
     int commandNum = 0;
     public Sprite commandImg;
 
+    //音響関係
+    public AudioClip[] SEClips;
+    AudioSource playSE;
+
     void Start()
     {
         pl=GameObject.Find("Player");
@@ -88,8 +92,11 @@ public class player : MonoBehaviour
         }
         else
         {
-        gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(PlayerPrefs.GetString("SKIN"), @"\.png$", ""));
+            gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(PlayerPrefs.GetString("SKIN"), @"\.png$", ""));
         }
+
+        //音響関係
+        playSE = GameObject.Find("AudioSEObj").GetComponent<AudioSource>();
 
         // 初期動作
         Cursor.lockState=wantedMode;
@@ -148,6 +155,9 @@ public class player : MonoBehaviour
             //トロフィーの達成
             Debug.Log("command success!");
 
+            //SE再生
+            playSE.PlayOneShot(SEClips[2]);
+
             /*
             //当たり判定無くして無敵
             Destroy(GetComponent<CircleCollider2D>());
@@ -162,6 +172,10 @@ public class player : MonoBehaviour
             //当たり判定縮小する強化
             CircleCollider2D collider = GetComponent<CircleCollider2D>();
             collider.radius = 0.1f;
+
+            //トロフィー解放
+            jsonReceive jsonRec = new jsonReceive();
+            StartCoroutine(jsonRec.SaveHiddenCommand(PlayerPrefs.GetString("ID"), 0));
         }
     }
 
@@ -262,7 +276,11 @@ public class player : MonoBehaviour
 
             //スペースキー
             if(Input.GetKey(KeyCode.Space)&&timer>=coolTime) {
+                //弾生成
                 Instantiate(bulletPrefab,bulPos,Quaternion.identity);
+                //SE再生
+                playSE.PlayOneShot(SEClips[1]);
+
                 imageNum++;
                 imageNum%=2;
                 timer=0;
@@ -275,8 +293,11 @@ public class player : MonoBehaviour
     {
         if ((col.gameObject.tag == "Enemy" || col.gameObject.tag == "Boss") && pro.gameOver == false) 
         {
-            // 爆発エフェクトを生成する	
-		    Instantiate (explosionPrefab, transform.position, Quaternion.identity);
+            //被弾エフェクトを生成する	
+            EffectAdd("hitEffect2");
+
+            //SE再生
+            playSE.PlayOneShot(SEClips[0]);
 
             //スコア大幅減点
             GameObject scoreCounter=GameObject.Find("ScoreCounter");
@@ -294,5 +315,16 @@ public class player : MonoBehaviour
                 }
             }
         }
+    }
+
+    //エフェクト再生用
+    void EffectAdd(string name)
+    {
+        GameObject explosionPrefab = Resources.Load("Prefabs/Effect/" + name) as GameObject;
+        Vector3 pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 0);
+        GameObject canvas = GameObject.Find("EffectCanvas");
+        GameObject g = Instantiate(explosionPrefab, pos, Quaternion.identity);
+        g.transform.SetParent(canvas.transform, false);
+        g.transform.position = pos;
     }
 }

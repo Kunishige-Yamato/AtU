@@ -416,6 +416,7 @@ public class jsonReceive
         else
         {
             //カンマ区切りで配列格納
+            Debug.Log("saveDeco:" + request.downloadHandler.text);
             string[] decoration = request.downloadHandler.text.Split(',');
             Debug.Log(decoration[0] + "," + decoration[1]);
 
@@ -441,6 +442,28 @@ public class jsonReceive
         }
         else
         {
+            Debug.Log(request.downloadHandler.text);
+        }
+    }
+
+    public IEnumerator SaveHiddenCommand(string id, int kind)
+    {
+        //UserData保存
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?id=" + id + "&command=" + kind;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        //SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            PlayerPrefs.SetString("COMMAND", request.downloadHandler.text);
+            PlayerPrefs.Save();
             Debug.Log(request.downloadHandler.text);
         }
     }

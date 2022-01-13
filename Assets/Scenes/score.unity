@@ -877,6 +877,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236296d9270a64265859d876794b3bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &715614273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1555,6 +1557,8 @@ MonoBehaviour:
   myScoreTab: {fileID: 1816661114}
   FriendTab: {fileID: 408004318}
   AllWorldTab: {fileID: 1626754721}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &942817931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,6 +1808,8 @@ MonoBehaviour:
   myScoreTab: {fileID: 1816661114}
   FriendTab: {fileID: 408004318}
   AllWorldTab: {fileID: 1626754721}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &1099082998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,6 +2144,8 @@ MonoBehaviour:
   myScoreTab: {fileID: 1816661114}
   FriendTab: {fileID: 408004318}
   AllWorldTab: {fileID: 1626754721}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &1255209993
 GameObject:
   m_ObjectHideFlags: 0

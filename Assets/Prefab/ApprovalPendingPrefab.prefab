@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btnFriend: {fileID: 0}
+  audioSEClips: []
 --- !u!1 &3794344007032152550
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +277,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btnFriend: {fileID: 0}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &5500993157729331651
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,6 +579,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btnFriend: {fileID: 0}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &7514912802516897462
 GameObject:
   m_ObjectHideFlags: 0

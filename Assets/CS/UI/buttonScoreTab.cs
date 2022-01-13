@@ -8,6 +8,9 @@ public class buttonScoreTab : MonoBehaviour
     public GameObject FriendTab;
     public GameObject AllWorldTab;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
         
@@ -20,7 +23,10 @@ public class buttonScoreTab : MonoBehaviour
 
     public void OnClick()
     {
-        switch(gameObject.name)
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
+        switch (gameObject.name)
         {
             case "MyScoreBtn":
                 myScoreTab.SetActive(true);

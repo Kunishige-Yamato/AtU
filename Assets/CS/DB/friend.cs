@@ -30,9 +30,15 @@ public class friend : MonoBehaviour
     string inputID;
     string returnData;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     // フレンドタブのボタンを押した時
     public void btnFriend()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         FriCanvas.SetActive(true);
         FoundFriend.SetActive(false);
 
@@ -187,6 +193,9 @@ public class friend : MonoBehaviour
     // 検索ボタン押した時
     public void btnSearch()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         inputID = UserIdInput.text;
 
         if(inputID == PlayerPrefs.GetString("ID") || !System.Text.RegularExpressions.Regex.IsMatch(inputID, @"^[0-9]{9}$"))
@@ -241,6 +250,9 @@ public class friend : MonoBehaviour
     // OKボタンを押した時
     public void btnOK()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         Debug.Log(FoundID.text);
         StartCoroutine(request(PlayerPrefs.GetString("ID"), FoundID.text));
     }
@@ -291,6 +303,9 @@ public class friend : MonoBehaviour
     // キャンセルボタン押した時
     public void btnCancel()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         FoundFriend.SetActive(false);
     }
 }

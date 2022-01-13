@@ -126,6 +126,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fe91f064e5a0041f48a0d32553f17769, type: 3}
   hit: 0
   audioClip: {fileID: 8300000, guid: ff138cd78e38e4fb38f9fe9ac587596d, type: 3}
+  audioSEClips:
+  - {fileID: 8300000, guid: 5823a623fab684e93899fbd4507356f6, type: 3}
+  - {fileID: 8300000, guid: e45b73a520ef541f296d67ba0781dc94, type: 3}
 --- !u!114 &-3738084322640717309
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class selectDifficulty : MonoBehaviour
 {
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
         PlayerPrefs.DeleteKey("difficulty");
@@ -14,7 +17,10 @@ public class selectDifficulty : MonoBehaviour
 
     public void OnClick()
     {
-        switch(gameObject.name){
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
+        switch (gameObject.name){
             case "easy":
                 PlayerPrefs.SetInt("endless", 0);
                 PlayerPrefs.SetInt("difficulty", 0);

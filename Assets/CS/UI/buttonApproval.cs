@@ -8,9 +8,15 @@ public class buttonApproval : MonoBehaviour
 {
     public GameObject btnFriend;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     // フレンド申請拒否ボタン
     public void BtnDeny()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         GameObject parent = transform.parent.gameObject;
         Text id = parent.transform.Find("FriendID").gameObject.GetComponent<Text>();
         StartCoroutine(Deny(id.text, PlayerPrefs.GetString("ID")));
@@ -54,6 +60,9 @@ public class buttonApproval : MonoBehaviour
     // フレンド申請承認ボタン
     public void BtnApproval()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         GameObject parent = transform.parent.gameObject;
         Text id = parent.transform.Find("FriendID").gameObject.GetComponent<Text>();
         StartCoroutine(Approval(id.text, PlayerPrefs.GetString("ID")));

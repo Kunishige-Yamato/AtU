@@ -649,7 +649,7 @@ public class attack_boss_3 : attack_boss
         for (float i = -1.5f; i <= 1.5f; i += 1.5f)
         {
             bulPos[5].x = transform.position.x + i;
-            bulPos[5].y = transform.position.y - 1;
+            bulPos[5].y = transform.position.y - 1.5f;
             Instantiate(bulPrefab[5], bulPos[5], Quaternion.identity);
         }
     }

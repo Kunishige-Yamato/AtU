@@ -7,6 +7,9 @@ public class buttonFriendTab : MonoBehaviour
     public GameObject listTab;
     public GameObject applicationTab;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
 
@@ -19,6 +22,9 @@ public class buttonFriendTab : MonoBehaviour
 
     public void OnClick()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         switch (gameObject.name)
         {
             case "FriendListBtn":

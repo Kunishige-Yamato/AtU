@@ -31,6 +31,10 @@ public class enemyBasicInfo : MonoBehaviour
     //hp0の時に消去したくない場合falseに
     bool defeatAndDestroy=false;
 
+    //SE関係
+    AudioSource audioSESource;
+    public AudioClip[] audioSEClips;
+
     //設定読み込み
     public void SetBasicInfo(string name, int hp, int hitBonus, int defeatBonus, float fallSpeed, float moveSpeed, float rotSpeed, float lifeExpectancy)
     {
@@ -63,6 +67,12 @@ public class enemyBasicInfo : MonoBehaviour
     public void NotDestroy()
     {
         defeatAndDestroy = true;
+    }
+
+    void Start()
+    {
+        //SE再生用コンポーネント取得
+        audioSESource = GameObject.Find("AudioSEObj").GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -114,7 +124,13 @@ public class enemyBasicInfo : MonoBehaviour
             ScoreCount sc = scoreCounter.GetComponent<ScoreCount>();
             sc.AddScore(hitBonus);
 
+            //hit演出
             EffectAdd(col.transform.position.x, col.transform.position.y, "hitEffect");
+            if (audioSESource == null) 
+            {
+                audioSESource = GameObject.Find("AudioSEObj").GetComponent<AudioSource>();
+            }
+            audioSESource.PlayOneShot(audioSEClips[0]);
             Destroy(col.gameObject);
 
             if (hit >= hp)

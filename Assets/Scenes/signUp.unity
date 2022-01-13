@@ -551,8 +551,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Do you already have an account? \nIf you want to sign in, please fill in
-    the above and press the button on the right"
+  m_Text: "Do you already have an account? \nIf you want to sign in, please fill
+    in the above and press the button on the right"
 --- !u!222 &268122847
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1032,7 +1032,12 @@ MonoBehaviour:
   UserIdInput: {fileID: 1631462762}
   UserNameInput: {fileID: 0}
   PasswordInput: {fileID: 152054463}
-  errorTextObj: {fileID: 1400044910}
+  popUpPrefab: {fileID: 0}
+  audioPrefab: {fileID: 0}
+  audioSEPrefab: {fileID: 0}
+  defaultClip: {fileID: 0}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &517791936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1179,7 +1184,16 @@ MonoBehaviour:
   UserIdInput: {fileID: 0}
   UserNameInput: {fileID: 1769761921}
   PasswordInput: {fileID: 1415889478}
-  errorTextObj: {fileID: 1400044910}
+  popUpPrefab: {fileID: 7621807362244423881, guid: cfa3dca7b426d4e82986e3fb01e29428,
+    type: 3}
+  audioPrefab: {fileID: 2299577941876532274, guid: cee39844656dc4949ba723108cf419e4,
+    type: 3}
+  audioSEPrefab: {fileID: 3630017096695255238, guid: 77a1cafc2689243e6b1a999262dda5b8,
+    type: 3}
+  defaultClip: {fileID: 8300000, guid: c2c218e2a762e41059d1cdf2bfd73686, type: 3}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
+  - {fileID: 8300000, guid: 949eb9f49b4da413e89b2afcce09563e, type: 3}
 --- !u!1 &627127240
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,7 +1344,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a5243425c120b40a4a1219fdad3cb891, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6f49f761620e84daf85ce6eeefdebab8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1836,6 +1850,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   signInCanvas: {fileID: 353141394}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &1178811780
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,6 +2090,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   signInCanvas: {fileID: 353141394}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &1363499427
 GameObject:
   m_ObjectHideFlags: 0
@@ -2237,7 +2255,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Error Message.
+  m_Text: 
 --- !u!222 &1400044914
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3144,3 +3162,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769761919}
   m_CullTransparentMesh: 0
+--- !u!1 &2043960834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2043960836}
+  - component: {fileID: 2043960835}
+  m_Layer: 0
+  m_Name: InternetConnectMonitor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2043960835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043960834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 461632b642d994ffaa7911b41f90a89c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popUpPrefab: {fileID: 7621807362244423881, guid: cfa3dca7b426d4e82986e3fb01e29428,
+    type: 3}
+  audioSEClips:
+  - {fileID: 8300000, guid: 949eb9f49b4da413e89b2afcce09563e, type: 3}
+--- !u!4 &2043960836
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043960834}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 888.0649, y: 497.85556, z: -33.934204}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

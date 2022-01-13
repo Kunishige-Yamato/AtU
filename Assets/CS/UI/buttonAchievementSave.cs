@@ -12,6 +12,9 @@ public class buttonAchievementSave : MonoBehaviour
     //確認用ポップアップ
     public GameObject popUpPrefab;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
 
@@ -48,8 +51,11 @@ public class buttonAchievementSave : MonoBehaviour
 
     public void SaveDecoration()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         //変化があった場合セーブ
-        if(s_num!=s_num_def||t_num!=t_num_def)
+        if (s_num!=s_num_def||t_num!=t_num_def)
         {
             Debug.Log(t_num + "," + s_num);
             StartCoroutine(jsonRec.SaveDecoration(PlayerPrefs.GetString("ID"),t_num,s_num));
@@ -90,6 +96,9 @@ public class buttonAchievementSave : MonoBehaviour
             button_2.GetComponent<Image>().color = Color.red;
             //ボタンのテキスト変更
             button_2.transform.Find("Text").GetComponent<Text>().text = "Back Title";
+
+            //SE再生
+            GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[1]);
         }
         else
         {
@@ -100,6 +109,8 @@ public class buttonAchievementSave : MonoBehaviour
 
     private void BackTitle()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
         //サインアップシーン移動
         SceneManager.LoadScene("title");
     }

@@ -115,6 +115,8 @@ MonoBehaviour:
   skinSprite:
   - {fileID: 21300000, guid: cbd541e6c373f4980b83d0ccce655e10, type: 3}
   - {fileID: 21300000, guid: 43c2363ea81fd48f5b51591ff1b14540, type: 3}
+  audioSEClips:
+  - {fileID: 8300000, guid: 5823a623fab684e93899fbd4507356f6, type: 3}
 --- !u!114 &-9176568438166329110
 MonoBehaviour:
   m_ObjectHideFlags: 0

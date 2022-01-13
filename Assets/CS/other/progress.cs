@@ -222,7 +222,7 @@ public class progress : MonoBehaviour
                 fadeDeltaTime = fadeInSeconds;
                 isFadeIn = false;
             }
-            audioSource.volume = (float)(fadeDeltaTime / fadeInSeconds);
+            audioSource.volume = (float)(fadeDeltaTime / fadeInSeconds) * PlayerPrefs.GetFloat("BGMVOL");
         }
         else
         {
@@ -242,7 +242,7 @@ public class progress : MonoBehaviour
                 audioSource.Play();
                 isFadeIn = true;
             }
-            audioSource.volume = (float)(1.0 - fadeDeltaTime2 / fadeOutSeconds);
+            audioSource.volume = (float)(1.0 - fadeDeltaTime2 / fadeOutSeconds) * PlayerPrefs.GetFloat("BGMVOL");
         }
         else
         {
@@ -404,7 +404,7 @@ public class progress : MonoBehaviour
             timer = 0;
             sc.ResetTimer();
             //Debug用ステージ早送り
-            timer = 60;
+            //timer = 60;
         }
 
         Destroy(loadingPrefab.gameObject);
@@ -531,9 +531,3 @@ public class progress : MonoBehaviour
         yield return StartCoroutine(jsonRec.SaveUserData(PlayerPrefs.GetString("ID"), pl.hitNum, stageNum));
     }
 }
-
-/*
-
-データベースのtitleとskinを0埋め
-
- */

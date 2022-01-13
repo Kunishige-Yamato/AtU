@@ -12,6 +12,9 @@ public class moveCanvas_1 : MonoBehaviour
     public GameObject BG;
     Animator animator,animator2,animator3;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
         animator=menuCanvas.GetComponent<Animator>();
@@ -31,7 +34,10 @@ public class moveCanvas_1 : MonoBehaviour
 
     public void OnClick()
     {
-        if(gameObject.name=="StoryModeButton"){
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
+        if (gameObject.name=="StoryModeButton"){
             BG.gameObject.GetComponent<Image>().color=new Color(0f,0.471f,0f,0.471f);
         }
         if(gameObject.name=="EndlessModeButton"){

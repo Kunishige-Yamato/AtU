@@ -998,6 +998,8 @@ MonoBehaviour:
   totalResultCanvas: {fileID: 1227338679}
   resultCanvas: {fileID: 780829236}
   nextButtonText: {fileID: 1806711288}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &563637471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1650,7 +1652,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 200
   m_TargetDisplay: 0
 --- !u!224 &793342845
 RectTransform:
@@ -2013,6 +2015,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236296d9270a64265859d876794b3bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &978435448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2209,6 +2213,10 @@ MonoBehaviour:
   screenToWorldPointPosition: {x: 0, y: 0, z: 0}
   explosionPrefab: {fileID: 100000, guid: 4c5a17ca1f9fec84e941441ebb8be079, type: 3}
   commandImg: {fileID: 21300000, guid: 542799bf292314d189c4d240182b8cbd, type: 3}
+  SEClips:
+  - {fileID: 8300000, guid: 7fca5f33fef0c45c984ebe4e583c7b9f, type: 3}
+  - {fileID: 8300000, guid: 09a3bf532c81540b8b7e93f726665b97, type: 3}
+  - {fileID: 8300000, guid: 5c49da319ae8b4a4c9555726ecd1e396, type: 3}
 --- !u!58 &1038589229
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3657,6 +3665,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236296d9270a64265859d876794b3bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &1537140736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3953,6 +3963,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseGroup: {fileID: 887104131}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &1646906825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4198,6 +4210,8 @@ MonoBehaviour:
   totalResultCanvas: {fileID: 0}
   resultCanvas: {fileID: 0}
   nextButtonText: {fileID: 1721598367}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &1709276091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4877,6 +4891,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236296d9270a64265859d876794b3bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &1948750952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5116,6 +5132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseGroup: {fileID: 887104131}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &2001544090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5341,6 +5359,8 @@ MonoBehaviour:
   totalResultCanvas: {fileID: 0}
   resultCanvas: {fileID: 0}
   nextButtonText: {fileID: 2005351362}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &2007176237
 MonoBehaviour:
   m_ObjectHideFlags: 0

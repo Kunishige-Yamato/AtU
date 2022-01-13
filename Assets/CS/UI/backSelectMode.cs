@@ -12,6 +12,9 @@ public class backSelectMode : MonoBehaviour
     public GameObject BG;
     Animator animator,animator2,animator3;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
         animator=menuCanvas.GetComponent<Animator>();
@@ -25,6 +28,9 @@ public class backSelectMode : MonoBehaviour
 
     public void OnClick()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         BG.gameObject.GetComponent<Image>().color=new Color(0.471f,0.471f,0f,0.471f);
         if(modeCanvas1.transform.position.x<modeCanvas2.transform.position.x){
             animator2=modeCanvas1.GetComponent<Animator>();

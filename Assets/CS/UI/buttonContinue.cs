@@ -9,6 +9,9 @@ public class buttonContinue : MonoBehaviour
     GameObject player;
     player pl;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
         player=GameObject.Find("Player");
@@ -22,6 +25,9 @@ public class buttonContinue : MonoBehaviour
 
     public void OnClick()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         //ポーズ画面消去
         pauseGroup.alpha=0f;
         pauseGroup.interactable = false;

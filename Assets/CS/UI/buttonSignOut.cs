@@ -8,6 +8,9 @@ public class buttonSignOut : MonoBehaviour
 {
     public GameObject popUpPrefab;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
         
@@ -20,6 +23,9 @@ public class buttonSignOut : MonoBehaviour
 
     public void OnClick()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         //ポップアップ作成，テキストとボタンの設定
         GameObject popUp = Instantiate(popUpPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 

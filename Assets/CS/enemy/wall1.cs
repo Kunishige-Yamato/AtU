@@ -7,6 +7,9 @@ public class wall1 : MonoBehaviour
     int hp=30;
     int hit=0;
 
+    //SE関係
+    public AudioClip audioSEClip;
+
     void Start()
     {
         Invoke("Des",15f);
@@ -20,7 +23,10 @@ public class wall1 : MonoBehaviour
     //当たったらhp減らしながら弾をブロック
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag=="Bullet")
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClip);
+
+        if (col.gameObject.tag=="Bullet")
         {
             hit++;
             if(hit>hp)

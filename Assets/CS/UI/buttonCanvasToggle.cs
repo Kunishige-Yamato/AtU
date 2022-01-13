@@ -11,9 +11,12 @@ public class buttonCanvasToggle : MonoBehaviour
     bool konami = false;
     int commandNum = 0;
 
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -61,6 +64,12 @@ public class buttonCanvasToggle : MonoBehaviour
             {
                 //トロフィーの達成
                 Debug.Log("command success!");
+                //SE再生
+                GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[1]);
+
+                //トロフィー解放
+                jsonReceive jsonRec = new jsonReceive();
+                StartCoroutine(jsonRec.SaveHiddenCommand(PlayerPrefs.GetString("ID"), 0));
             }
         }
     }
@@ -72,6 +81,9 @@ public class buttonCanvasToggle : MonoBehaviour
 
     public void Onclick()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         if (gameObject.name == "ConfigurationBtn")
         {
             ConfCanvas.SetActive(true);

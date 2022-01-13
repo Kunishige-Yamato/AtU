@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class buttonMoveScene : MonoBehaviour
 {
+
+    //SE関係
+    public AudioClip[] audioSEClips;
+
     void Start()
     {
 
@@ -18,6 +22,9 @@ public class buttonMoveScene : MonoBehaviour
 
     public void Onclick()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         switch (gameObject.name)
         {
             case "StartBtn":
@@ -36,6 +43,11 @@ public class buttonMoveScene : MonoBehaviour
 
                     StartCoroutine(SaveData(pro));
                 }
+                else
+                {
+                    //タイトル画面へ
+                    SceneManager.LoadScene("title");
+                }
                 break;
         }
     }
@@ -46,7 +58,7 @@ public class buttonMoveScene : MonoBehaviour
         yield return StartCoroutine(pro.SaveScore());
         yield return StartCoroutine(pro.SaveUserData());
 
-        //スコア画面へ
+        //タイトル画面へ
         SceneManager.LoadScene("title");
     }
 }

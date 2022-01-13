@@ -353,6 +353,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236296d9270a64265859d876794b3bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &77322853
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,6 +724,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listTab: {fileID: 206240458}
   applicationTab: {fileID: 435578698}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &132081216
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +905,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236296d9270a64265859d876794b3bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &133343480
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,7 +1127,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &163531949
 MonoBehaviour:
@@ -1321,6 +1327,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConfCanvas: {fileID: 503585133}
   FriCanvas: {fileID: 1222547039}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &169821452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2679,6 +2687,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236296d9270a64265859d876794b3bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &482489998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2717,7 +2727,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -80}
-  m_SizeDelta: {x: 1000, y: 20}
+  m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &482490000
 MonoBehaviour:
@@ -2763,9 +2773,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1857397831}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 2
-  m_WholeNumbers: 0
-  m_Value: 1
+  m_MaxValue: 10
+  m_WholeNumbers: 1
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4525,6 +4535,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioPrefab: {fileID: 2299577941876532274, guid: cee39844656dc4949ba723108cf419e4,
     type: 3}
+  audioSEPrefab: {fileID: 3630017096695255238, guid: 77a1cafc2689243e6b1a999262dda5b8,
+    type: 3}
   defaultClip: {fileID: 8300000, guid: c2c218e2a762e41059d1cdf2bfd73686, type: 3}
 --- !u!1 &1204035471
 GameObject:
@@ -5194,6 +5206,8 @@ MonoBehaviour:
   FoundID: {fileID: 170909180}
   FoundName: {fileID: 1631103209}
   FoundScore: {fileID: 1526794110}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &1357375438
 GameObject:
   m_ObjectHideFlags: 0
@@ -5946,6 +5960,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConfCanvas: {fileID: 503585133}
   FriCanvas: {fileID: 1222547039}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
+  - {fileID: 8300000, guid: 232edbe6c1f144f078e8cdf2d7f4de83, type: 3}
 --- !u!1 &1454579852
 GameObject:
   m_ObjectHideFlags: 0
@@ -6346,6 +6363,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listTab: {fileID: 206240458}
   applicationTab: {fileID: 435578698}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!1 &1492112397
 GameObject:
   m_ObjectHideFlags: 0
@@ -6848,7 +6867,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 80}
-  m_SizeDelta: {x: 1000, y: 20}
+  m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1601926102
 MonoBehaviour:
@@ -6894,9 +6913,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 163531948}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 2
-  m_WholeNumbers: 0
-  m_Value: 1
+  m_MaxValue: 10
+  m_WholeNumbers: 1
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7369,6 +7388,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConfCanvas: {fileID: 503585133}
   FriCanvas: {fileID: 1222547039}
+  audioSEClips:
+  - {fileID: 8300000, guid: ff45a3d17bde04ae4a056a58e1c75195, type: 3}
 --- !u!114 &1738008698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7611,7 +7632,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1857397832
 MonoBehaviour:
@@ -7873,6 +7894,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popUpPrefab: {fileID: 7621807362244423881, guid: cfa3dca7b426d4e82986e3fb01e29428,
     type: 3}
+  audioSEClips:
+  - {fileID: 8300000, guid: 949eb9f49b4da413e89b2afcce09563e, type: 3}
 --- !u!1 &1936135767
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,23 +16,128 @@ public class registration: MonoBehaviour
     string returnID;
     string returnName;
 
-    // Start is called before the first frame update
+    public GameObject popUpPrefab;
+
+    //ローディングのPrefab
+    GameObject loadingPrefab;
+
+    //BGM関係
+    public GameObject audioPrefab;
+    public GameObject audioSEPrefab;
+    AudioSource BGMSource, SESource;
+    public AudioClip defaultClip;
+
+    //SE関係
+    public AudioClip[] audioSEClips;
+
+    private void Awake()
+    {
+        if (gameObject.name == "SignUpBtn")
+        {
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/Other/LoadingCanvas");
+            loadingPrefab = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+        }
+    }
+
     void Start()
     {
         // 自動ログイン。サインインの動作確認の間はコメントアウトで無効に。
-        // StartCoroutine(connect());
+        StartCoroutine(connect());
         StartCoroutine(getEnemyInfo("1"));
+
+        GameObject mainAudio = GameObject.Find("AudioObj");
+        GameObject mainSEAudio = GameObject.Find("AudioSEObj");
+        if (mainAudio == null || mainSEAudio == null)
+        {
+            audioSourceCreate();
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
 
     }
 
+    void audioSourceCreate()
+    {
+
+        GameObject mainAudio = Instantiate(audioPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        mainAudio.name = "AudioObj";
+        DontDestroyOnLoad(mainAudio);
+        
+        GameObject mainSEAudio = Instantiate(audioSEPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        mainSEAudio.name = "AudioSEObj";
+        DontDestroyOnLoad(mainSEAudio);
+
+        //コンポーネント取得
+        BGMSource = mainAudio.GetComponent<AudioSource>();
+        SESource = mainSEAudio.GetComponent<AudioSource>();
+
+        //音量チェック
+        //セーブされているかチェック
+        if (PlayerPrefs.HasKey("BGMVOL"))
+        {
+            //既にセットされている場合
+            BGMSource.volume = PlayerPrefs.GetFloat("BGMVOL");
+        }
+        else
+        {
+            //初めての場合
+            BGMSource.volume = 0.5f;
+
+        }
+        //セーブされているかチェック
+        if (PlayerPrefs.HasKey("SEVOL"))
+        {
+            //既にセットされている場合
+            SESource.volume = PlayerPrefs.GetFloat("SEVOL");
+        }
+        else
+        {
+            //初めての場合
+            SESource.volume = 0.5f;
+        }
+
+        BGMSource.clip = defaultClip;
+
+        BGMSource.Play();
+    }
+
     // サインアップボタン押した時
     public void btnSignUp()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[1]);
+
+        //ポップアップ作成，テキストとボタンの設定
+        GameObject popUp = Instantiate(popUpPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+        //テキスト設定
+        popUp.transform.Find("TextBackGround/Text").GetComponent<Text>().text = "You are creating a new user, are you sure?";
+
+        //ボタン1設定
+        GameObject button_1 = popUp.transform.Find("Buttons/Button_1").gameObject;
+        //ボタンの背景色設定
+        button_1.GetComponent<Image>().color = Color.gray;
+        //ボタンのテキスト変更
+        button_1.transform.Find("Text").GetComponent<Text>().text = "Cancel";
+
+        //ボタン2設定
+        GameObject button_2 = popUp.transform.Find("Buttons/Button_2").gameObject;
+        //ボタン押した時動くメソッドを追加
+        button_2.GetComponent<Button>().onClick.AddListener(SignUp);
+        //ボタンの背景色設定
+        button_2.GetComponent<Image>().color = Color.green;
+        //ボタンのテキスト変更
+        button_2.transform.Find("Text").GetComponent<Text>().text = "Sure";
+    }
+
+    //サインアップ機能
+    public void SignUp()
+    {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         inputName = UserNameInput.text;
         inputPass = PasswordInput.text;
         bool check = true;
@@ -55,6 +160,9 @@ public class registration: MonoBehaviour
     // サインインボタン押した時
     public void btnSignIn()
     {
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
         inputID = UserIdInput.text;
         inputPass = PasswordInput.text;
         StartCoroutine(sign_in(inputID, inputPass));
@@ -76,6 +184,10 @@ public class registration: MonoBehaviour
         }
         else
         {
+            if(loadingPrefab!=null)
+            {
+                Destroy(loadingPrefab.gameObject);
+            }
             // PlayerPrefsのIDに9桁のIDが入っていればタイトル画面に飛ばす
             if (System.Text.RegularExpressions.Regex.IsMatch(PlayerPrefs.GetString("ID"), @"^[0-9]{9}$"))
             {
@@ -157,6 +269,8 @@ public class registration: MonoBehaviour
             // ID値の不正入力やパスワードミスを処理
             if(returnName==null || returnName=="")
             {
+                Text errorText = GameObject.Find("Canvas/SignInCanvas/ErrorText").GetComponent<Text>();
+                errorText.text = "There is an error in the input.";
                 Debug.Log("入力に間違いがあります");
             }
             else
