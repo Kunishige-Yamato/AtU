@@ -449,7 +449,7 @@ public class jsonReceive
     public IEnumerator SaveHiddenCommand(string id, int kind)
     {
         //UserData保存
-        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?id=" + id + "&command=" + kind;
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?id=" + id + "&achieve_id=" + kind;
         UnityWebRequest request = UnityWebRequest.Get(url);
 
         //SendWebRequestを実行して送受信開始
@@ -462,9 +462,47 @@ public class jsonReceive
         }
         else
         {
-            PlayerPrefs.SetString("COMMAND", request.downloadHandler.text);
+            string[] achiNum = request.downloadHandler.text.Split(',');
+            for(int i=0;i<achiNum.Length;i++)
+            {
+                /*if(achiNum[i]=="17")
+                {
+                    PlayerPrefs.SetString("COMMAND_1", request.downloadHandler.text);
+                }
+                if (achiNum[i] == "18")
+                {
+                    PlayerPrefs.SetString("COMMAND_2", request.downloadHandler.text);
+                }
+                if (achiNum[i] == "19")
+                {
+                    PlayerPrefs.SetString("COMMAND_3", request.downloadHandler.text);
+                }if (achiNum[i] == "20")
+                {
+                    PlayerPrefs.SetString("COMMAND_4", request.downloadHandler.text);
+                }*/
+            }
             PlayerPrefs.Save();
             Debug.Log(request.downloadHandler.text);
+        }
+    }
+
+    public IEnumerator CheckFriendNum(string id)
+    {
+        //UserData保存
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?id=" + id + "&action=chk_fri";
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        //SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            //PlayerPrefs.SetInt("FRIEND_NUM",int.Parse(request.downloadHandler.text));
         }
     }
 }

@@ -335,6 +335,9 @@ public class progress : MonoBehaviour
             stageScore = sc.GetScore();
             stageHit = pl.hitNum;
         }
+
+        //回復
+        pl.HealPlayer(10-difficulty*3);
     }
 
     public IEnumerator StoryStageStart()

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public class titleAdmin : MonoBehaviour
@@ -14,6 +15,16 @@ public class titleAdmin : MonoBehaviour
 
     //ローディングのPrefab
     GameObject loadingPrefab;
+
+    public GameObject popUpPrefab;
+    GameObject popUp;
+
+    //SE関係
+    public AudioClip[] audioSEClips;
+
+    //得点コード用
+    public InputField inputField;
+    string giftCode;
 
     private void Awake()
     {
@@ -85,17 +96,96 @@ public class titleAdmin : MonoBehaviour
         //スキンと称号の再セット
         if (PlayerPrefs.HasKey("SKIN") == false || PlayerPrefs.HasKey("TITLE") == false)  
         {
-
             StartCoroutine(SetDeco());
         }
 
         //フレンド人数確認、称号獲得チェック
+        if (PlayerPrefs.GetInt("FRIEND_NUM") < 20)
+        {
+            StartCoroutine(jsonRec.CheckFriendNum(PlayerPrefs.GetString("ID")));
+        }
 
-    }
+        //得点コード用
+        inputField = inputField.GetComponent<InputField>();
+}
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape) && popUp == null) 
+        {
+            //SE再生
+            GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+
+            //ポップアップ作成，テキストとボタンの設定
+            popUp = Instantiate(popUpPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+            //テキスト設定
+            popUp.transform.Find("TextBackGround/Text").GetComponent<Text>().text = "Do you want to quit the game?";
+
+            //ボタン1設定
+            GameObject button_1 = popUp.transform.Find("Buttons/Button_1").gameObject;
+            //ボタンの背景色設定
+            button_1.GetComponent<Image>().color = Color.gray;
+            //ボタンのテキスト変更
+            button_1.transform.Find("Text").GetComponent<Text>().text = "Cancel";
+
+            //ボタン2設定
+            GameObject button_2 = popUp.transform.Find("Buttons/Button_2").gameObject;
+            //ボタン押した時動くメソッドを追加
+            button_2.GetComponent<Button>().onClick.AddListener(quit);
+            //ボタンの背景色設定
+            button_2.GetComponent<Image>().color = Color.red;
+            //ボタンのテキスト変更
+            button_2.transform.Find("Text").GetComponent<Text>().text = "Quit";
+
+            //ボタンが1つでいい場合は「button_2」を取得後，以下を実行
+            //Destroy(button_2);
+        }
+    }
+
+    private void quit()
+    {
+        //ゲーム終了
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    public void InputGiftCode()
+    {
+        //入力内容確認
+        giftCode = inputField.text;
+
+        //DB接続用
+        jsonReceive jsonRec = new jsonReceive();
+
+        switch (giftCode)
+        {
+            case "uquJuMNia":
+                //SE再生
+                GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[1]);
+                //トロフィー解放
+                if (PlayerPrefs.HasKey("COMMAND_3") == false)
+                {
+                    StartCoroutine(jsonRec.SaveHiddenCommand(PlayerPrefs.GetString("ID"), 19));
+                }
+                break;
+            case "OhSPoqfON":
+                //SE再生
+                GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[1]);
+                //トロフィー解放
+                if (PlayerPrefs.HasKey("COMMAND_4") == false)
+                {
+                    StartCoroutine(jsonRec.SaveHiddenCommand(PlayerPrefs.GetString("ID"), 20));
+                }
+                break;
+            default:
+                inputField.text = "";
+                break;
+        }
+        Debug.Log(giftCode);
     }
 
     IEnumerator SetDeco()

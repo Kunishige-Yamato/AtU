@@ -67,6 +67,7 @@ public class buttonApproval : MonoBehaviour
         Text id = parent.transform.Find("FriendID").gameObject.GetComponent<Text>();
         StartCoroutine(Approval(id.text, PlayerPrefs.GetString("ID")));
     }
+
     // フレンド申請承認処理
     public IEnumerator Approval(string id1, string id2)
     {

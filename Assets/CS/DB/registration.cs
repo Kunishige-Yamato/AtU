@@ -302,10 +302,5 @@ public class registration: MonoBehaviour
         {
             Debug.Log(request.error);
         }
-        else
-        {
-            // return request.downloadHandler.text;
-            Debug.Log(request.downloadHandler.text);
-        }
     }
 }

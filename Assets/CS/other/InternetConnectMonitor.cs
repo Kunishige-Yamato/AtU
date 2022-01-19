@@ -17,12 +17,15 @@ public class InternetConnectMonitor : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        Screen.SetResolution(1920, 1080, true);
     }
 
     void Update()
     {
         if(netConnectCheck)
         {
+            popUp = GameObject.Find("InternetErrorPopUp");
+
             // ネットワークの状態を確認する
             if (Application.internetReachability == NetworkReachability.NotReachable && popUp == null) 
             {
@@ -32,6 +35,8 @@ public class InternetConnectMonitor : MonoBehaviour
 
                 //ポップアップ作成，テキストとボタンの設定
                 popUp = Instantiate(popUpPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+                popUp.name = "InternetErrorPopUp";
 
                 //テキスト設定
                 popUp.transform.Find("TextBackGround/Text").GetComponent<Text>().text = "You don't seem to be connected to the internet. Check your internet connection.";

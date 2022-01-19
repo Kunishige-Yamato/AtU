@@ -68,8 +68,11 @@ public class buttonCanvasToggle : MonoBehaviour
                 GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[1]);
 
                 //トロフィー解放
-                jsonReceive jsonRec = new jsonReceive();
-                StartCoroutine(jsonRec.SaveHiddenCommand(PlayerPrefs.GetString("ID"), 0));
+                if(PlayerPrefs.HasKey("COMMAND_1")==false)
+                {
+                    jsonReceive jsonRec = new jsonReceive();
+                    StartCoroutine(jsonRec.SaveHiddenCommand(PlayerPrefs.GetString("ID"), 17));
+                }
             }
         }
     }

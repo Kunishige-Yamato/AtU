@@ -13,10 +13,11 @@ public class player : MonoBehaviour
     float timer,coolTime;
     public int imageNum;
     public int hitNum;
+    int heal=0;
     public bool canMove=true;
 
     //プレイヤーの体力
-    int maxLife=5;
+    int maxLife=30;
 
     Slider hpBar;
 
@@ -174,8 +175,11 @@ public class player : MonoBehaviour
             collider.radius = 0.1f;
 
             //トロフィー解放
-            jsonReceive jsonRec = new jsonReceive();
-            StartCoroutine(jsonRec.SaveHiddenCommand(PlayerPrefs.GetString("ID"), 0));
+            if (PlayerPrefs.HasKey("COMMAND_2") == false)
+            {
+                jsonReceive jsonRec = new jsonReceive();
+                StartCoroutine(jsonRec.SaveHiddenCommand(PlayerPrefs.GetString("ID"), 18));
+            }
         }
     }
 
@@ -186,7 +190,7 @@ public class player : MonoBehaviour
         //エンドレスモードの時hpバー表示
         if(endless==1)
         {
-            hpBar.value=maxLife-hitNum;
+            hpBar.value=maxLife-hitNum+heal;
         }
 
         bulPos.x=gameObject.transform.position.x;
@@ -306,7 +310,7 @@ public class player : MonoBehaviour
 		
             hitNum++;
 
-            if(hitNum>=maxLife){
+            if(hitNum-heal>=maxLife){
                 if (endless==1)
                 {
                     pro.gameOver=true;
@@ -326,5 +330,15 @@ public class player : MonoBehaviour
         GameObject g = Instantiate(explosionPrefab, pos, Quaternion.identity);
         g.transform.SetParent(canvas.transform, false);
         g.transform.position = pos;
+    }
+
+    public void HealPlayer(int num)
+    {
+        heal += num;
+        //体力満タンならそれに合わせて回復
+        if(heal>=hitNum)
+        {
+            heal = hitNum;
+        }
     }
 }
