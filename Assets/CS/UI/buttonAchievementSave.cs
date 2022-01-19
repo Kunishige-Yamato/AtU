@@ -102,7 +102,6 @@ public class buttonAchievementSave : MonoBehaviour
         }
         else
         {
-            Debug.Log("not change");
             BackTitle();
         }
     }
