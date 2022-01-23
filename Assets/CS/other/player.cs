@@ -107,11 +107,6 @@ public class player : MonoBehaviour
         Invoke("CursorMove",0.1f);
     }
 
-    void CursorMove()
-    {
-        Cursor.lockState=CursorLockMode.None;
-    }
-
     void Update()
     {
         //隠しコマンド

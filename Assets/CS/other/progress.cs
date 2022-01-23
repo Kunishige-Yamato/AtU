@@ -289,6 +289,8 @@ public class progress : MonoBehaviour
             Destroy(del);
         }
 
+        Invoke("DeleteEnemy", 0.1f);
+
         //リザルト表示
         resultGroup.alpha = 1f;
         resultGroup.interactable = true;
@@ -340,11 +342,27 @@ public class progress : MonoBehaviour
         pl.HealPlayer(10-difficulty*3);
     }
 
+    void DeleteEnemy()
+    {
+        //敵消去
+        //タグつきを全て格納
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject del in enemys)
+        {
+            Destroy(del);
+        }
+        enemys = GameObject.FindGameObjectsWithTag("Boss");
+        foreach (GameObject del in enemys)
+        {
+            Destroy(del);
+        }
+    }
+
     public IEnumerator StoryStageStart()
     {
         //自機動作
         Cursor.visible = false;
-        pl.canMove = true;
+        pl.canMove = false;
         Cursor.lockState = CursorLockMode.Locked;
         Invoke("CursorMove", 1.8f);
 
@@ -418,7 +436,7 @@ public class progress : MonoBehaviour
     {
         //自機動作
         Cursor.visible = false;
-        pl.canMove = true;
+        pl.canMove = false;
         Cursor.lockState = CursorLockMode.Locked;
         Invoke("CursorMove", 0.1f);
 
@@ -495,6 +513,8 @@ public class progress : MonoBehaviour
     void CursorMove()
     {
         //カーソルのロック解除
+        Cursor.visible = true;
+        pl.canMove = true;
         Cursor.lockState = CursorLockMode.Confined;
     }
 

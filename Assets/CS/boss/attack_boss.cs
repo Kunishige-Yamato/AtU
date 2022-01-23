@@ -573,22 +573,67 @@ public class attack_boss_3 : attack_boss
 
     public void Shoot11()
     {
-        countShoot11++;
-        for (float i = -5; i < 16; i += 2)
+        //難易度イージーの時だけゆるい感じに
+        if (difficulty < 1)
         {
-            bulPos[2].y = i + i % 3;
-            bulPos[2].x = -9.5f;
-            Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
-            bulPos[2].x = 9.5f;
-            Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
+            countShoot11++;
+            for (float i = -5; i < 16; i += 2)
+            {
+                bulPos[2].y = i + i % 3;
+                bulPos[2].x = -9.5f;
+                Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
+                bulPos[2].x = 9.5f;
+                Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
+            }
+            if (countShoot11 < 5)
+            {
+                Invoke("Shoot11", 0.8f);
+            }
+            else
+            {
+                countShoot11 = 0;
+            }
         }
-        if (countShoot11 < 5)
+        else if(difficulty < 3)
         {
-            Invoke("Shoot11", 0.8f);
+            countShoot11++;
+            for (float i = -5; i < 16; i += 2)
+            {
+                bulPos[2].y = i + i % 3;
+                bulPos[2].x = -9.5f + Random.Range(0, 2);
+                Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
+                bulPos[2].x = 9.5f - Random.Range(0, 2);
+                Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
+            }
+            if (countShoot11 < 10)
+            {
+                Invoke("Shoot11", 0.4f);
+            }
+            else
+            {
+                countShoot11 = 0;
+            }
         }
         else
         {
-            countShoot11 = 0;
+            countShoot11++;
+            for (float i = -5; i < 16; i += 2)
+            {
+                bulPos[2].y = i + i % 3 + Random.Range(-2, 2);
+                bulPos[2].x = -9.5f+Random.Range(0,2);
+                Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
+                bulPos[2].y = i + i % 3 + Random.Range(-2, 2);
+                bulPos[2].x = 9.5f + Random.Range(0, 2);
+                Instantiate(bulPrefab[2], bulPos[2], Quaternion.identity);
+            }
+            if (countShoot11 < 20)
+            {
+                Invoke("Shoot11", 0.2f);
+            }
+            else
+            {
+                countShoot11 = 0;
+            }
         }
     }
 
