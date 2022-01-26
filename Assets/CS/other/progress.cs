@@ -413,6 +413,8 @@ public class progress : MonoBehaviour
                     csvFile = Resources.Load("CSV/stage-c-" + stageNum) as TextAsset;
                     break;
             }
+            //発表用テストデータ
+            csvFile = Resources.Load("CSV/test") as TextAsset;
             StringReader reader = new StringReader(csvFile.text);
 
             // , で分割しつつ一行ずつ読み込み，リストに追加していく

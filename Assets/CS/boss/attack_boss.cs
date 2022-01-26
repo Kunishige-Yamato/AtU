@@ -460,6 +460,8 @@ public class attack_boss_3 : attack_boss
     int countShoot12;
     int countShoot13;
 
+    bool attack10=false;
+
     void Start()
     {
         //初期化
@@ -478,7 +480,71 @@ public class attack_boss_3 : attack_boss
 
     void FixedUpdate()
     {
-
+        if(attack10)
+        {
+            if (mode == 0)
+            {
+                //ボス上移動
+                moveSpeed = 0.03f;
+                objPlace = transform.position;
+                objPlace.y -= moveSpeed;
+                transform.position = objPlace;
+                if (transform.position.y <= 0)
+                {
+                    moveSpeed = 0;
+                    objPlace.x = 0;
+                    objPlace.y = 0;
+                    transform.position = objPlace;
+                    mode = 1;
+                }
+            }
+            if (mode == 1)
+            {
+                if (angle < 720)
+                {
+                    float rad = Mathf.PI * (angle + 45) / 180;
+                    bulPos[1].x = (float)Mathf.Cos(rad) * 2 + transform.position.x;
+                    bulPos[1].y = (float)Mathf.Sin(rad) * 2 + transform.position.y;
+                    GameObject bul = Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
+                    bul.transform.Rotate(0, 0, angle - 90);
+                    if (difficulty != 0)
+                    {
+                        rad = Mathf.PI * (angle + 225) / 180;
+                        bulPos[1].x = (float)Mathf.Cos(rad) * 2 + transform.position.x;
+                        bulPos[1].y = (float)Mathf.Sin(rad) * 2 + transform.position.y;
+                        Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
+                    }
+                    angle += 4.5f;
+                }
+                else
+                {
+                    angle = 0;
+                    mode = 2;
+                }
+            }
+            if (mode == 2)
+            {
+                //ボス移動
+                moveSpeed = 0.03f;
+                objPlace = transform.position;
+                objPlace.y += moveSpeed;
+                transform.position = objPlace;
+                if (transform.position.y >= 3)
+                {
+                    moveSpeed = 0;
+                    objPlace.x = 0;
+                    objPlace.y = 3;
+                    transform.position = objPlace;
+                    mode = 3;
+                }
+            }
+            if (mode == 3)
+            {
+                mode = 0;
+                Defense();
+                attack10 = false;
+            }
+        }
     }
 
     public void Shoot9()
@@ -503,72 +569,7 @@ public class attack_boss_3 : attack_boss
 
     public void Shoot10()
     {
-        if (mode == 0)
-        {
-            //ボス上移動
-            moveSpeed = 0.01f;
-            objPlace = transform.position;
-            objPlace.y -= moveSpeed;
-            transform.position = objPlace;
-            if (transform.position.y <= 0)
-            {
-                moveSpeed = 0;
-                objPlace.x = 0;
-                objPlace.y = 0;
-                transform.position = objPlace;
-                mode = 1;
-            }
-        }
-        if (mode == 1)
-        {
-            if (angle < 720)
-            {
-                float rad = Mathf.PI * (angle + 45) / 180;
-                bulPos[1].x = (float)Mathf.Cos(rad) * 2 + transform.position.x;
-                bulPos[1].y = (float)Mathf.Sin(rad) * 2 + transform.position.y;
-                GameObject bul=Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
-                bul.transform.Rotate(0, 0, angle-90);
-                if (difficulty != 0)
-                {
-                    rad = Mathf.PI * (angle + 225) / 180;
-                    bulPos[1].x = (float)Mathf.Cos(rad) * 2 + transform.position.x;
-                    bulPos[1].y = (float)Mathf.Sin(rad) * 2 + transform.position.y;
-                    Instantiate(bulPrefab[1], bulPos[1], Quaternion.identity);
-                }
-                angle += 1.5f;
-            }
-            else
-            {
-                angle = 0;
-                mode = 2;
-            }
-        }
-        if (mode == 2)
-        {
-            //ボス移動
-            moveSpeed = 0.01f;
-            objPlace = transform.position;
-            objPlace.y += moveSpeed;
-            transform.position = objPlace;
-            if (transform.position.y >= 3)
-            {
-                moveSpeed = 0;
-                objPlace.x = 0;
-                objPlace.y = 3;
-                transform.position = objPlace;
-                mode = 3;
-            }
-        }
-        if (mode == 3)
-        {
-            mode = 0;
-            Defense();
-
-        }
-        else
-        {
-            Invoke("Shoot10", 0.01f);
-        }
+        attack10 = true;
     }
 
     public void Shoot11()

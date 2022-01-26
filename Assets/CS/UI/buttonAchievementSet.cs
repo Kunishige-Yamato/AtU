@@ -42,6 +42,18 @@ public class buttonAchievementSet : MonoBehaviour
 
         achieveSave = GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>();
         backBtn = GameObject.Find("Canvas/BackTitleButton").GetComponent<buttonAchievementSave>();
+
+        //最初は1をセット
+        if (achieveSave.GetDefaultDeco()[0] == 0) 
+        {
+            achieveSave.SetSkinNum(1);
+            backBtn.SetSkinNum(1);
+        }
+        if (achieveSave.GetDefaultDeco()[1] == 0) 
+        {
+            achieveSave.SetTitleNum(1);
+            backBtn.SetTitleNum(1);
+        }
     }
 
     void FixedUpdate()
@@ -64,16 +76,16 @@ public class buttonAchievementSet : MonoBehaviour
             Image mySprite = gameObject.transform.GetChild(0).gameObject.GetComponent<Image>();
             //スキン変更
             mySprite.sprite = Resources.Load<Sprite>("AchievementImage/default"); ;
-            achieveSave.GetSkinNum(1);
-            backBtn.GetSkinNum(1);
+            achieveSave.SetSkinNum(1);
+            backBtn.SetSkinNum(1);
         }
         else if (gameObject.name == "TitlePreview")
         {
             Text myTitle = gameObject.GetComponent<Text>();
             //称号変更
             myTitle.text = "";
-            achieveSave.GetTitleNum(1);
-            backBtn.GetTitleNum(1);
+            achieveSave.SetTitleNum(1);
+            backBtn.SetTitleNum(1);
         }
         else
         {
@@ -86,8 +98,8 @@ public class buttonAchievementSet : MonoBehaviour
                 {
                     //スキン変更
                     preSkin.sprite = mySprite.sprite;
-                    achieveSave.GetSkinNum(achieveNum);
-                    backBtn.GetSkinNum(achieveNum);
+                    achieveSave.SetSkinNum(achieveNum);
+                    backBtn.SetSkinNum(achieveNum);
                 }
             }
             else if (acqTitle.activeSelf)
@@ -98,8 +110,8 @@ public class buttonAchievementSet : MonoBehaviour
                 {
                     //称号変更
                     preTitle.text = myTitle.text;
-                    achieveSave.GetTitleNum(achieveNum);
-                    backBtn.GetTitleNum(achieveNum);
+                    achieveSave.SetTitleNum(achieveNum);
+                    backBtn.SetTitleNum(achieveNum);
                 }
             }
         }

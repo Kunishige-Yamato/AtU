@@ -111,6 +111,7 @@ public class registration: MonoBehaviour
 
         //ポップアップ作成，テキストとボタンの設定
         GameObject popUp = Instantiate(popUpPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        popUp.name = "confPopup";
 
         //テキスト設定
         popUp.transform.Find("TextBackGround/Text").GetComponent<Text>().text = "You are creating a new user, are you sure?";
@@ -135,26 +136,67 @@ public class registration: MonoBehaviour
     //サインアップ機能
     public void SignUp()
     {
-        //SE再生
-        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
 
         inputName = UserNameInput.text;
         inputPass = PasswordInput.text;
         bool check = true;
 
-        if (!System.Text.RegularExpressions.Regex.IsMatch(inputName, @"^[a-zA-Z0-9_]+$"))
+        if (System.Text.RegularExpressions.Regex.IsMatch(inputName, @"('|\\)+"))
         {
             check = false;
-            Debug.Log("名前だめー");
+            Debug.Log("不正な文字列が含まれています。");
+
+            SignInPopup("Registration failed because the input content contains invalid characters.");
         }
-        if (UserNameInput.text == "")
+        else if (inputName.Length < 1 || 20 < inputName.Length)
         {
             check = false;
+            Debug.Log("名前は20文字まで使用できます。");
+
+            SignInPopup("Use up to 20 characters in the name.");
         }
+        else if (System.Text.RegularExpressions.Regex.IsMatch(inputPass, @"[^\da-zA-Z]+") || inputPass.Length < 8 || 16 < inputPass.Length)
+        {
+            check = false;
+            Debug.Log("パスワードは8〜16文字の半角英数字で作成してください。");
+
+            SignInPopup("Create the password using 8 to 16 single-byte alphanumerical characters.");
+        }
+        // チェックを終えて使用可能で合った場合
         if (check == true)
         {
+            //SE再生
+            GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
+            Debug.Log("successsssssssssss");
             StartCoroutine(sign_up(inputName, inputPass));
         }
+    }
+
+    //名前とパスワードがエラー吐いた時のポップアップ作成
+    public void SignInPopup(string message)
+    {
+        //既存のポップアップ削除
+        Destroy(GameObject.Find("confPopup"));
+
+        //SE再生
+        GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[1]);
+
+        //ポップアップ作成，テキストとボタンの設定
+        GameObject popUp = Instantiate(popUpPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+        //テキスト設定
+        popUp.transform.Find("TextBackGround/Text").GetComponent<Text>().text = message;
+
+        //ボタン1設定
+        GameObject button_1 = popUp.transform.Find("Buttons/Button_1").gameObject;
+        //ボタンの背景色設定
+        button_1.GetComponent<Image>().color = Color.gray;
+        //ボタンのテキスト変更
+        button_1.transform.Find("Text").GetComponent<Text>().text = "OK";
+
+        //ボタン2設定
+        GameObject button_2 = popUp.transform.Find("Buttons/Button_2").gameObject;
+        Destroy(button_2);
     }
 
     // サインインボタン押した時

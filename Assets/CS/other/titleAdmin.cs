@@ -146,11 +146,11 @@ public class titleAdmin : MonoBehaviour
     private void quit()
     {
         //ゲーム終了
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+    #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+    #else
+            Application.Quit();
+    #endif
     }
 
     public void InputGiftCode()

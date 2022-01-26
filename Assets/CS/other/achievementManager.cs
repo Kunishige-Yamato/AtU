@@ -126,7 +126,7 @@ public class achievementManager : MonoBehaviour
                             settingSkin.sprite = skinSprite;
 
                             //セット済みのスキン番号を渡す
-                            GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>().GetDefSkinNum(achievementList[i].achieveID);
+                            GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>().SetDefSkinNum(achievementList[i].achieveID);
                         }
                     }
                 }
@@ -147,7 +147,7 @@ public class achievementManager : MonoBehaviour
                             settingTitleText.text = achievementList[i].s_or_t;
 
                             //セット済みの称号番号を渡す
-                            GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>().GetDefTitleNum(achievementList[i].achieveID);
+                            GameObject.Find("Canvas/DecoEnterButton").GetComponent<buttonAchievementSave>().SetDefTitleNum(achievementList[i].achieveID);
                         }
                     }
                 }

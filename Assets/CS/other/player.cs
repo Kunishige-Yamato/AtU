@@ -104,7 +104,6 @@ public class player : MonoBehaviour
         Cursor.lockState=wantedMode=CursorLockMode.Confined;
         Cursor.visible=false; 
         Cursor.lockState=CursorLockMode.Locked;
-        Invoke("CursorMove",0.1f);
     }
 
     void Update()

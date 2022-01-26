@@ -75,19 +75,25 @@ public class bullet26 : MonoBehaviour
 
     void LateUpdate()
     {
-        timer+=Time.deltaTime;
+        timer += Time.deltaTime;
 
-        transform.Translate(moveSpeed,fallSpeed,0,Space.World);
-        transform.Rotate(0,0,rotSpeed);
+        //親がやられたら消去
+        if (enemyPrefab == null && fallSpeed == 0 && moveSpeed == 0)
+        {
+            Destroy(gameObject);
+        }
 
         //端まで行ったら消去
-        if(transform.position.y<-5.5f||transform.position.y>9f||transform.position.x<-9.5f||transform.position.x>9.5f){
+        if (transform.position.y < -5.5f || transform.position.y > 9f || transform.position.x < -9.5f || transform.position.x > 9.5f)
+        {
             Destroy(gameObject);
         }
-        //親がやられたら消去
-        if(enemyPrefab==null&&fallSpeed==0&&moveSpeed==0){
-            Destroy(gameObject);
-        }
+    }
+
+    void FixedUpdate()
+    {
+        transform.Translate(moveSpeed,fallSpeed,0,Space.World);
+        transform.Rotate(0,0,rotSpeed);
     }
 
     void checkParent()

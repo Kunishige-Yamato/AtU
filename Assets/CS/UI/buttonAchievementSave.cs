@@ -26,27 +26,33 @@ public class buttonAchievementSave : MonoBehaviour
     }
 
     //最初にセットされてるやつ取得
-    public void GetDefSkinNum(int skinNum)
+    public void SetDefSkinNum(int skinNum)
     {
         s_num_def = skinNum;
-        GetSkinNum(s_num_def);
+        SetSkinNum(s_num_def);
     }
 
-    public void GetDefTitleNum(int titleNum)
+    public void SetDefTitleNum(int titleNum)
     {
         t_num_def = titleNum;
-        GetTitleNum(t_num_def);
+        SetTitleNum(t_num_def);
     }
 
     //変更した場合番号取得
-    public void GetSkinNum(int skinNum)
+    public void SetSkinNum(int skinNum)
     {
         s_num = skinNum;
     }
 
-    public void GetTitleNum(int titleNum)
+    public void SetTitleNum(int titleNum)
     {
         t_num = titleNum;
+    }
+
+    public int[] GetDefaultDeco()
+    {
+        int[] deco = { s_num_def, t_num_def };
+        return deco;
     }
 
     public void SaveDecoration()
@@ -59,11 +65,11 @@ public class buttonAchievementSave : MonoBehaviour
         {
             Debug.Log(t_num + "," + s_num);
             StartCoroutine(jsonRec.SaveDecoration(PlayerPrefs.GetString("ID"),t_num,s_num));
-            GetDefSkinNum(s_num);
-            GetDefTitleNum(t_num);
+            SetDefSkinNum(s_num);
+            SetDefTitleNum(t_num);
             buttonAchievementSave btnTitleBack = GameObject.Find("Canvas/BackTitleButton").GetComponent<buttonAchievementSave>();
-            btnTitleBack.GetDefSkinNum(s_num);
-            btnTitleBack.GetDefTitleNum(t_num);
+            btnTitleBack.SetDefSkinNum(s_num);
+            btnTitleBack.SetDefTitleNum(t_num);
         }
         else
         {
