@@ -74,54 +74,58 @@ public class friend : MonoBehaviour
         }
 
         //データを分割して配列へ
-        Regex regex = new Regex("^.|.$");
-        jsonString = regex.Replace(jsonString, "");
-        regex = new Regex("},{");
-        jsonString = regex.Replace(jsonString, "}&{");
-
-        var jsonDatas = jsonString.Split('&');
-
-        //jsonからオブジェクトに格納
-        RankingScore[] r_score = new RankingScore[jsonDatas.Length];
-        for (int i = 0; i < jsonDatas.Length; i++)
+        if (jsonString != "null")
         {
-            r_score[i] = JsonUtility.FromJson<RankingScore>(jsonDatas[i]);
-        }
 
-        //中身一旦削除
-        Transform children = friendListParent.GetComponentInChildren<Transform>();
-        foreach (Transform ob in children)
-        {
-            Destroy(ob.gameObject);
-        }
+            Regex regex = new Regex("^.|.$");
+            jsonString = regex.Replace(jsonString, "");
+            regex = new Regex("},{");
+            jsonString = regex.Replace(jsonString, "}&{");
 
-        //表示人数分ループ
-        for (int i = 0; i < r_score.Length; i++)
-        {
-            GameObject ranking = Instantiate(friendPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            ranking.transform.SetParent(friendListParent.transform);
+            var jsonDatas = jsonString.Split('&');
 
-            //ここでデータを書き換える
+            //jsonからオブジェクトに格納
+            RankingScore[] r_score = new RankingScore[jsonDatas.Length];
+            for (int i = 0; i < jsonDatas.Length; i++)
+            {
+                r_score[i] = JsonUtility.FromJson<RankingScore>(jsonDatas[i]);
+            }
 
-            //userIcon
-            GameObject userIcon = ranking.transform.Find("UserIcon").gameObject;
-            Image icon = userIcon.GetComponent<Image>();
-            icon.sprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(r_score[i].skin, @"\.png$", ""));
+            //中身一旦削除
+            Transform children = friendListParent.GetComponentInChildren<Transform>();
+            foreach (Transform ob in children)
+            {
+                Destroy(ob.gameObject);
+            }
 
-            //UserTitle
-            GameObject userTitle = ranking.transform.Find("UserTitle").gameObject;
-            Text title = userTitle.GetComponent<Text>();
-            title.text = r_score[i].title;
+            //表示人数分ループ
+            for (int i = 0; i < r_score.Length; i++)
+            {
+                GameObject ranking = Instantiate(friendPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                ranking.transform.SetParent(friendListParent.transform);
 
-            //UserName
-            GameObject userName = ranking.transform.Find("UserName").gameObject;
-            Text name = userName.GetComponent<Text>();
-            name.text = r_score[i].name;
+                //ここでデータを書き換える
 
-            //S_Score
-            GameObject score = ranking.transform.Find("Score").gameObject;
-            Text text = score.GetComponent<Text>();
-            text.text = "Hi Score : " + r_score[i].score.ToString("D8");
+                //userIcon
+                GameObject userIcon = ranking.transform.Find("UserIcon").gameObject;
+                Image icon = userIcon.GetComponent<Image>();
+                icon.sprite = Resources.Load<Sprite>("AchievementImage/" + Regex.Replace(r_score[i].skin, @"\.png$", ""));
+
+                //UserTitle
+                GameObject userTitle = ranking.transform.Find("UserTitle").gameObject;
+                Text title = userTitle.GetComponent<Text>();
+                title.text = r_score[i].title;
+
+                //UserName
+                GameObject userName = ranking.transform.Find("UserName").gameObject;
+                Text name = userName.GetComponent<Text>();
+                name.text = r_score[i].name;
+
+                //S_Score
+                GameObject score = ranking.transform.Find("Score").gameObject;
+                Text text = score.GetComponent<Text>();
+                text.text = "Hi Score : " + r_score[i].score.ToString("D8");
+            }
         }
     }
 

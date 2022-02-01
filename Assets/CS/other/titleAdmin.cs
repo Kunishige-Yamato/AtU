@@ -26,6 +26,10 @@ public class titleAdmin : MonoBehaviour
     public InputField inputField;
     string giftCode;
 
+    //フレンドキャンバスの自分のIDのText
+    public GameObject idTextObj;
+    Text idText;
+
     private void Awake()
     {
         if (PlayerPrefs.HasKey("SKIN") == false || PlayerPrefs.HasKey("TITLE") == false)
@@ -107,6 +111,10 @@ public class titleAdmin : MonoBehaviour
 
         //得点コード用
         inputField = inputField.GetComponent<InputField>();
+
+        //フレンドキャンバスに表示する自分のIDセット
+        idText = idTextObj.GetComponent<Text>();
+        idText.text = PlayerPrefs.GetString("ID");
 }
 
     void Update()

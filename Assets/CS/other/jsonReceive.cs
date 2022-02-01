@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using enemyInfo;
 using scoreInfo;
 using achievementInfo;
@@ -502,7 +503,39 @@ public class jsonReceive
         }
         else
         {
-            //PlayerPrefs.SetInt("FRIEND_NUM",int.Parse(request.downloadHandler.text));
+            PlayerPrefs.SetInt("FRIEND_NUM",int.Parse(request.downloadHandler.text));
+            PlayerPrefs.Save();
+        }
+    }
+
+    public IEnumerator RenameUserName(string id, string name, Text text)
+    {
+        //UserData保存
+        string url = "http://www.tmc-kkf.tokyo/sotsusei/request/index.php?id=" + id + "&action=rename&name=" + name;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+
+        //SendWebRequestを実行して送受信開始
+        yield return request.SendWebRequest();
+
+        // isNetworkErrorとisHttpErrorでエラー判定
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            if(request.downloadHandler.text!="false")
+            {
+                PlayerPrefs.SetString("NAME", request.downloadHandler.text);
+                PlayerPrefs.Save();
+                Debug.Log("rename");
+                SceneManager.LoadScene("SignUp");
+
+            }
+            else
+            {
+                text.text = "Failed to change user name.";
+            }
         }
     }
 }

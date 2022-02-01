@@ -167,7 +167,6 @@ public class registration: MonoBehaviour
         {
             //SE再生
             GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
-            Debug.Log("successsssssssssss");
             StartCoroutine(sign_up(inputName, inputPass));
         }
     }
