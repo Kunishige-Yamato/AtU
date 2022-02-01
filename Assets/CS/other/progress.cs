@@ -278,7 +278,13 @@ public class progress : MonoBehaviour
 
         //敵消去
         //タグつきを全て格納
-        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        //弾も消す
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Bullet");
+        foreach (GameObject del in enemys)
+        {
+            Destroy(del);
+        }
+        enemys = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject del in enemys)
         {
             Destroy(del);
@@ -435,6 +441,7 @@ public class progress : MonoBehaviour
 
     public IEnumerator EndlessStageStart()
     {
+        Debug.Log(difficulty);
         //自機動作
         Cursor.visible = false;
         pl.canMove = false;
@@ -457,6 +464,14 @@ public class progress : MonoBehaviour
         stageNum++;
 
         //boss呼び出し
+        if (selectBoss[3] != 0)
+        {
+            selectBoss = new int[4];
+            if (difficulty < 3)
+            {
+                difficulty++;
+            }
+        }
         for (int i = 0; i < selectBoss.Length; i++)
         {
             if (selectBoss[i] == 0)
@@ -473,14 +488,6 @@ public class progress : MonoBehaviour
                 }
                 selectBoss[i] = bossRan;
                 break;
-            }
-        }
-        if (selectBoss[3] != 0)
-        {
-            selectBoss = new int[4];
-            if(difficulty<3)
-            {
-                difficulty++;
             }
         }
 
@@ -514,7 +521,7 @@ public class progress : MonoBehaviour
     void CursorMove()
     {
         //カーソルのロック解除
-        Cursor.visible = true;
+        Cursor.visible = false;
         pl.canMove = true;
         Cursor.lockState = CursorLockMode.Confined;
     }

@@ -61,7 +61,7 @@ public class buttonAchievementSave : MonoBehaviour
         GameObject.Find("AudioSEObj").GetComponent<AudioSource>().PlayOneShot(audioSEClips[0]);
 
         //変化があった場合セーブ
-        if (s_num!=s_num_def||t_num!=t_num_def)
+        if (s_num != s_num_def || t_num != t_num_def) 
         {
             Debug.Log(t_num + "," + s_num);
             StartCoroutine(jsonRec.SaveDecoration(PlayerPrefs.GetString("ID"),t_num,s_num));

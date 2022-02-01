@@ -46,13 +46,13 @@ public class buttonAchievementSet : MonoBehaviour
         //最初は1をセット
         if (achieveSave.GetDefaultDeco()[0] == 0) 
         {
-            achieveSave.SetSkinNum(1);
-            backBtn.SetSkinNum(1);
+            achieveSave.SetDefSkinNum(1);
+            backBtn.SetDefSkinNum(1);
         }
         if (achieveSave.GetDefaultDeco()[1] == 0) 
         {
-            achieveSave.SetTitleNum(1);
-            backBtn.SetTitleNum(1);
+            achieveSave.SetDefTitleNum(1);
+            backBtn.SetDefTitleNum(1);
         }
     }
 
