@@ -136,7 +136,6 @@ public class registration: MonoBehaviour
     //サインアップ機能
     public void SignUp()
     {
-
         inputName = UserNameInput.text;
         inputPass = PasswordInput.text;
         bool check = true;
@@ -196,6 +195,27 @@ public class registration: MonoBehaviour
         //ボタン2設定
         GameObject button_2 = popUp.transform.Find("Buttons/Button_2").gameObject;
         Destroy(button_2);
+    }
+
+    //入力中
+    public void InputText()
+    {
+        //エンターキーで確定
+        if (UserNameInput.text.IndexOf("\n") == -1) 
+        {
+            return;
+        }
+        UserNameInput.text = UserNameInput.text.Replace("\n", "");
+    }
+
+    public void InputText2()
+    {
+        //エンターキーで確定
+        if (PasswordInput.text.IndexOf("\n") == -1)
+        {
+            return;
+        }
+        PasswordInput.text = PasswordInput.text.Replace("\n", "");
     }
 
     // サインインボタン押した時
